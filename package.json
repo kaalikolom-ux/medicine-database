@@ -11,6 +11,7 @@
     "sync": "tsx scripts/sync/index.ts",
     "sync:global": "tsx scripts/sync/bulk-global-fetcher.ts",
     "import:all": "tsx scripts/import-all-medicines.ts",
+    "import:bd21k": "tsx scripts/import-bd-21k.ts",
     "test:edge": "tsx scripts/test-edge-proxy.ts",
     "worker:deploy": "wrangler deploy",
     "cap:sync": "npx cap sync",
