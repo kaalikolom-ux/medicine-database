@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
   Search, Pill, Building2, Globe2, ArrowUpDown, 
-  Sparkles, SlidersHorizontal, ChevronRight, X, Bookmark
+  Sparkles, SlidersHorizontal, ChevronRight, X, Bookmark, FileText
 } from 'lucide-react';
 import { searchMedicines } from './services/medicineService';
 import { isSupabaseConfigured } from './lib/supabase';
@@ -12,6 +12,7 @@ import { GenericsView } from './components/views/GenericsView';
 import { CompaniesView } from './components/views/CompaniesView';
 import { SavedMedicinesView } from './components/views/SavedMedicinesView';
 import { AboutView } from './components/views/AboutView';
+import { AdminView } from './components/admin/AdminView';
 import type { MedicineDirectoryItem } from './types/database.types';
 
 export function App() {
@@ -200,17 +201,30 @@ export function App() {
           </div>
 
           <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setCurrentTab('admin')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm ${
+                currentTab === 'admin'
+                  ? 'bg-white text-emerald-950 ring-2 ring-emerald-300'
+                  : 'bg-emerald-700 hover:bg-emerald-600 text-white border border-emerald-500/40'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5 text-emerald-300" />
+              <span>প্রেসক্রিপশন প্যাড (Rx Pad)</span>
+            </button>
+
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
               isSupabaseConfigured 
                 ? 'bg-emerald-900/80 text-emerald-200 border border-emerald-400/30' 
                 : 'bg-amber-900/80 text-amber-200 border border-amber-400/30'
             }`}>
               <span className={`w-2 h-2 rounded-full ${isSupabaseConfigured ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
-              <span className="hidden sm:inline">{isSupabaseConfigured ? 'Supabase Connected' : 'Demo Mode'}</span>
+              <span className="hidden sm:inline">{isSupabaseConfigured ? 'Connected' : 'Demo'}</span>
             </span>
           </div>
         </div>
       </header>
+
 
       {/* VIEW: EXPLORE (Main Priority Medicine Search) */}
       {currentTab === 'explore' && (
@@ -508,10 +522,16 @@ export function App() {
         />
       )}
 
+      {/* VIEW: ADMIN & PRESCRIPTION PAD */}
+      {currentTab === 'admin' && (
+        <AdminView />
+      )}
+
       {/* VIEW: ABOUT */}
       {currentTab === 'info' && (
         <AboutView totalMedicines={allMedicines.length || medicines.length} />
       )}
+
 
       {/* Medicine Details Modal */}
       <MedicineDetailsModal

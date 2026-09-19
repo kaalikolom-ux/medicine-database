@@ -1,6 +1,6 @@
-import { Home, Pill, Building2, Bookmark, Info } from 'lucide-react';
+import { Home, Pill, Building2, Bookmark, Info, FileText } from 'lucide-react';
 
-export type NavTab = 'explore' | 'generics' | 'companies' | 'saved' | 'info';
+export type NavTab = 'explore' | 'generics' | 'companies' | 'saved' | 'admin' | 'info';
 
 interface BottomNavProps {
   currentTab: NavTab;
@@ -11,6 +11,7 @@ interface BottomNavProps {
 export function BottomNav({ currentTab, onSelectTab, savedCount }: BottomNavProps) {
   const tabs = [
     { id: 'explore' as NavTab, label: 'Explore', icon: Home },
+    { id: 'admin' as NavTab, label: 'Rx Pad', icon: FileText },
     { id: 'generics' as NavTab, label: 'Generics', icon: Pill },
     { id: 'companies' as NavTab, label: 'Companies', icon: Building2 },
     { id: 'saved' as NavTab, label: 'Saved', icon: Bookmark, badge: savedCount },
