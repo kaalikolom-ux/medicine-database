@@ -214,7 +214,17 @@ export async function searchMedicines({
         cacheControl: edgeResponse.headers.get('Cache-Control') || undefined,
       };
 
-      return data;
+      // Return edge results if items exist, or if query was intentionally blank
+      if (Array.isArray(data) && data.length > 0) {
+        return data;
+      }
+      if (!searchQuery.trim()) {
+        return data;
+      }
+
+      // If edge returned 0 items for a valid query, fall back to Supabase directly
+      // in case of a stale edge cache created before database import
+      console.info('[EdgeProxy] Edge returned 0 results for query, checking Supabase origin directly...');
     }
   } catch (edgeErr) {
     // If edge proxy request is aborted or network fails, gracefully fall back to direct Supabase

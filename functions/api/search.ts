@@ -222,12 +222,15 @@ export async function onRequest(context: EventContext): Promise<Response> {
     const duration = Date.now() - startTime;
 
     // Cloudflare Edge Cache-Control headers:
-    // s-maxage=3600: Cache at Cloudflare edge nodes for 1 hour
-    // max-age=600: Cache in client / mobile webview for 10 minutes
-    // stale-while-revalidate=86400: Allow edge to serve stale cache while fetching fresh in background
+    // Only cache positive responses; never cache empty arrays to avoid stale empty results
+    const hasData = Array.isArray(data) && data.length > 0;
+    const cacheControlHeader = hasData
+      ? 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400'
+      : 'no-cache, no-store, must-revalidate';
+
     const edgeHeaders = new Headers({
       'Content-Type': 'application/json',
-      'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': cacheControlHeader,
       'X-Edge-Cache': 'MISS',
       'X-Edge-Response-Time': `${duration}ms`,
       'X-Edge-Region': (request as any).cf?.colo || 'EDGE',
@@ -241,8 +244,8 @@ export async function onRequest(context: EventContext): Promise<Response> {
       headers: edgeHeaders,
     });
 
-    // Store in Cloudflare Edge Cache asynchronously
-    if (cache) {
+    // Store in Cloudflare Edge Cache asynchronously only if data exists
+    if (cache && hasData) {
       try {
         const cacheStorePromise = cache.put(cacheKey, responseToCache.clone());
         if (typeof waitUntil === 'function') {

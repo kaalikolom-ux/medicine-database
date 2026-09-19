@@ -311,10 +311,15 @@ async function handleSearch(request: Request, env: Env, ctx: ExecutionContext): 
     const duration = Date.now() - startTime;
     const cf = (request as any).cf || {};
 
-    // Cloudflare Edge Cache headers
+    // Cloudflare Edge Cache headers: only cache positive responses, never cache empty arrays
+    const hasData = Array.isArray(data) && data.length > 0;
+    const cacheControlHeader = hasData
+      ? 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400'
+      : 'no-cache, no-store, must-revalidate';
+
     const responseHeaders = new Headers({
       'Content-Type': 'application/json',
-      'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+      'Cache-Control': cacheControlHeader,
       'X-Edge-Cache': 'MISS',
       'X-Edge-Latency': `${duration}ms`,
       'X-Edge-Region': cf.colo || 'GLOBAL',
@@ -328,8 +333,8 @@ async function handleSearch(request: Request, env: Env, ctx: ExecutionContext): 
       headers: responseHeaders,
     });
 
-    // Asynchronously store in Cloudflare Edge Cache
-    if (cache) {
+    // Asynchronously store in Cloudflare Edge Cache only if results exist
+    if (cache && hasData && request.method === 'GET') {
       ctx.waitUntil(cache.put(cacheKey, responseToCache.clone()));
     }
 
