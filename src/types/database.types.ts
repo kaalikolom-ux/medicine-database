@@ -48,8 +48,13 @@ export interface MedicineDirectoryItem {
   package_info: string | null;
   generic_name: string;
   therapeutic_class?: string;
+  indications?: string;
+  dosage_and_administration?: string;
+  side_effects?: string;
+  precautions?: string;
   producer_name: string;
   producer_country: string;
+  producer_website?: string;
   priority_group?: number;
 }
 
@@ -57,6 +62,10 @@ export interface MedicineSearchParams {
   searchQuery?: string;
   country?: string | null;
   genericId?: string | null;
+  dosageForm?: string | null;
+  therapeuticClass?: string | null;
+  minPrice?: number | null;
+  maxPrice?: number | null;
   page?: number;
   pageSize?: number;
 }

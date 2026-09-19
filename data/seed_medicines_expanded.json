@@ -1,0 +1,1157 @@
+[
+  {
+    "brand_name": "Napa",
+    "dosage_form": "Tablet",
+    "strength": "500 mg",
+    "price": 1.20,
+    "currency": "BDT",
+    "package_info": "10 x 50 tablets",
+    "generic": {
+      "name": "Paracetamol",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Fever, headache, toothache, earache, body ache, backache, dysmenorrhea, and post-vaccination fever.",
+      "dosage_and_administration": "Adults: 1-2 tablets (500mg-1000mg) every 4-6 hours as needed. Maximum 4g daily.",
+      "side_effects": "Rarely skin rash or allergic reactions. Prolonged excessive doses can cause liver impairment.",
+      "precautions": "Caution in patients with severe hepatic or renal disease. Do not exceed recommended dosage."
+    },
+    "producer": {
+      "name": "Beximco Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.beximcopharma.com"
+    }
+  },
+  {
+    "brand_name": "Napa Extra",
+    "dosage_form": "Tablet",
+    "strength": "500 mg + 65 mg",
+    "price": 2.50,
+    "currency": "BDT",
+    "package_info": "10 x 20 tablets",
+    "generic": {
+      "name": "Paracetamol + Caffeine",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Fast relief from severe headache, migraine, dental pain, rheumatic pain, and fever with lethargy.",
+      "dosage_and_administration": "Adults: 1-2 tablets every 4-6 hours. Maximum 8 tablets in 24 hours.",
+      "side_effects": "Palpitations, insomnia, nervousness due to caffeine in high doses.",
+      "precautions": "Avoid excessive intake of coffee or tea while taking this medication."
+    },
+    "producer": {
+      "name": "Beximco Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.beximcopharma.com"
+    }
+  },
+  {
+    "brand_name": "Napa Extend",
+    "dosage_form": "Tablet",
+    "strength": "665 mg",
+    "price": 2.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Paracetamol (Extended Release)",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Long-lasting pain relief for osteoarthritis, joint stiffness, chronic muscle ache.",
+      "dosage_and_administration": "Adults: 2 tablets every 8 hours swallowed whole. Maximum 6 tablets daily.",
+      "side_effects": "Mild gastric discomfort, rare cutaneous hypersensitivity.",
+      "precautions": "Do not crush or chew extended-release tablets."
+    },
+    "producer": {
+      "name": "Beximco Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.beximcopharma.com"
+    }
+  },
+  {
+    "brand_name": "Ace",
+    "dosage_form": "Tablet",
+    "strength": "500 mg",
+    "price": 1.20,
+    "currency": "BDT",
+    "package_info": "10 x 50 tablets",
+    "generic": {
+      "name": "Paracetamol",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Fever, cold & flu symptoms, tension headache, migraine, neuralgia, toothache, dysmenorrhea.",
+      "dosage_and_administration": "Adults: 1-2 tablets every 4 to 6 hours up to 4 times a day.",
+      "side_effects": "Generally very well tolerated. Rare hematological reactions.",
+      "precautions": "Care required in chronic alcoholics and patients with liver diseases."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Ace Plus",
+    "dosage_form": "Tablet",
+    "strength": "500 mg + 65 mg",
+    "price": 2.50,
+    "currency": "BDT",
+    "package_info": "10 x 20 tablets",
+    "generic": {
+      "name": "Paracetamol + Caffeine",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Stronger fever, severe headache, migraine, toothache, muscle aches, sore throat.",
+      "dosage_and_administration": "1-2 tablets every 4-6 hours. Do not exceed 8 tablets daily.",
+      "side_effects": "Dizziness, restlessness, sleeplessness, rapid heartbeat.",
+      "precautions": "Limit caffeine-containing beverages during treatment."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Ace Syrup",
+    "dosage_form": "Syrup",
+    "strength": "120 mg/5 ml",
+    "price": 35.00,
+    "currency": "BDT",
+    "package_info": "60 ml bottle",
+    "generic": {
+      "name": "Paracetamol",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Pediatric fever, post-immunization pyrexia, teething pain, cold symptoms.",
+      "dosage_and_administration": "Children: 10-15 mg/kg body weight per dose, every 4-6 hours.",
+      "side_effects": "Safe for children when taken at recommended dosages.",
+      "precautions": "Keep out of reach of children. Use measuring spoon."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Seclo",
+    "dosage_form": "Capsule",
+    "strength": "20 mg",
+    "price": 5.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 capsules",
+    "generic": {
+      "name": "Omeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Gastro-esophageal reflux disease (GERD), gastric & duodenal ulcers, Zollinger-Ellison syndrome.",
+      "dosage_and_administration": "Adults: 20 mg once daily before breakfast for 4-8 weeks.",
+      "side_effects": "Headache, diarrhea, nausea, flatulence, abdominal pain.",
+      "precautions": "Long-term PPI use may reduce vitamin B12 and magnesium absorption."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Seclo 40",
+    "dosage_form": "Capsule",
+    "strength": "40 mg",
+    "price": 9.00,
+    "currency": "BDT",
+    "package_info": "5 x 10 capsules",
+    "generic": {
+      "name": "Omeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Severe refractory esophagitis, hypersecretory disorders, aggressive ulcer healing.",
+      "dosage_and_administration": "Adults: 40 mg once daily before meal.",
+      "side_effects": "Constipation, dizziness, skin rash, dry mouth.",
+      "precautions": "Rule out gastric malignancy prior to treatment initiation."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Sergel",
+    "dosage_form": "Capsule",
+    "strength": "20 mg",
+    "price": 7.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 capsules",
+    "generic": {
+      "name": "Esomeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Treatment of acid-related disorders, erosive esophagitis, NSAID-induced ulcer prevention.",
+      "dosage_and_administration": "Adults: 20-40 mg once daily at least 1 hour before meal.",
+      "side_effects": "Headache, diarrhea, nausea, abdominal distension.",
+      "precautions": "Patients on Clopidogrel should use alternative anti-acid therapy if advised."
+    },
+    "producer": {
+      "name": "Healthcare Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.hplbd.com"
+    }
+  },
+  {
+    "brand_name": "Sergel 40",
+    "dosage_form": "Capsule",
+    "strength": "40 mg",
+    "price": 12.00,
+    "currency": "BDT",
+    "package_info": "6 x 10 capsules",
+    "generic": {
+      "name": "Esomeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Healing of erosive esophagitis, maintenance of healed esophagitis.",
+      "dosage_and_administration": "40 mg once daily for 4 to 8 weeks.",
+      "side_effects": "Fatigue, dyspepsia, dry mouth.",
+      "precautions": "May increase risk of bone fractures with very high doses over multiple years."
+    },
+    "producer": {
+      "name": "Healthcare Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.hplbd.com"
+    }
+  },
+  {
+    "brand_name": "Maxpro",
+    "dosage_form": "Capsule",
+    "strength": "20 mg",
+    "price": 7.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 capsules",
+    "generic": {
+      "name": "Esomeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "GERD, heartburn, peptic ulcer disease, H. pylori eradication alongside antibiotics.",
+      "dosage_and_administration": "20 mg once daily 30 minutes before meal.",
+      "side_effects": "Nausea, mild headache, abdominal pain.",
+      "precautions": "Take capsules whole with water; do not crush beads."
+    },
+    "producer": {
+      "name": "Renata Limited",
+      "country": "Bangladesh",
+      "website": "https://www.renata-ltd.com"
+    }
+  },
+  {
+    "brand_name": "Pantonix",
+    "dosage_form": "Tablet",
+    "strength": "20 mg",
+    "price": 7.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Pantoprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Acid reflux, gastric ulcer, duodenal ulcer, prevention of stress gastritis.",
+      "dosage_and_administration": "Adults: 20-40 mg once daily before breakfast.",
+      "side_effects": "Mild diarrhea, flatulence, sleep disturbance.",
+      "precautions": "Regular monitoring for patients with severe liver impairment."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Pantonix 40",
+    "dosage_form": "Tablet",
+    "strength": "40 mg",
+    "price": 11.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Pantoprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Moderate to severe reflux esophagitis, eradication of Helicobacter pylori.",
+      "dosage_and_administration": "40 mg once daily in the morning before food.",
+      "side_effects": "Headache, joint pain, pruritus.",
+      "precautions": "Enteric-coated tablet must not be split, crushed or chewed."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Finix",
+    "dosage_form": "Tablet",
+    "strength": "20 mg",
+    "price": 7.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Rabeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Fast healing of active duodenal ulcers, active benign gastric ulcer, symptomatic erosive GERD.",
+      "dosage_and_administration": "20 mg once daily in the morning before eating.",
+      "side_effects": "Asthenia, rash, rhinitis, pharyngitis.",
+      "precautions": "Caution in patients with severe hepatic dysfunction."
+    },
+    "producer": {
+      "name": "Opsonin Pharma Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.opsonin.com"
+    }
+  },
+  {
+    "brand_name": "Losectil",
+    "dosage_form": "Capsule",
+    "strength": "20 mg",
+    "price": 5.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 capsules",
+    "generic": {
+      "name": "Omeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Dyspepsia, heartburn, acid indigestion, peptic ulcers.",
+      "dosage_and_administration": "20 mg once daily 30-60 minutes before breakfast.",
+      "side_effects": "Constipation, nausea, dizziness.",
+      "precautions": "Take regularly at same time each day for best results."
+    },
+    "producer": {
+      "name": "Eskayef Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.skfbd.com"
+    }
+  },
+  {
+    "brand_name": "Monas",
+    "dosage_form": "Tablet",
+    "strength": "10 mg",
+    "price": 16.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 tablets",
+    "generic": {
+      "name": "Montelukast",
+      "therapeutic_class": "Leukotriene Receptor Antagonist",
+      "indications": "Prophylaxis and chronic treatment of bronchial asthma, relief of allergic rhinitis symptoms.",
+      "dosage_and_administration": "Adults: 10 mg once daily taken in the evening with or without food.",
+      "side_effects": "Upper respiratory infection, fever, headache, sore throat, abdominal pain.",
+      "precautions": "Not indicated for the treatment of acute asthmatic attacks."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Monas 5",
+    "dosage_form": "Tablet",
+    "strength": "5 mg",
+    "price": 9.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 chewable tablets",
+    "generic": {
+      "name": "Montelukast",
+      "therapeutic_class": "Leukotriene Receptor Antagonist",
+      "indications": "Childhood asthma maintenance, seasonal and perennial allergic rhinitis in children aged 6-14.",
+      "dosage_and_administration": "Pediatric (6-14 years): One 5 mg chewable tablet daily in the evening.",
+      "side_effects": "Hyperactivity, thirst, mild stomach ache.",
+      "precautions": "Chewable tablets should be chewed before swallowing."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Provair",
+    "dosage_form": "Tablet",
+    "strength": "10 mg",
+    "price": 16.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 tablets",
+    "generic": {
+      "name": "Montelukast",
+      "therapeutic_class": "Leukotriene Receptor Antagonist",
+      "indications": "Prevention of asthma symptoms, prevention of exercise-induced bronchoconstriction.",
+      "dosage_and_administration": "10 mg daily in the evening. For exercise bronchospasm, take 2 hours before exercise.",
+      "side_effects": "Headache, cough, influenza, sinusitis.",
+      "precautions": "Notify doctor if neuropsychiatric changes (mood or behavior changes) occur."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Fexo",
+    "dosage_form": "Tablet",
+    "strength": "120 mg",
+    "price": 9.00,
+    "currency": "BDT",
+    "package_info": "5 x 10 tablets",
+    "generic": {
+      "name": "Fexofenadine",
+      "therapeutic_class": "Antihistamines (Non-sedating)",
+      "indications": "Relief of symptoms associated with seasonal allergic rhinitis (sneezing, runny nose, itchy throat), chronic urticaria.",
+      "dosage_and_administration": "Adults: 120 mg or 180 mg once daily with water.",
+      "side_effects": "Drowsiness (rare), fatigue, headache, dizziness.",
+      "precautions": "Do not take with fruit juice (apple, orange, grapefruit) as it reduces absorption."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Fexo 180",
+    "dosage_form": "Tablet",
+    "strength": "180 mg",
+    "price": 12.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 tablets",
+    "generic": {
+      "name": "Fexofenadine",
+      "therapeutic_class": "Antihistamines (Non-sedating)",
+      "indications": "Severe chronic idiopathic urticaria, severe skin allergies, allergic rhinoconjunctivitis.",
+      "dosage_and_administration": "Adults: 180 mg once daily with water.",
+      "side_effects": "Nausea, dyspepsia, dry mouth.",
+      "precautions": "Dose adjustment recommended in patients with impaired renal function."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Alarid",
+    "dosage_form": "Tablet",
+    "strength": "10 mg",
+    "price": 3.50,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Cetirizine",
+      "therapeutic_class": "Antihistamines",
+      "indications": "Perennial allergic rhinitis, seasonal pollinosis, urticaria, pruritus, allergic skin conditions.",
+      "dosage_and_administration": "Adults: 10 mg once daily in the evening.",
+      "side_effects": "Mild drowsiness, dry mouth, headache, fatigue.",
+      "precautions": "Avoid alcohol and operating heavy machinery if feeling drowsy."
+    },
+    "producer": {
+      "name": "Renata Limited",
+      "country": "Bangladesh",
+      "website": "https://www.renata-ltd.com"
+    }
+  },
+  {
+    "brand_name": "Tofen",
+    "dosage_form": "Syrup",
+    "strength": "1 mg/5 ml",
+    "price": 60.00,
+    "currency": "BDT",
+    "package_info": "100 ml bottle",
+    "generic": {
+      "name": "Ketotifen",
+      "therapeutic_class": "Antihistamines / Mast Cell Stabilizer",
+      "indications": "Prophylactic treatment of bronchial asthma, allergic rhinitis, allergic conjunctivitis.",
+      "dosage_and_administration": "Adults: 5 ml syrup (1 mg) twice daily with food.",
+      "side_effects": "Sedation, dry mouth, slight dizziness at beginning of treatment.",
+      "precautions": "Symptoms usually disappear spontaneously after a few days of therapy."
+    },
+    "producer": {
+      "name": "Beximco Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.beximcopharma.com"
+    }
+  },
+  {
+    "brand_name": "Cef-3",
+    "dosage_form": "Capsule",
+    "strength": "200 mg",
+    "price": 35.00,
+    "currency": "BDT",
+    "package_info": "2 x 7 capsules",
+    "generic": {
+      "name": "Cefixime",
+      "therapeutic_class": "Cephalosporin Antibiotics",
+      "indications": "Upper and lower respiratory tract infections, typhoid fever, urinary tract infections (UTI), otitis media.",
+      "dosage_and_administration": "Adults: 200 mg - 400 mg daily as single dose or divided in two doses for 7-14 days.",
+      "side_effects": "Diarrhea, loose stools, nausea, abdominal pain, flatulence.",
+      "precautions": "Check for hypersensitivity to cephalosporins or penicillins before use."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Cef-3 DS",
+    "dosage_form": "Capsule",
+    "strength": "400 mg",
+    "price": 50.00,
+    "currency": "BDT",
+    "package_info": "2 x 7 capsules",
+    "generic": {
+      "name": "Cefixime",
+      "therapeutic_class": "Cephalosporin Antibiotics",
+      "indications": "Acute bronchitis, community-acquired pneumonia, acute exacerbation of chronic bronchitis.",
+      "dosage_and_administration": "Adults: 400 mg once daily for 7-10 days.",
+      "side_effects": "Gastrointestinal disturbances, pseudomembranous colitis.",
+      "precautions": "Complete full antibiotic course even if feeling better."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Zimax",
+    "dosage_form": "Tablet",
+    "strength": "500 mg",
+    "price": 35.00,
+    "currency": "BDT",
+    "package_info": "3 x 6 tablets",
+    "generic": {
+      "name": "Azithromycin",
+      "therapeutic_class": "Macrolide Antibiotic",
+      "indications": "Respiratory tract infections, tonsillitis, pharyngitis, sinusitis, skin and soft tissue infections.",
+      "dosage_and_administration": "Adults: 500 mg once daily for 3 days or 500 mg on day 1 followed by 250 mg daily on days 2-5.",
+      "side_effects": "Nausea, vomiting, diarrhea, abdominal cramps.",
+      "precautions": "Take at least 1 hour before or 2 hours after meals. Caution in hepatic impairment."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Azithrocin",
+    "dosage_form": "Capsule",
+    "strength": "500 mg",
+    "price": 35.00,
+    "currency": "BDT",
+    "package_info": "3 x 6 capsules",
+    "generic": {
+      "name": "Azithromycin",
+      "therapeutic_class": "Macrolide Antibiotic",
+      "indications": "Bronchitis, pneumonia, sexually transmitted bacterial infections, severe acne.",
+      "dosage_and_administration": "500 mg once daily for 3 consecutive days.",
+      "side_effects": "Mild loose stools, transient elevation in liver enzymes.",
+      "precautions": "Do not co-administer with antacids containing aluminum or magnesium."
+    },
+    "producer": {
+      "name": "Beximco Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.beximcopharma.com"
+    }
+  },
+  {
+    "brand_name": "Ciprox",
+    "dosage_form": "Tablet",
+    "strength": "500 mg",
+    "price": 15.00,
+    "currency": "BDT",
+    "package_info": "5 x 10 tablets",
+    "generic": {
+      "name": "Ciprofloxacin",
+      "therapeutic_class": "Quinolone Antibiotics",
+      "indications": "Urinary tract infections, bone and joint infections, infectious diarrhea, typhoid fever.",
+      "dosage_and_administration": "Adults: 500 mg every 12 hours for 7-14 days.",
+      "side_effects": "Nausea, diarrhea, tendon pain or swelling (tendinitis), dizziness.",
+      "precautions": "Drink plenty of water. Avoid direct exposure to strong sunlight."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Filmet",
+    "dosage_form": "Tablet",
+    "strength": "400 mg",
+    "price": 2.00,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Metronidazole",
+      "therapeutic_class": "Antiprotozoal & Antibacterial",
+      "indications": "Amoebiasis, giardiasis, trichomoniasis, bacterial vaginosis, dental infections.",
+      "dosage_and_administration": "Adults: 400 mg 3 times daily for 5-7 days.",
+      "side_effects": "Metallic taste in mouth, nausea, furrowed tongue, dark colored urine.",
+      "precautions": "Strictly avoid alcohol during therapy and for at least 48 hours after stopping."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Flamyd",
+    "dosage_form": "Suspension",
+    "strength": "200 mg/5 ml",
+    "price": 38.00,
+    "currency": "BDT",
+    "package_info": "100 ml bottle",
+    "generic": {
+      "name": "Metronidazole",
+      "therapeutic_class": "Antiprotozoal & Antibacterial",
+      "indications": "Pediatric amoebic dysentery, giardiasis, anaerobic bacterial infections.",
+      "dosage_and_administration": "Children: 35-50 mg/kg/day divided in 3 doses for 7 days.",
+      "side_effects": "Anorexia, nausea, abdominal discomfort.",
+      "precautions": "Shake bottle well before each administration."
+    },
+    "producer": {
+      "name": "Beximco Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.beximcopharma.com"
+    }
+  },
+  {
+    "brand_name": "Osartil",
+    "dosage_form": "Tablet",
+    "strength": "50 mg",
+    "price": 8.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 tablets",
+    "generic": {
+      "name": "Losartan Potassium",
+      "therapeutic_class": "Antihypertensive (ARB)",
+      "indications": "Management of hypertension, stroke risk reduction in hypertensive patients with left ventricular hypertrophy.",
+      "dosage_and_administration": "Adults: Initially 50 mg once daily. Can be increased to 100 mg once daily.",
+      "side_effects": "Dizziness, hyperkalemia, fatigue, hypotension.",
+      "precautions": "Contraindicated in pregnancy. Regular potassium level checking advised."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Osartil 25",
+    "dosage_form": "Tablet",
+    "strength": "25 mg",
+    "price": 5.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 tablets",
+    "generic": {
+      "name": "Losartan Potassium",
+      "therapeutic_class": "Antihypertensive (ARB)",
+      "indications": "Starting dose for elderly patients or patients with volume depletion, diabetic nephropathy.",
+      "dosage_and_administration": "25 mg once daily with or without meals.",
+      "side_effects": "Lightheadedness, nasal congestion.",
+      "precautions": "Monitor serum creatinine and blood pressure regularly."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Camlosart",
+    "dosage_form": "Tablet",
+    "strength": "5 mg + 50 mg",
+    "price": 10.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 tablets",
+    "generic": {
+      "name": "Amlodipine + Losartan",
+      "therapeutic_class": "Antihypertensive Combination",
+      "indications": "Hypertension not adequately controlled with monotherapy of amlodipine or losartan.",
+      "dosage_and_administration": "One tablet once daily in the morning.",
+      "side_effects": "Peripheral edema (ankle swelling), headache, facial flushing.",
+      "precautions": "Monitor blood pressure frequently when starting combination therapy."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Comet",
+    "dosage_form": "Tablet",
+    "strength": "500 mg",
+    "price": 4.50,
+    "currency": "BDT",
+    "package_info": "10 x 10 tablets",
+    "generic": {
+      "name": "Metformin Hydrochloride",
+      "therapeutic_class": "Antidiabetic (Biguanide)",
+      "indications": "Type 2 diabetes mellitus, especially in overweight patients; polycystic ovary syndrome (PCOS).",
+      "dosage_and_administration": "Adults: 500 mg once or twice daily with or after meals. Maximum 2000 mg daily.",
+      "side_effects": "Gastrointestinal intolerance, metallic taste, nausea, flatulence.",
+      "precautions": "Take with meals to minimize stomach upset. Contraindicated in severe renal failure."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Comet XR",
+    "dosage_form": "Tablet",
+    "strength": "1000 mg",
+    "price": 8.00,
+    "currency": "BDT",
+    "package_info": "5 x 10 tablets",
+    "generic": {
+      "name": "Metformin Hydrochloride (Extended Release)",
+      "therapeutic_class": "Antidiabetic (Biguanide)",
+      "indications": "Better GI tolerated once-daily blood sugar control for Type 2 diabetes.",
+      "dosage_and_administration": "1 tablet once daily with evening meal.",
+      "side_effects": "Significantly fewer stomach problems than immediate-release metformin.",
+      "precautions": "Swallow whole; do not break, chew, or crush."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Rolac",
+    "dosage_form": "Tablet",
+    "strength": "10 mg",
+    "price": 12.00,
+    "currency": "BDT",
+    "package_info": "2 x 10 tablets",
+    "generic": {
+      "name": "Ketorolac Tromethamine",
+      "therapeutic_class": "NSAIDs (Non-Steroidal Anti-Inflammatory)",
+      "indications": "Short-term management of moderate to severe acute pain (post-operative, dental, renal colic).",
+      "dosage_and_administration": "10 mg every 4-6 hours as needed. Maximum 40 mg daily. Duration max 5 days.",
+      "side_effects": "Peptic ulcer, GI bleeding, drowsiness, dizziness.",
+      "precautions": "Do not use for more than 5 consecutive days due to gastrointestinal and renal risks."
+    },
+    "producer": {
+      "name": "Renata Limited",
+      "country": "Bangladesh",
+      "website": "https://www.renata-ltd.com"
+    }
+  },
+  {
+    "brand_name": "Rolac Injection",
+    "dosage_form": "Injection",
+    "strength": "30 mg/ml",
+    "price": 50.00,
+    "currency": "BDT",
+    "package_info": "1 ampoule (1 ml)",
+    "generic": {
+      "name": "Ketorolac Tromethamine",
+      "therapeutic_class": "NSAIDs",
+      "indications": "Severe acute surgical pain, trauma, acute orthopedic pain.",
+      "dosage_and_administration": "Administered intramuscularly or intravenously by healthcare provider.",
+      "side_effects": "Injection site pain, sweating, nausea.",
+      "precautions": "Hospital / clinical administration only. Monitor renal function."
+    },
+    "producer": {
+      "name": "Renata Limited",
+      "country": "Bangladesh",
+      "website": "https://www.renata-ltd.com"
+    }
+  },
+  {
+    "brand_name": "Anaflex",
+    "dosage_form": "Tablet",
+    "strength": "250 mg",
+    "price": 5.00,
+    "currency": "BDT",
+    "package_info": "5 x 10 tablets",
+    "generic": {
+      "name": "Naproxen Sodium",
+      "therapeutic_class": "NSAIDs",
+      "indications": "Pain and inflammation in osteoarthritis, rheumatoid arthritis, ankylosing spondylitis, acute gout.",
+      "dosage_and_administration": "Adults: 250 mg to 500 mg twice daily with food.",
+      "side_effects": "Indigestion, heartburn, abdominal pain, edema.",
+      "precautions": "Co-prescribe PPI in patients vulnerable to gastric ulcers."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Flugal",
+    "dosage_form": "Capsule",
+    "strength": "50 mg",
+    "price": 12.00,
+    "currency": "BDT",
+    "package_info": "3 x 10 capsules",
+    "generic": {
+      "name": "Fluconazole",
+      "therapeutic_class": "Antifungal",
+      "indications": "Candidiasis (oral, esophageal, vaginal), cryptococcal meningitis, dermatomycosis, ringworm.",
+      "dosage_and_administration": "Vaginal candidiasis: 150 mg single dose. Other fungal infections: 50-200 mg daily for 2-4 weeks.",
+      "side_effects": "Nausea, headache, rash, abdominal pain.",
+      "precautions": "Check liver function during prolonged therapy."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Flugal 150",
+    "dosage_form": "Capsule",
+    "strength": "150 mg",
+    "price": 30.00,
+    "currency": "BDT",
+    "package_info": "1 x 2 capsules",
+    "generic": {
+      "name": "Fluconazole",
+      "therapeutic_class": "Antifungal",
+      "indications": "Single-dose cure for vaginal thrush / yeast infection, recurrent fungal infection.",
+      "dosage_and_administration": "One 150 mg capsule swallowed whole once.",
+      "side_effects": "Transient mild diarrhea, headache.",
+      "precautions": "Avoid during pregnancy unless clearly necessary."
+    },
+    "producer": {
+      "name": "Square Pharmaceuticals PLC",
+      "country": "Bangladesh",
+      "website": "https://www.squarepharma.com.bd"
+    }
+  },
+  {
+    "brand_name": "Lubrex",
+    "dosage_form": "Eye Drops",
+    "strength": "0.5%",
+    "price": 140.00,
+    "currency": "BDT",
+    "package_info": "10 ml dropper bottle",
+    "generic": {
+      "name": "Carboxymethylcellulose",
+      "therapeutic_class": "Ophthalmic Lubricant / Artificial Tears",
+      "indications": "Relief of dry, irritated, burning eyes caused by wind, screen glare, heating or air conditioning.",
+      "dosage_and_administration": "Instill 1 to 2 drops in the affected eye(s) as needed.",
+      "side_effects": "Temporary blurred vision immediately upon application.",
+      "precautions": "Do not touch dropper tip to any surface to avoid contamination. Discard 1 month after opening."
+    },
+    "producer": {
+      "name": "Incepta Pharmaceuticals Ltd.",
+      "country": "Bangladesh",
+      "website": "https://www.inceptapharma.com"
+    }
+  },
+  {
+    "brand_name": "Panadol",
+    "dosage_form": "Tablet",
+    "strength": "500 mg",
+    "price": 3.50,
+    "currency": "GBP",
+    "package_info": "2 x 12 tablets",
+    "generic": {
+      "name": "Paracetamol",
+      "therapeutic_class": "Analgesics & Antipyretics",
+      "indications": "Relief of headaches, tension headaches, toothache, muscle aches, and feverishness.",
+      "dosage_and_administration": "1-2 tablets swallowed with water every 4-6 hours.",
+      "side_effects": "Very rare allergic skin reactions.",
+      "precautions": "Do not use with other paracetamol-containing products."
+    },
+    "producer": {
+      "name": "GlaxoSmithKline (GSK)",
+      "country": "United Kingdom",
+      "website": "https://www.gsk.com"
+    }
+  },
+  {
+    "brand_name": "Augmentin",
+    "dosage_form": "Tablet",
+    "strength": "625 mg",
+    "price": 12.50,
+    "currency": "GBP",
+    "package_info": "2 x 7 tablets",
+    "generic": {
+      "name": "Amoxicillin + Clavulanic Acid",
+      "therapeutic_class": "Beta-lactam Antibiotic",
+      "indications": "Bacterial sinusitis, otitis media, acute exacerbation of chronic bronchitis, community-acquired pneumonia.",
+      "dosage_and_administration": "Adults: 625 mg one tablet 2-3 times daily at start of a meal.",
+      "side_effects": "Diarrhea, nausea, vomiting, candidiasis.",
+      "precautions": "Take at the start of a meal to reduce gastrointestinal upset. Contraindicated in penicillin allergy."
+    },
+    "producer": {
+      "name": "GlaxoSmithKline (GSK)",
+      "country": "United Kingdom",
+      "website": "https://www.gsk.com"
+    }
+  },
+  {
+    "brand_name": "Ventolin Inhaler",
+    "dosage_form": "Inhaler",
+    "strength": "100 mcg/puff",
+    "price": 6.80,
+    "currency": "GBP",
+    "package_info": "200 puffs canister",
+    "generic": {
+      "name": "Salbutamol",
+      "therapeutic_class": "Short-acting Beta-2 Agonist (Bronchodilator)",
+      "indications": "Quick relief of acute bronchospasm in asthma, chronic bronchitis, and emphysema.",
+      "dosage_and_administration": "1-2 puffs inhaled as needed for sudden shortness of breath. Maximum 8 puffs in 24 hours.",
+      "side_effects": "Fine tremor of hands, tachycardia, nervousness.",
+      "precautions": "If relief lasts less than 3 hours, seek urgent medical advice."
+    },
+    "producer": {
+      "name": "GlaxoSmithKline (GSK)",
+      "country": "United Kingdom",
+      "website": "https://www.gsk.com"
+    }
+  },
+  {
+    "brand_name": "Zithromax",
+    "dosage_form": "Tablet",
+    "strength": "250 mg",
+    "price": 25.00,
+    "currency": "USD",
+    "package_info": "6 tablets bottle",
+    "generic": {
+      "name": "Azithromycin",
+      "therapeutic_class": "Macrolide Antibiotic",
+      "indications": "Mild to moderate bacterial infections of ears, lungs, throat, and reproductive tract.",
+      "dosage_and_administration": "500 mg day 1, followed by 250 mg once daily days 2-5.",
+      "side_effects": "Nausea, diarrhea, stomach cramps.",
+      "precautions": "Caution in patients with cardiac arrhythmia (QT prolongation)."
+    },
+    "producer": {
+      "name": "Pfizer Inc.",
+      "country": "United States",
+      "website": "https://www.pfizer.com"
+    }
+  },
+  {
+    "brand_name": "Lipitor",
+    "dosage_form": "Tablet",
+    "strength": "20 mg",
+    "price": 38.00,
+    "currency": "USD",
+    "package_info": "30 tablets bottle",
+    "generic": {
+      "name": "Atorvastatin",
+      "therapeutic_class": "Statin (Lipid-lowering)",
+      "indications": "Hypercholesterolemia, prevention of cardiovascular disease, reducing myocardial infarction risk.",
+      "dosage_and_administration": "Adults: 10-20 mg once daily at any time of day, with or without food.",
+      "side_effects": "Muscle pain, weakness, joint pain, elevated liver enzymes.",
+      "precautions": "Report unexplained muscle tenderness immediately. Avoid large amounts of grapefruit juice."
+    },
+    "producer": {
+      "name": "Pfizer Inc.",
+      "country": "United States",
+      "website": "https://www.pfizer.com"
+    }
+  },
+  {
+    "brand_name": "Norvasc",
+    "dosage_form": "Tablet",
+    "strength": "5 mg",
+    "price": 28.00,
+    "currency": "USD",
+    "package_info": "30 tablets bottle",
+    "generic": {
+      "name": "Amlodipine",
+      "therapeutic_class": "Calcium Channel Blocker (CCB)",
+      "indications": "Management of high blood pressure and chronic stable angina.",
+      "dosage_and_administration": "5 mg once daily; can be titrated to 10 mg daily.",
+      "side_effects": "Swelling in ankles/feet, dizziness, tiredness, flushing.",
+      "precautions": "Monitor blood pressure regularly."
+    },
+    "producer": {
+      "name": "Pfizer Inc.",
+      "country": "United States",
+      "website": "https://www.pfizer.com"
+    }
+  },
+  {
+    "brand_name": "Celebrex",
+    "dosage_form": "Capsule",
+    "strength": "200 mg",
+    "price": 45.00,
+    "currency": "USD",
+    "package_info": "30 capsules bottle",
+    "generic": {
+      "name": "Celecoxib",
+      "therapeutic_class": "COX-2 Inhibitor (NSAID)",
+      "indications": "Osteoarthritis, rheumatoid arthritis, ankylosing spondylitis, acute musculoskeletal pain.",
+      "dosage_and_administration": "100-200 mg once or twice daily with food.",
+      "side_effects": "Dyspepsia, peripheral edema, hypertension.",
+      "precautions": "Contraindicated after coronary artery bypass graft (CABG) surgery."
+    },
+    "producer": {
+      "name": "Pfizer Inc.",
+      "country": "United States",
+      "website": "https://www.pfizer.com"
+    }
+  },
+  {
+    "brand_name": "Nexium",
+    "dosage_form": "Tablet",
+    "strength": "20 mg",
+    "price": 32.00,
+    "currency": "GBP",
+    "package_info": "28 tablets pack",
+    "generic": {
+      "name": "Esomeprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "GERD, frequent heartburn relief, healing erosive esophagitis.",
+      "dosage_and_administration": "20-40 mg once daily for 4-8 weeks.",
+      "side_effects": "Headache, nausea, constipation, abdominal discomfort.",
+      "precautions": "Swallow tablet whole with liquid. Do not chew or crush."
+    },
+    "producer": {
+      "name": "AstraZeneca",
+      "country": "United Kingdom",
+      "website": "https://www.astrazeneca.com"
+    }
+  },
+  {
+    "brand_name": "Voltaren",
+    "dosage_form": "Tablet",
+    "strength": "50 mg",
+    "price": 14.00,
+    "currency": "CHF",
+    "package_info": "20 tablets pack",
+    "generic": {
+      "name": "Diclofenac Sodium",
+      "therapeutic_class": "NSAIDs",
+      "indications": "Inflammatory and degenerative forms of rheumatism, acute musculoskeletal trauma, low back pain.",
+      "dosage_and_administration": "50 mg 2-3 times daily after food.",
+      "side_effects": "Epigastric pain, nausea, peptic ulceration.",
+      "precautions": "Always take with food or milk to protect stomach."
+    },
+    "producer": {
+      "name": "Novartis",
+      "country": "Switzerland",
+      "website": "https://www.novartis.com"
+    }
+  },
+  {
+    "brand_name": "Galvus Met",
+    "dosage_form": "Tablet",
+    "strength": "50 mg + 500 mg",
+    "price": 28.00,
+    "currency": "CHF",
+    "package_info": "30 tablets pack",
+    "generic": {
+      "name": "Vildagliptin + Metformin",
+      "therapeutic_class": "Antidiabetic Combination",
+      "indications": "Type 2 diabetes mellitus when metformin alone is insufficient.",
+      "dosage_and_administration": "1 tablet twice daily with morning and evening meals.",
+      "side_effects": "Hypoglycemia (low risk), tremors, nausea.",
+      "precautions": "Monitor renal and hepatic parameters periodically."
+    },
+    "producer": {
+      "name": "Novartis",
+      "country": "Switzerland",
+      "website": "https://www.novartis.com"
+    }
+  },
+  {
+    "brand_name": "Telfast",
+    "dosage_form": "Tablet",
+    "strength": "120 mg",
+    "price": 11.50,
+    "currency": "EUR",
+    "package_info": "30 tablets pack",
+    "generic": {
+      "name": "Fexofenadine",
+      "therapeutic_class": "Antihistamines (Non-sedating)",
+      "indications": "Hay fever, pollen allergies, sneezing, itchy runny nose.",
+      "dosage_and_administration": "One 120 mg tablet once daily before meals.",
+      "side_effects": "Mild headache, fatigue.",
+      "precautions": "Non-drowsy formulation for active adults and daytime drivers."
+    },
+    "producer": {
+      "name": "Sanofi",
+      "country": "France",
+      "website": "https://www.sanofi.com"
+    }
+  },
+  {
+    "brand_name": "Plavix",
+    "dosage_form": "Tablet",
+    "strength": "75 mg",
+    "price": 42.00,
+    "currency": "EUR",
+    "package_info": "28 tablets pack",
+    "generic": {
+      "name": "Clopidogrel",
+      "therapeutic_class": "Antiplatelet",
+      "indications": "Prevention of blood clots in patients with prior myocardial infarction, ischemic stroke, or peripheral arterial disease.",
+      "dosage_and_administration": "75 mg once daily with or without food.",
+      "side_effects": "Bruising, prolonged bleeding from cuts, hematoma.",
+      "precautions": "Discontinue 5-7 days before scheduled elective surgeries."
+    },
+    "producer": {
+      "name": "Sanofi",
+      "country": "France",
+      "website": "https://www.sanofi.com"
+    }
+  },
+  {
+    "brand_name": "Pantocid",
+    "dosage_form": "Tablet",
+    "strength": "40 mg",
+    "price": 15.00,
+    "currency": "INR",
+    "package_info": "1 x 15 tablets",
+    "generic": {
+      "name": "Pantoprazole",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI)",
+      "indications": "Acid reflux, gastroesophageal reflux disease, duodenal ulcers.",
+      "dosage_and_administration": "40 mg once daily in the morning before food.",
+      "side_effects": "Flatulence, headache, stomach ache.",
+      "precautions": "Do not chew or crush."
+    },
+    "producer": {
+      "name": "Sun Pharmaceutical Industries",
+      "country": "India",
+      "website": "https://www.sunpharma.com"
+    }
+  },
+  {
+    "brand_name": "Storvas",
+    "dosage_form": "Tablet",
+    "strength": "10 mg",
+    "price": 18.00,
+    "currency": "INR",
+    "package_info": "1 x 10 tablets",
+    "generic": {
+      "name": "Atorvastatin",
+      "therapeutic_class": "Statin (Lipid-lowering)",
+      "indications": "Reduction of LDL cholesterol and triglyceride levels, coronary heart disease.",
+      "dosage_and_administration": "10 mg once daily at bedtime.",
+      "side_effects": "Mild indigestion, joint aches.",
+      "precautions": "Periodic liver function tests recommended."
+    },
+    "producer": {
+      "name": "Sun Pharmaceutical Industries",
+      "country": "India",
+      "website": "https://www.sunpharma.com"
+    }
+  },
+  {
+    "brand_name": "Asthalin Inhaler",
+    "dosage_form": "Inhaler",
+    "strength": "100 mcg",
+    "price": 140.00,
+    "currency": "INR",
+    "package_info": "200 metered doses",
+    "generic": {
+      "name": "Salbutamol",
+      "therapeutic_class": "Short-acting Beta-2 Agonist",
+      "indications": "Bronchial asthma, exercise-induced asthma, COPD symptom relief.",
+      "dosage_and_administration": "1-2 inhalations when breathlessness occurs.",
+      "side_effects": "Palpitations, mild tremors.",
+      "precautions": "Rinse mouth with water after use."
+    },
+    "producer": {
+      "name": "Cipla Ltd.",
+      "country": "India",
+      "website": "https://www.cipla.com"
+    }
+  }
+]

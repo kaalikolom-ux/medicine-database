@@ -127,8 +127,12 @@ export async function searchMedicines({
   searchQuery = '',
   country = null,
   genericId = null,
+  dosageForm = null,
+  therapeuticClass = null,
+  minPrice = null,
+  maxPrice = null,
   page = 1,
-  pageSize = 20,
+  pageSize = 50,
 }: MedicineSearchParams): Promise<MedicineDirectoryItem[]> {
   if (!isSupabaseConfigured) {
     // Client-side simulation of the exact PostgreSQL sorting rule
@@ -141,8 +145,10 @@ export async function searchMedicines({
         item.producer_name.toLowerCase().includes(normalizedQuery);
 
       const matchCountry = !country || item.producer_country.toLowerCase() === country.toLowerCase();
+      const matchForm = !dosageForm || item.dosage_form.toLowerCase() === dosageForm.toLowerCase();
+      const matchClass = !therapeuticClass || item.therapeutic_class?.toLowerCase() === therapeuticClass.toLowerCase();
 
-      return matchQuery && matchCountry;
+      return matchQuery && matchCountry && matchForm && matchClass;
     }).sort((a, b) => {
       // 1. Bangladesh First (0 vs 1)
       const aIsBd = a.producer_country.toLowerCase() === 'bangladesh' ? 0 : 1;
@@ -165,6 +171,10 @@ export async function searchMedicines({
     search_query: searchQuery.trim(),
     filter_country: country || null,
     filter_generic_id: genericId || null,
+    filter_dosage_form: dosageForm || null,
+    filter_therapeutic_class: therapeuticClass || null,
+    min_price: minPrice || null,
+    max_price: maxPrice || null,
     limit_count: pageSize,
     offset_count: offset,
   });

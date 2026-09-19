@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Search, Pill, Building2, Globe2, ShieldCheck, Filter, ArrowUpDown, Sparkles } from 'lucide-react';
+import { Search, Pill, Building2, Globe2, ShieldCheck, ArrowUpDown, Sparkles, SlidersHorizontal, ChevronRight } from 'lucide-react';
 import { searchMedicines } from './services/medicineService';
 import { isSupabaseConfigured } from './lib/supabase';
+import { MedicineDetailsModal } from './components/medicine/MedicineDetailsModal';
+import { AdvancedFilterDrawer } from './components/medicine/AdvancedFilterDrawer';
 import type { MedicineDirectoryItem } from './types/database.types';
 
 export function App() {
@@ -9,6 +11,25 @@ export function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const [selectedDosageForm, setSelectedDosageForm] = useState<string>('');
+  const [selectedTherapeuticClass, setSelectedTherapeuticClass] = useState<string>('');
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState<boolean>(false);
+  const [selectedMedicine, setSelectedMedicine] = useState<MedicineDirectoryItem | null>(null);
+
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCountry) count++;
+    if (selectedDosageForm) count++;
+    if (selectedTherapeuticClass) count++;
+    return count;
+  }, [selectedCountry, selectedDosageForm, selectedTherapeuticClass]);
+
+  const handleResetFilters = () => {
+    setSelectedCountry('');
+    setSelectedDosageForm('');
+    setSelectedTherapeuticClass('');
+    setSearchQuery('');
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -19,6 +40,9 @@ export function App() {
         const results = await searchMedicines({
           searchQuery,
           country: selectedCountry || null,
+          dosageForm: selectedDosageForm || null,
+          therapeuticClass: selectedTherapeuticClass || null,
+          pageSize: 60,
         });
         if (isMounted) {
           setMedicines(results);
@@ -36,17 +60,12 @@ export function App() {
       isMounted = false;
       clearTimeout(timer);
     };
-  }, [searchQuery, selectedCountry]);
-
-  // Unique country list for filter
-  const countries = useMemo(() => {
-    return ['Bangladesh', 'India', 'United Kingdom', 'United States'];
-  }, []);
+  }, [searchQuery, selectedCountry, selectedDosageForm, selectedTherapeuticClass]);
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
-      <header className="bg-emerald-800 text-white shadow-md sticky top-0 z-50">
+      <header className="bg-emerald-800 text-white shadow-md sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center space-x-3">
             <div className="bg-emerald-700 p-2 rounded-xl shadow-inner">
@@ -72,49 +91,59 @@ export function App() {
       </header>
 
       {/* Hero & Search Section */}
-      <section className="bg-white border-b border-slate-200 shadow-sm py-6 px-4">
-        <div className="max-w-4xl mx-auto space-y-4">
-          <div className="flex items-center justify-between">
+      <section className="bg-white border-b border-slate-200 shadow-sm py-5 px-4">
+        <div className="max-w-4xl mx-auto space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2 text-xs font-medium text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100">
               <Sparkles className="w-4 h-4 text-emerald-600" />
               <span>Custom Sorting: <strong>Bangladesh (0)</strong> &rarr; <strong>Country (A-Z)</strong> &rarr; <strong>Brand (A-Z)</strong></span>
             </div>
+
+            <button
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${
+                showAdvancedFilters || activeFilterCount > 0
+                  ? 'bg-emerald-700 text-white border-emerald-800 shadow-sm'
+                  : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
+              }`}
+            >
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              <span>Filters</span>
+              {activeFilterCount > 0 && (
+                <span className="w-5 h-5 rounded-full bg-emerald-400 text-emerald-950 font-bold text-[10px] inline-flex items-center justify-center ml-0.5">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search brand (e.g. Napa, Seclo), generic, or company..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none text-slate-900 text-sm transition"
+          {/* Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search brand (e.g. Napa, Seclo), generic (e.g. Paracetamol), or company..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none text-slate-900 text-sm transition"
+            />
+          </div>
+
+          {/* Collapsible Advanced Filters Drawer */}
+          {showAdvancedFilters && (
+            <div className="pt-2 animate-in fade-in duration-150">
+              <AdvancedFilterDrawer
+                selectedDosageForm={selectedDosageForm}
+                onSelectDosageForm={setSelectedDosageForm}
+                selectedTherapeuticClass={selectedTherapeuticClass}
+                onSelectTherapeuticClass={setSelectedTherapeuticClass}
+                selectedCountry={selectedCountry}
+                onSelectCountry={setSelectedCountry}
+                onResetFilters={handleResetFilters}
+                activeFilterCount={activeFilterCount}
               />
             </div>
-
-            {/* Country Filter */}
-            <div className="relative sm:w-56">
-              <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <select
-                value={selectedCountry}
-                onChange={(e) => setSelectedCountry(e.target.value)}
-                aria-label="Filter by Country"
-                className="w-full pl-10 pr-8 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none text-slate-900 text-sm appearance-none transition"
-              >
-                <option value="">All Countries</option>
-                {countries.map((c) => (
-                  <option key={c} value={c}>
-                    {c === 'Bangladesh' ? '🇧🇩 Bangladesh (Priority)' : c}
-                  </option>
-                ))}
-              </select>
-              <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs">
-                ▼
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -139,7 +168,15 @@ export function App() {
           <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
             <Pill className="w-12 h-12 text-slate-300 mx-auto mb-3" />
             <h3 className="text-base font-semibold text-slate-800">No medicines found</h3>
-            <p className="text-sm text-slate-500 mt-1">Try adjusting your search query or country filter.</p>
+            <p className="text-sm text-slate-500 mt-1">Try adjusting your search query or reset your filters.</p>
+            {activeFilterCount > 0 && (
+              <button
+                onClick={handleResetFilters}
+                className="mt-4 px-4 py-2 bg-emerald-700 text-white rounded-xl text-xs font-semibold hover:bg-emerald-800 transition"
+              >
+                Reset All Filters
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -148,16 +185,17 @@ export function App() {
               return (
                 <div
                   key={med.medicine_id}
-                  className={`relative rounded-2xl border p-5 transition-all shadow-sm hover:shadow-md bg-white flex flex-col justify-between ${
+                  onClick={() => setSelectedMedicine(med)}
+                  className={`group relative rounded-2xl border p-5 transition-all cursor-pointer shadow-sm hover:shadow-lg bg-white flex flex-col justify-between hover:-translate-y-0.5 ${
                     isBd 
-                      ? 'border-emerald-200 ring-1 ring-emerald-50 hover:border-emerald-300' 
+                      ? 'border-emerald-200 ring-1 ring-emerald-50 hover:border-emerald-400' 
                       : 'border-slate-200 hover:border-slate-300'
                   }`}
                 >
                   {/* Top Badge: Priority / Country */}
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div>
-                      <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                      <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2 group-hover:text-emerald-700 transition">
                         {med.brand_name}
                         <span className="text-xs font-normal text-slate-500 px-2 py-0.5 bg-slate-100 rounded-md border border-slate-200">
                           {med.strength}
@@ -181,23 +219,22 @@ export function App() {
                     )}
                   </div>
 
-                  {/* Form, Package & Indications */}
+                  {/* Form, Package & Indications preview */}
                   <div className="space-y-1.5 text-xs text-slate-600 mb-4 bg-slate-50/80 p-3 rounded-xl border border-slate-100">
                     <div className="flex justify-between">
                       <span className="text-slate-400">Dosage Form:</span>
-                      <span className="font-medium text-slate-700">{med.dosage_form}</span>
+                      <span className="font-semibold text-slate-700">{med.dosage_form}</span>
                     </div>
-                    {med.package_info && (
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Packaging:</span>
-                        <span className="font-medium text-slate-700">{med.package_info}</span>
-                      </div>
-                    )}
                     {med.therapeutic_class && (
                       <div className="flex justify-between">
                         <span className="text-slate-400">Class:</span>
                         <span className="font-medium text-slate-700 truncate max-w-[180px]">{med.therapeutic_class}</span>
                       </div>
+                    )}
+                    {med.indications && (
+                      <p className="text-[11px] text-slate-500 line-clamp-2 pt-1 border-t border-slate-200/60">
+                        {med.indications}
+                      </p>
                     )}
                   </div>
 
@@ -205,21 +242,26 @@ export function App() {
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs mt-auto">
                     <div className="flex items-center gap-1.5 text-slate-600">
                       <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span className="font-medium truncate max-w-[150px]" title={med.producer_name}>
+                      <span className="font-medium truncate max-w-[140px]" title={med.producer_name}>
                         {med.producer_name}
                       </span>
                     </div>
 
-                    {med.price !== null && (
-                      <div className="text-right">
-                        <span className="text-sm font-bold text-slate-900">
-                          {med.price.toFixed(2)}
-                        </span>
-                        <span className="text-[10px] text-slate-500 ml-1 uppercase">
-                          {med.currency}
-                        </span>
+                    <div className="flex items-center gap-2">
+                      {med.price !== null && (
+                        <div className="text-right">
+                          <span className="text-sm font-bold text-slate-900">
+                            {med.price.toFixed(2)}
+                          </span>
+                          <span className="text-[10px] text-slate-500 ml-1 uppercase">
+                            {med.currency}
+                          </span>
+                        </div>
+                      )}
+                      <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-700 transition">
+                        <ChevronRight className="w-3.5 h-3.5" />
                       </div>
-                    )}
+                    </div>
                   </div>
                 </div>
               );
@@ -227,6 +269,12 @@ export function App() {
           </div>
         )}
       </main>
+
+      {/* Medicine Details Modal */}
+      <MedicineDetailsModal
+        medicine={selectedMedicine}
+        onClose={() => setSelectedMedicine(null)}
+      />
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
