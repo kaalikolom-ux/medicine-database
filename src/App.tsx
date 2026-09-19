@@ -360,10 +360,18 @@ export function App() {
                               {med.strength}
                             </span>
                           </h2>
-                          <p className="text-xs font-medium text-emerald-700 mt-0.5 flex items-center gap-1">
-                            <Pill className="w-3 h-3 shrink-0" />
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSelectGenericFromView(med.generic_name);
+                            }}
+                            className="text-xs font-semibold text-emerald-700 hover:text-emerald-900 hover:underline mt-0.5 flex items-center gap-1 cursor-pointer group/gen text-left"
+                            title={`Find all medicines with generic ${med.generic_name}`}
+                          >
+                            <Pill className="w-3 h-3 shrink-0 text-emerald-600 group-hover/gen:text-emerald-900" />
                             <span className="truncate max-w-[200px]">{med.generic_name}</span>
-                          </p>
+                          </button>
                         </div>
 
                         <div className="flex items-center gap-1 shrink-0">
@@ -481,7 +489,10 @@ export function App() {
       {/* Medicine Details Modal */}
       <MedicineDetailsModal
         medicine={selectedMedicine}
+        allMedicines={allMedicines.length > 0 ? allMedicines : medicines}
         onClose={() => setSelectedMedicine(null)}
+        onSelectGeneric={handleSelectGenericFromView}
+        onSelectMedicine={(med) => setSelectedMedicine(med)}
       />
 
       {/* Mobile Native Bottom Navigation Bar */}

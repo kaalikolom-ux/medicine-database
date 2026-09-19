@@ -1,14 +1,38 @@
-import { useEffect, useState } from 'react';
-import { X, Pill, Building2, Globe2, AlertTriangle, ShieldCheck, FileText, ExternalLink, Activity, Info } from 'lucide-react';
+import { useEffect, useState, useMemo } from 'react';
+import {
+  X,
+  Pill,
+  Building2,
+  Globe2,
+  AlertTriangle,
+  ShieldCheck,
+  FileText,
+  ExternalLink,
+  Activity,
+  Info,
+  Layers,
+  Search,
+  ChevronRight,
+  ArrowUpRight,
+} from 'lucide-react';
 import type { MedicineDirectoryItem } from '../../types/database.types';
 
 interface MedicineDetailsModalProps {
   medicine: MedicineDirectoryItem | null;
+  allMedicines?: MedicineDirectoryItem[];
   onClose: () => void;
+  onSelectGeneric?: (genericName: string) => void;
+  onSelectMedicine?: (medicine: MedicineDirectoryItem) => void;
 }
 
-export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModalProps) {
-  const [activeTab, setActiveTab] = useState<'clinical' | 'dosage' | 'safety' | 'company'>('clinical');
+export function MedicineDetailsModal({
+  medicine,
+  allMedicines = [],
+  onClose,
+  onSelectGeneric,
+  onSelectMedicine,
+}: MedicineDetailsModalProps) {
+  const [activeTab, setActiveTab] = useState<'clinical' | 'dosage' | 'safety' | 'company' | 'similar'>('clinical');
 
   // Close on Escape key
   useEffect(() => {
@@ -19,14 +43,51 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
+  // Find all similar medicines by the same generic name from other manufacturers
+  const similarMedicines = useMemo(() => {
+    if (!medicine) return [];
+    const normalizedGeneric = medicine.generic_name.trim().toLowerCase();
+
+    return allMedicines
+      .filter((m) => {
+        const matchesGeneric = m.generic_name.trim().toLowerCase() === normalizedGeneric;
+        const isDifferentBrand = m.medicine_id !== medicine.medicine_id;
+        return matchesGeneric && isDifferentBrand;
+      })
+      .sort((a, b) => {
+        // 1. Bangladesh First
+        const aIsBd = a.producer_country.toLowerCase() === 'bangladesh' ? 0 : 1;
+        const bIsBd = b.producer_country.toLowerCase() === 'bangladesh' ? 0 : 1;
+        if (aIsBd !== bIsBd) return aIsBd - bIsBd;
+
+        // 2. Country ASC
+        const countryCompare = a.producer_country.localeCompare(b.producer_country);
+        if (countryCompare !== 0) return countryCompare;
+
+        // 3. Brand name ASC
+        return a.brand_name.localeCompare(b.brand_name);
+      });
+  }, [medicine, allMedicines]);
+
   if (!medicine) return null;
 
   const isBd = medicine.producer_country.toLowerCase() === 'bangladesh';
 
+  const handleGenericClick = () => {
+    setActiveTab('similar');
+  };
+
+  const handleOpenInDirectory = (genericName: string) => {
+    if (onSelectGeneric) {
+      onSelectGeneric(genericName);
+      onClose();
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       {/* Modal Container */}
-      <div 
+      <div
         className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] border border-slate-200"
         onClick={(e) => e.stopPropagation()}
       >
@@ -35,7 +96,7 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
           <button
             onClick={onClose}
             aria-label="Close modal"
-            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition focus:outline-none focus:ring-2 focus:ring-white/50"
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition focus:outline-none focus:ring-2 focus:ring-white/50 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -68,10 +129,33 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
             </span>
           </h2>
 
-          <p className="text-sm font-medium text-emerald-200 mt-1 flex items-center gap-1.5">
-            <Pill className="w-4 h-4 text-emerald-300" />
-            <span>Generic: <strong className="text-white underline decoration-emerald-400/60">{medicine.generic_name}</strong></span>
-          </p>
+          {/* Clickable Generic Name with Search & Similar Brands Affordance */}
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-emerald-200">
+              <Pill className="w-4 h-4 text-emerald-300 shrink-0" />
+              <span>Generic:</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGenericClick}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-700/70 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm underline decoration-emerald-300 underline-offset-4 transition cursor-pointer border border-emerald-500/50 shadow-sm group"
+              title="Click to view all alternative brands of this generic"
+            >
+              <span>{medicine.generic_name}</span>
+              <Layers className="w-3.5 h-3.5 text-emerald-300 group-hover:scale-110 transition-transform" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleOpenInDirectory(medicine.generic_name)}
+              className="inline-flex items-center gap-1 text-xs text-emerald-100 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg transition cursor-pointer"
+              title="Filter entire directory by this generic name"
+            >
+              <Search className="w-3 h-3" />
+              <span>Search in Directory</span>
+            </button>
+          </div>
 
           <div className="mt-4 pt-3 border-t border-emerald-700/60 flex items-center justify-between text-xs text-emerald-100">
             <div className="flex items-center gap-1.5">
@@ -95,7 +179,7 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
         <div className="flex border-b border-slate-200 bg-slate-50 px-4 pt-2 gap-1 text-xs font-semibold text-slate-600 overflow-x-auto">
           <button
             onClick={() => setActiveTab('clinical')}
-            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition ${
+            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition shrink-0 cursor-pointer ${
               activeTab === 'clinical'
                 ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-lg shadow-sm'
                 : 'border-transparent hover:text-slate-900'
@@ -104,9 +188,27 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
             <Activity className="w-3.5 h-3.5" />
             <span>Indications (নির্দেশনা)</span>
           </button>
+
+          <button
+            onClick={() => setActiveTab('similar')}
+            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition shrink-0 cursor-pointer ${
+              activeTab === 'similar'
+                ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-lg shadow-sm font-bold'
+                : 'border-transparent hover:text-slate-900'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Similar Brands (বিকল্প ওষুধ)</span>
+            {similarMedicines.length > 0 && (
+              <span className="px-1.5 py-0.2 text-[10px] font-bold bg-emerald-100 text-emerald-800 rounded-full">
+                {similarMedicines.length}
+              </span>
+            )}
+          </button>
+
           <button
             onClick={() => setActiveTab('dosage')}
-            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition ${
+            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition shrink-0 cursor-pointer ${
               activeTab === 'dosage'
                 ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-lg shadow-sm'
                 : 'border-transparent hover:text-slate-900'
@@ -115,32 +217,154 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
             <FileText className="w-3.5 h-3.5" />
             <span>Dosage (মাত্রা ও সেবনবিধি)</span>
           </button>
+
           <button
             onClick={() => setActiveTab('safety')}
-            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition ${
+            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition shrink-0 cursor-pointer ${
               activeTab === 'safety'
                 ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-lg shadow-sm'
                 : 'border-transparent hover:text-slate-900'
             }`}
           >
             <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
-            <span>Safety & Side Effects (পার্শ্বপ্রতিক্রিয়া)</span>
+            <span>Safety & Side Effects</span>
           </button>
+
           <button
             onClick={() => setActiveTab('company')}
-            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition ${
+            className={`flex items-center gap-1.5 px-3 py-2.5 border-b-2 transition shrink-0 cursor-pointer ${
               activeTab === 'company'
                 ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-lg shadow-sm'
                 : 'border-transparent hover:text-slate-900'
             }`}
           >
             <Building2 className="w-3.5 h-3.5" />
-            <span>Manufacturer (প্রস্তুতকারক)</span>
+            <span>Manufacturer (কোম্পানি)</span>
           </button>
         </div>
 
         {/* Tab Content */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-4 text-sm flex-1">
+          {/* TAB: SIMILAR MEDICINES / ALTERNATIVE BRANDS */}
+          {activeTab === 'similar' && (
+            <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h4 className="font-bold text-emerald-950 flex items-center gap-1.5 text-sm">
+                    <Layers className="w-4 h-4 text-emerald-700" />
+                    Similar Brands with Generic: <u>{medicine.generic_name}</u>
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1">
+                    Compare alternative brands produced by different Bangladeshi & global pharmaceutical manufacturers.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleOpenInDirectory(medicine.generic_name)}
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold shadow-sm transition shrink-0 cursor-pointer"
+                >
+                  <Search className="w-3.5 h-3.5" />
+                  <span>Search All in Directory</span>
+                </button>
+              </div>
+
+              {similarMedicines.length > 0 ? (
+                <div className="space-y-2.5">
+                  <div className="text-xs font-semibold text-slate-500 flex justify-between px-1">
+                    <span>Available Alternatives ({similarMedicines.length})</span>
+                    <span>Sorted by: 🇧🇩 Bangladesh Priority</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-2.5">
+                    {similarMedicines.map((simMed) => {
+                      const simIsBd = simMed.producer_country.toLowerCase() === 'bangladesh';
+
+                      return (
+                        <div
+                          key={simMed.medicine_id}
+                          onClick={() => {
+                            if (onSelectMedicine) {
+                              onSelectMedicine(simMed);
+                            }
+                          }}
+                          className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 bg-white hover:shadow-md hover:-translate-y-0.5 ${
+                            simIsBd
+                              ? 'border-emerald-200 hover:border-emerald-400 bg-gradient-to-r from-emerald-50/20 to-white'
+                              : 'border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="space-y-1 min-w-0 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h5 className="font-bold text-slate-900 text-sm hover:text-emerald-700 transition">
+                                {simMed.brand_name}
+                              </h5>
+                              <span className="text-xs text-slate-500 font-medium px-2 py-0.5 bg-slate-100 rounded border border-slate-200">
+                                {simMed.strength}
+                              </span>
+                              <span className="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                                {simMed.dosage_form}
+                              </span>
+                              {simIsBd ? (
+                                <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                                  🇧🇩 Bangladesh
+                                </span>
+                              ) : (
+                                <span className="text-[10px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                                  🌐 {simMed.producer_country}
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="flex items-center gap-1.5 text-xs text-slate-600">
+                              <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                              <span className="font-medium truncate">{simMed.producer_name}</span>
+                            </div>
+                          </div>
+
+                          <div className="text-right shrink-0 flex items-center gap-2">
+                            {simMed.price !== null && (
+                              <div>
+                                <span className="text-sm font-bold text-slate-900 block">
+                                  {simMed.price.toFixed(2)} {simMed.currency}
+                                </span>
+                                {simMed.package_info && (
+                                  <span className="text-[10px] text-slate-400 block max-w-[100px] truncate">
+                                    {simMed.package_info}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                            <div className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-emerald-100 hover:text-emerald-800 transition">
+                              <ChevronRight className="w-4 h-4" />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-8 px-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                  <Pill className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                  <p className="text-sm font-semibold text-slate-700">No other loaded brands found for this generic.</p>
+                  <p className="text-xs text-slate-500 mt-1 mb-4">
+                    Search the full directory or live edge cache to discover more manufacturers.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleOpenInDirectory(medicine.generic_name)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-semibold hover:bg-emerald-800 transition cursor-pointer"
+                  >
+                    <Search className="w-3.5 h-3.5" />
+                    <span>Search "{medicine.generic_name}" in Full Directory</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB: CLINICAL INDICATIONS */}
           {activeTab === 'clinical' && (
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="bg-emerald-50/60 border border-emerald-100 p-4 rounded-2xl">
@@ -163,9 +387,29 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
                   <span className="font-semibold text-slate-800 text-sm mt-0.5 block">{medicine.dosage_form} &bull; {medicine.strength}</span>
                 </div>
               </div>
+
+              {/* Quick shortcut to Similar Brands */}
+              <div
+                onClick={() => setActiveTab('similar')}
+                className="bg-slate-50 hover:bg-emerald-50/60 border border-slate-200 hover:border-emerald-300 p-3.5 rounded-xl flex items-center justify-between cursor-pointer transition group"
+              >
+                <div className="flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-emerald-600" />
+                  <div>
+                    <span className="text-xs font-bold text-slate-800 group-hover:text-emerald-800">
+                      Looking for alternatives?
+                    </span>
+                    <p className="text-[11px] text-slate-500">
+                      View all medicines manufactured with {medicine.generic_name}
+                    </p>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
             </div>
           )}
 
+          {/* TAB: DOSAGE */}
           {activeTab === 'dosage' && (
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="bg-teal-50/60 border border-teal-100 p-4 rounded-2xl">
@@ -185,6 +429,7 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
             </div>
           )}
 
+          {/* TAB: SAFETY */}
           {activeTab === 'safety' && (
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="bg-rose-50/60 border border-rose-100 p-4 rounded-2xl">
@@ -209,6 +454,7 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
             </div>
           )}
 
+          {/* TAB: COMPANY */}
           {activeTab === 'company' && (
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl space-y-3">
@@ -248,7 +494,7 @@ export function MedicineDetailsModal({ medicine, onClose }: MedicineDetailsModal
           <span className="text-[11px] text-slate-400">ID: {medicine.medicine_id}</span>
           <button
             onClick={onClose}
-            className="px-5 py-2 bg-slate-900 text-white text-xs font-semibold rounded-xl hover:bg-slate-800 transition"
+            className="px-5 py-2 bg-slate-900 text-white text-xs font-semibold rounded-xl hover:bg-slate-800 transition cursor-pointer"
           >
             Close
           </button>
