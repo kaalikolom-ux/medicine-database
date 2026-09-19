@@ -249,7 +249,7 @@ export function App() {
                   <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     type="text"
-                    placeholder="Search brand, generic (e.g. Paracetamol), or company..."
+                    placeholder="Search brand (e.g. Cardex, Seclo, Ciprox, Napa), generic, or company..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-10 pr-9 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-none text-slate-900 text-xs sm:text-sm transition"
@@ -284,6 +284,33 @@ export function App() {
                     ▼
                   </div>
                 </div>
+              </div>
+
+              {/* Quick Suggestion Pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 text-xs">
+                <span className="text-slate-600 shrink-0 text-[11px] font-medium">Quick search:</span>
+                {[
+                  { label: 'Cardex (Heart/BP)', term: 'Cardex' },
+                  { label: 'Seclo (Gastric)', term: 'Seclo' },
+                  { label: 'Sergel (Gastric)', term: 'Sergel' },
+                  { label: 'Ciprox (Antibiotic)', term: 'Ciprox' },
+                  { label: 'Monas (Asthma)', term: 'Monas' },
+                  { label: 'Bestcol (Cholesterol)', term: 'Bestcol' },
+                  { label: 'Napa (Fever)', term: 'Napa' },
+                  { label: '3Bion (Vitamin)', term: '3Bion' }
+                ].map((item) => (
+                  <button
+                    key={item.term}
+                    onClick={() => setSearchQuery(item.term)}
+                    className={`shrink-0 px-2.5 py-1 rounded-lg transition text-[11px] font-medium border ${
+                      searchQuery.toLowerCase() === item.term.toLowerCase()
+                        ? 'bg-emerald-600 text-white border-emerald-700 shadow-sm'
+                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
 
               {/* Collapsible Advanced Filters Drawer */}
