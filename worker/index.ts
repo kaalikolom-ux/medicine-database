@@ -258,6 +258,56 @@ async function handleSearch(request: Request, env: Env, ctx: ExecutionContext): 
     }
 
     const data = await originResponse.json();
+
+    // --------------------------------------------------------------------
+    // Worldwide Medicine Federation (openFDA Global Fallback)
+    // If query has limited results, query the 130,000+ openFDA global registry
+    // --------------------------------------------------------------------
+    if (Array.isArray(data) && data.length < 12 && q.trim().length >= 3 && (!country || country.toLowerCase() !== 'bangladesh')) {
+      try {
+        const fdaQuery = encodeURIComponent(q.trim());
+        const fdaUrl = `https://api.fda.gov/drug/ndc.json?search=(brand_name:"${fdaQuery}"+generic_name:"${fdaQuery}")&limit=10`;
+        const fdaRes = await fetch(fdaUrl);
+        if (fdaRes.ok) {
+          const fdaData = (await fdaRes.json()) as any;
+          if (fdaData.results && Array.isArray(fdaData.results)) {
+            const existingBrands = new Set(data.map((d: any) => d.brand_name.toLowerCase()));
+            for (const item of fdaData.results) {
+              const brand = item.brand_name || item.generic_name;
+              if (!brand || existingBrands.has(brand.toLowerCase())) continue;
+              existingBrands.add(brand.toLowerCase());
+
+              const generic = item.generic_name || (item.active_ingredients && item.active_ingredients[0]?.name) || 'Allopathic Compound';
+              const producer = item.labeler_name || 'Global Pharmaceutical Producer';
+              const strength = (item.active_ingredients && item.active_ingredients[0]?.strength) || item.dosage_form || 'Standard';
+
+              data.push({
+                medicine_id: `global-fda-${item.product_ndc || Math.random().toString(36).substring(2, 9)}`,
+                brand_name: brand,
+                dosage_form: item.dosage_form || 'Tablet / Capsule',
+                strength: strength,
+                price: null,
+                currency: 'USD',
+                package_info: item.packaging?.[0]?.description || 'International Formulation',
+                generic_name: generic,
+                therapeutic_class: item.pharm_class?.[0] || 'International Therapeutic Drug',
+                indications: `FDA registered drug product (${item.product_type || 'Prescription / OTC'}).`,
+                dosage_and_administration: 'As prescribed by licensed medical practitioner or indicated on package label.',
+                side_effects: 'Consult official product monograph or prescribing healthcare provider.',
+                precautions: 'Verify active ingredient formulation with licensed physician or pharmacist.',
+                producer_name: producer,
+                producer_country: 'United States',
+                producer_website: undefined,
+                priority_group: 1, // Global priority (always placed AFTER Bangladesh medicines)
+              });
+            }
+          }
+        }
+      } catch (fdaErr) {
+        console.warn('openFDA fallback lookup error:', fdaErr);
+      }
+    }
+
     const duration = Date.now() - startTime;
     const cf = (request as any).cf || {};
 

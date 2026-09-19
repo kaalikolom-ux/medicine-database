@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "migrate": "node scripts/migrate.js",
     "sync": "tsx scripts/sync/index.ts",
+    "sync:global": "tsx scripts/sync/bulk-global-fetcher.ts",
     "import:all": "tsx scripts/import-all-medicines.ts",
     "test:edge": "tsx scripts/test-edge-proxy.ts",
     "worker:deploy": "wrangler deploy",
