@@ -10,6 +10,7 @@
 export interface Env {
   SUPABASE_URL: string;
   SUPABASE_ANON_KEY: string;
+  ASSETS?: { fetch: typeof fetch };
 }
 
 const DEFAULT_SUPABASE_URL = 'https://nxwjkawsnjrebxzdkedl.supabase.co';
@@ -50,6 +51,80 @@ export default {
 
     if (pathname === '/api/cache/purge' && request.method === 'POST') {
       return handleCachePurge(request, ctx);
+    }
+
+    // If static assets binding exists (Wrangler assets), serve frontend files
+    if (env.ASSETS) {
+      try {
+        const assetRes = await env.ASSETS.fetch(request);
+        if (assetRes.status < 400) {
+          return assetRes;
+        }
+      } catch {
+        // Fall through to status page
+      }
+    }
+
+    // Root status & documentation page
+    if (pathname === '/' || pathname === '') {
+      const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Medicine Database - Edge Proxy & API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 680px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #1e293b; background: #f8fafc; }
+    .container { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
+    h1 { color: #047857; margin-top: 0; font-size: 1.6rem; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: #d1fae5; color: #065f46; font-size: 0.85rem; font-weight: 600; padding: 5px 12px; border-radius: 9999px; margin-bottom: 20px; }
+    .dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; }
+    .endpoint { background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    a { color: #059669; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+    .desc { color: #64748b; font-size: 0.88rem; }
+    .footer { margin-top: 24px; font-size: 0.82rem; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇧🇩 Medicine Database Edge Proxy</h1>
+    <div class="badge"><span class="dot"></span> Edge Proxy Online & Healthy</div>
+    <p>Cloudflare Workers & Edge Caching Layer is running with sub-millisecond edge responses and Bangladesh-First priority ranking.</p>
+    
+    <h3 style="margin-top: 24px; color: #334155;">⚡ Live Edge Endpoints:</h3>
+    <div class="endpoint">
+      <div>
+        <a href="/api/search?q=napa">/api/search?q=napa</a>
+        <div class="desc">Search medicines by generic, brand, or company</div>
+      </div>
+      <span style="font-size: 0.8rem; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">Cached</span>
+    </div>
+    <div class="endpoint">
+      <div>
+        <a href="/api/search?country=bangladesh">/api/search?country=bangladesh</a>
+        <div class="desc">Filter Bangladesh top priority medicines</div>
+      </div>
+      <span style="font-size: 0.8rem; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">Priority</span>
+    </div>
+    <div class="endpoint">
+      <div>
+        <a href="/api/health">/api/health</a>
+        <div class="desc">Check edge datacenter location & node latency</div>
+      </div>
+      <span style="font-size: 0.8rem; background: #f3e8ff; color: #7e22ce; padding: 2px 8px; border-radius: 4px;">Health</span>
+    </div>
+
+    <div class="footer">
+      Powered by Cloudflare Workers Cache API • Bangladesh Pharmaceuticals Priority
+    </div>
+  </div>
+</body>
+</html>`;
+      return new Response(html, {
+        status: 200,
+        headers: { 'Content-Type': 'text/html; charset=utf-8', ...CORS_HEADERS },
+      });
     }
 
     return new Response(
