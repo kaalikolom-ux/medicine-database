@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "migrate": "node scripts/migrate.js",
     "sync": "tsx scripts/sync/index.ts",
+    "test:edge": "tsx scripts/test-edge-proxy.ts",
+    "worker:deploy": "wrangler deploy",
     "cap:sync": "npx cap sync",
     "cap:android": "npx cap open android"
   },
