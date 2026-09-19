@@ -6,3 +6,5 @@ compatibility_flags = ["nodejs_compat"]
 [vars]
 SUPABASE_URL = "https://nxwjkawsnjrebxzdkedl.supabase.co"
 SUPABASE_ANON_KEY = "sb_publishable_N3sGFMf59Kt2EKcrusYdDw_qfcoRiy5"
+VITE_SUPABASE_URL = "https://nxwjkawsnjrebxzdkedl.supabase.co"
+VITE_SUPABASE_ANON_KEY = "sb_publishable_N3sGFMf59Kt2EKcrusYdDw_qfcoRiy5"
