@@ -41,8 +41,15 @@ jobs:
           VITE_EDGE_API_URL: ${{ secrets.VITE_EDGE_API_URL || '' }}
 
       - name: 🚀 Deploy to Cloudflare Pages
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=medicine-database --branch=main
+
+      - name: ℹ️ Notice if Cloudflare Secrets are Not Set
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' }}
+        run: |
+          echo "::notice title=Cloudflare Deployment Skipped::CLOUDFLARE_API_TOKEN secret is not configured in GitHub repository settings. Build & Verification passed successfully. To auto-deploy via GitHub Actions, add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to GitHub Settings -> Secrets and variables -> Actions."
+
