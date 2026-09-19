@@ -1,0 +1,130 @@
+[
+  {
+    "openfda": {
+      "brand_name": ["Lipitor"],
+      "generic_name": ["Atorvastatin Calcium"],
+      "manufacturer_name": ["Pfizer Laboratories Div Pfizer Inc"],
+      "dosage_form": ["Tablet, Film Coated"],
+      "route": ["Oral"],
+      "product_type": ["Lipid-Lowering Agent (HMG-CoA Reductase Inhibitor)"]
+    },
+    "country": "United States",
+    "strength": "20 mg",
+    "indications_and_usage": ["LIPITOR is indicated as an adjunct to diet to reduce elevated total-C, LDL-C, apo B, and TG levels and to increase HDL-C in patients with primary hyperlipidemia."],
+    "dosage_and_administration": ["The recommended starting dose of LIPITOR is 10 or 20 mg once daily. Dose range is 10 to 80 mg once daily."],
+    "warnings": ["Myopathy and Rhabdomyolysis: Rare cases of rhabdomyolysis with acute renal failure secondary to myoglobinuria have been reported with LIPITOR."],
+    "adverse_reactions": ["Most common adverse reactions are nasopharyngitis, arthralgia, diarrhea, pain in extremity, and urinary tract infection."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Augmentin"],
+      "generic_name": ["Amoxicillin and Clavulanate Potassium"],
+      "manufacturer_name": ["GlaxoSmithKline LLC"],
+      "dosage_form": ["Tablet"],
+      "route": ["Oral"],
+      "product_type": ["Penicillin-Class Antibacterial"]
+    },
+    "country": "United Kingdom",
+    "strength": "625 mg",
+    "indications_and_usage": ["AUGMENTIN is indicated in the treatment of infections due to susceptible isolates of designated bacteria in lower respiratory tract infections, acute bacterial otitis media, sinusitis, and skin structure infections."],
+    "dosage_and_administration": ["Adults: One 625 mg tablet every 12 hours or one 500 mg tablet every 8 hours at the start of a meal."],
+    "warnings": ["Serious and occasionally fatal hypersensitivity (anaphylactic) reactions have been reported in patients on penicillin therapy."],
+    "adverse_reactions": ["The most frequently reported adverse effects were diarrhea/loose stools, nausea, skin rashes, and urticaria."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Ventolin HFA"],
+      "generic_name": ["Albuterol Sulfate"],
+      "manufacturer_name": ["GlaxoSmithKline LLC"],
+      "dosage_form": ["Aerosol, Metered"],
+      "route": ["Inhalation"],
+      "product_type": ["Bronchodilator (Beta-2 Adrenergic Agonist)"]
+    },
+    "country": "United Kingdom",
+    "strength": "90 mcg/puff",
+    "indications_and_usage": ["VENTOLIN HFA is indicated for the treatment or prevention of bronchospasm in patients 4 years of age and older with reversible obstructive airway disease."],
+    "dosage_and_administration": ["For treatment of acute episodes of bronchospasm: 2 inhalations repeated every 4 to 6 hours as needed."],
+    "warnings": ["Paradoxical Bronchospasm: Like other inhaled beta2-agonists, VENTOLIN HFA can produce paradoxical bronchospasm, which may be life threatening."],
+    "adverse_reactions": ["Common adverse reactions include throat irritation, viral respiratory infections, upper respiratory tract infection, tachycardia, and musculoskeletal pain."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Crestor"],
+      "generic_name": ["Rosuvastatin Calcium"],
+      "manufacturer_name": ["AstraZeneca Pharmaceuticals LP"],
+      "dosage_form": ["Tablet, Coated"],
+      "route": ["Oral"],
+      "product_type": ["Statin (Antihyperlipidemic)"]
+    },
+    "country": "United Kingdom",
+    "strength": "10 mg",
+    "indications_and_usage": ["CRESTOR is indicated as an adjunct to diet to reduce LDL-C, Total-C, and triglycerides, and to increase HDL-C in adult patients with hypertriglyceridemia."],
+    "dosage_and_administration": ["Dose range is 5 to 40 mg once daily. May be taken with or without food at any time of day."],
+    "warnings": ["Skeletal Muscle Effects (Myopathy and Rhabdomyolysis): Risk increases with higher doses."],
+    "adverse_reactions": ["Most frequent adverse reactions are headache, myalgia, abdominal pain, asthenia, and nausea."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Voltaren"],
+      "generic_name": ["Diclofenac Sodium"],
+      "manufacturer_name": ["Novartis Pharmaceuticals Corporation"],
+      "dosage_form": ["Tablet, Delayed Release"],
+      "route": ["Oral"],
+      "product_type": ["Nonsteroidal Anti-inflammatory Drug (NSAID)"]
+    },
+    "country": "Switzerland",
+    "strength": "50 mg",
+    "indications_and_usage": ["For relief of the signs and symptoms of osteoarthritis, rheumatoid arthritis, and ankylosing spondylitis."],
+    "dosage_and_administration": ["For osteoarthritis: 100-150 mg/day in divided doses (50 mg two or three times a day). Take with food."],
+    "warnings": ["Cardiovascular Thrombotic Events: Nonsteroidal anti-inflammatory drugs cause an increased risk of serious cardiovascular thrombotic events, including myocardial infarction and stroke."],
+    "adverse_reactions": ["Abdominal pain, constipation, diarrhea, dyspepsia, flatulence, gross bleeding/perforation, heartburn, nausea, GI ulcers."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Telfast"],
+      "generic_name": ["Fexofenadine Hydrochloride"],
+      "manufacturer_name": ["Sanofi-Aventis U.S. LLC"],
+      "dosage_form": ["Tablet"],
+      "route": ["Oral"],
+      "product_type": ["Second-Generation Antihistamine"]
+    },
+    "country": "France",
+    "strength": "120 mg",
+    "indications_and_usage": ["Relief of symptoms associated with seasonal allergic rhinitis and uncomplicated skin manifestations of chronic idiopathic urticaria."],
+    "dosage_and_administration": ["Adults: 120 mg or 180 mg once daily with water. Avoid fruit juices."],
+    "warnings": ["Do not administer with fruit juice as bioavailability is substantially decreased."],
+    "adverse_reactions": ["Headache, back pain, dizziness, fatigue, and nausea."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Storvas"],
+      "generic_name": ["Atorvastatin"],
+      "manufacturer_name": ["Sun Pharmaceutical Industries Ltd."],
+      "dosage_form": ["Tablet"],
+      "route": ["Oral"],
+      "product_type": ["Antihyperlipidemic"]
+    },
+    "country": "India",
+    "strength": "10 mg",
+    "indications_and_usage": ["Lowering cholesterol and reducing the risk of heart disease and cardiovascular events."],
+    "dosage_and_administration": ["10 mg once daily at bedtime."],
+    "warnings": ["Caution in patients with hepatic impairment and active liver disease."],
+    "adverse_reactions": ["Muscle pain, joint pain, nausea, mild indigestion."]
+  },
+  {
+    "openfda": {
+      "brand_name": ["Asthalin"],
+      "generic_name": ["Salbutamol"],
+      "manufacturer_name": ["Cipla Ltd."],
+      "dosage_form": ["Inhaler"],
+      "route": ["Inhalation"],
+      "product_type": ["Bronchodilator"]
+    },
+    "country": "India",
+    "strength": "100 mcg",
+    "indications_and_usage": ["Relief and prevention of airway bronchospasm in asthma and reversible obstructive airways disease."],
+    "dosage_and_administration": ["1-2 puffs as required for sudden breathlessness."],
+    "warnings": ["Overuse can lead to tolerance and cardiac overstimulation."],
+    "adverse_reactions": ["Fine tremor, headache, tachycardia."]
+  }
+]
