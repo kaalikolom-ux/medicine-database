@@ -9,7 +9,7 @@ export function AboutView({ totalMedicines }: AboutViewProps) {
     <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-          <ShieldCheck className="w-6 h-6 text-emerald-600" />
+          <ShieldCheck className="w-6 h-6 text-navy-700" />
           <span>About Worldwide Medicine Database</span>
         </h2>
         <p className="text-xs text-slate-500 mt-1">
@@ -18,13 +18,13 @@ export function AboutView({ totalMedicines }: AboutViewProps) {
       </div>
 
       {/* Priority Logic Banner */}
-      <div className="p-5 bg-gradient-to-r from-emerald-800 to-teal-900 text-white rounded-3xl shadow-md space-y-2">
-        <div className="flex items-center gap-2 text-emerald-300 text-xs font-bold uppercase tracking-wider">
+      <div className="p-5 bg-gradient-to-r from-navy-950 via-navy-900 to-navy-800 text-white rounded-3xl shadow-md space-y-2">
+        <div className="flex items-center gap-2 text-navy-300 text-xs font-bold uppercase tracking-wider">
           <Sparkles className="w-4 h-4" />
           <span>Priority Sorting Architecture</span>
         </div>
         <h3 className="text-lg font-bold">Bangladesh First &bull; Global Directory</h3>
-        <p className="text-xs sm:text-sm text-emerald-100 leading-relaxed">
+        <p className="text-xs sm:text-sm text-navy-100 leading-relaxed">
           In both default browsing and search queries, medicines produced by Bangladeshi companies are given top priority (Group 0), followed by international pharmaceutical companies ordered alphabetically by country (A to Z) and brand name.
         </p>
       </div>
@@ -32,7 +32,7 @@ export function AboutView({ totalMedicines }: AboutViewProps) {
       {/* Data Sources Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-2">
-          <div className="flex items-center gap-2 text-emerald-700 font-bold text-sm">
+          <div className="flex items-center gap-2 text-navy-800 font-bold text-sm">
             <Database className="w-4 h-4" />
             <span>DGDA (Bangladesh)</span>
           </div>
@@ -55,7 +55,7 @@ export function AboutView({ totalMedicines }: AboutViewProps) {
       {/* Mobile App & PWA Status */}
       <div className="p-4 bg-white border border-slate-200 rounded-2xl shadow-sm space-y-3">
         <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-          <Smartphone className="w-4 h-4 text-emerald-600" />
+          <Smartphone className="w-4 h-4 text-navy-700" />
           <span>PWA & Android Mobile Ready</span>
         </div>
         <p className="text-xs text-slate-600 leading-relaxed">

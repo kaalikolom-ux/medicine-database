@@ -20,14 +20,14 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
       <div className="fixed top-3 right-3 z-50 flex items-center gap-2 print:hidden bg-white/90 backdrop-blur-md p-2 rounded-2xl shadow-xl border border-slate-200">
         <button
           onClick={handlePrint}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow transition"
+          className="flex items-center gap-2 bg-navy-800 hover:bg-navy-900 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow transition cursor-pointer"
         >
           <Printer className="w-4 h-4" />
           <span>প্রিন্ট / PDF সেভ করুন (Print / PDF)</span>
         </button>
         <button
           onClick={onClose}
-          className="p-2 hover:bg-slate-100 text-slate-500 rounded-xl transition"
+          className="p-2 hover:bg-slate-100 text-slate-500 rounded-xl transition cursor-pointer"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
@@ -41,16 +41,16 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
       >
         <div>
           {/* 1. Doctor & Chamber Header */}
-          <header className="border-b-2 border-emerald-800 pb-4 mb-4 flex flex-col sm:flex-row justify-between gap-4">
+          <header className="border-b-2 border-navy-900 pb-4 mb-4 flex flex-col sm:flex-row justify-between gap-4">
             {/* Left: Doctor Credentials */}
             <div className="space-y-1 max-w-sm">
-              <h1 className="text-xl sm:text-2xl font-black text-emerald-900 tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black text-navy-950 tracking-tight">
                 {doctor.name || 'Dr. Physician Name'}
               </h1>
               <p className="text-xs sm:text-sm font-semibold text-slate-800">
                 {doctor.degrees}
               </p>
-              <p className="text-xs text-emerald-700 font-bold">
+              <p className="text-xs text-navy-700 font-bold">
                 {doctor.specialization}
               </p>
               <p className="text-[11px] text-slate-600">
@@ -60,7 +60,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
                 {doctor.workplace}
               </p>
               <div className="pt-1">
-                <span className="inline-block bg-emerald-50 text-emerald-900 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-200">
+                <span className="inline-block bg-navy-50 text-navy-900 text-[10px] font-bold px-2 py-0.5 rounded border border-navy-200">
                   BMDC Reg. No: {doctor.bmdcRegNo || 'Pending'}
                 </span>
               </div>
@@ -80,7 +80,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
                 </p>
               )}
               {doctor.visitingHours && (
-                <p className="text-[11px] text-emerald-800 font-medium">
+                <p className="text-[11px] text-navy-800 font-medium">
                   {doctor.visitingHours}
                 </p>
               )}
@@ -124,7 +124,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
               {/* Chief Complaints */}
               {chiefComplaints && (
                 <div>
-                  <h3 className="text-[11px] uppercase font-black tracking-wider text-emerald-800 border-b border-emerald-100 pb-1 mb-1.5">
+                  <h3 className="text-[11px] uppercase font-black tracking-wider text-navy-900 border-b border-navy-100 pb-1 mb-1.5">
                     Chief Complaints (C/C)
                   </h3>
                   <p className="text-xs text-slate-700 whitespace-pre-line leading-relaxed">
@@ -136,7 +136,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
               {/* Diagnosis */}
               {clinicalDiagnosis && (
                 <div>
-                  <h3 className="text-[11px] uppercase font-black tracking-wider text-emerald-800 border-b border-emerald-100 pb-1 mb-1.5">
+                  <h3 className="text-[11px] uppercase font-black tracking-wider text-navy-900 border-b border-navy-100 pb-1 mb-1.5">
                     Diagnosis (Dx)
                   </h3>
                   <p className="text-xs font-semibold text-slate-800">
@@ -148,7 +148,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
               {/* Investigations Advised */}
               {investigations && investigations.length > 0 && (
                 <div>
-                  <h3 className="text-[11px] uppercase font-black tracking-wider text-emerald-800 border-b border-emerald-100 pb-1 mb-1.5">
+                  <h3 className="text-[11px] uppercase font-black tracking-wider text-navy-900 border-b border-navy-100 pb-1 mb-1.5">
                     Investigations (পরীক্ষাসমূহ)
                   </h3>
                   <ul className="list-disc list-inside space-y-1 text-xs text-slate-700">
@@ -164,7 +164,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
             <main className="md:col-span-8 pl-0 md:pl-2">
               {/* Prominent Rx Symbol */}
               <div className="flex items-center gap-2 mb-4 pb-1 border-b border-slate-200">
-                <span className="text-3xl font-serif font-black text-emerald-800 leading-none">℞</span>
+                <span className="text-3xl font-serif font-black text-navy-900 leading-none">℞</span>
                 <span className="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">Medicines & Dosing Instructions</span>
               </div>
 
@@ -181,10 +181,10 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
                         <div className="flex items-baseline justify-between gap-2">
                           <div className="flex items-baseline gap-1.5">
                             <span className="text-xs font-bold text-slate-500">{index + 1}.</span>
-                            <span className="text-xs font-semibold text-emerald-900">{formPrefix}</span>
+                            <span className="text-xs font-semibold text-navy-950">{formPrefix}</span>
                             <strong className="text-sm font-black text-slate-900">{med.brandName}</strong>
                             {med.strength && (
-                              <span className="text-xs font-bold text-emerald-700 ml-1">
+                              <span className="text-xs font-bold text-navy-700 ml-1">
                                 ({med.strength})
                               </span>
                             )}
@@ -201,7 +201,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
                         {/* Dosing, Timing & Duration */}
                         <div className="flex flex-wrap items-center gap-2 pl-4 mt-1 text-xs text-slate-800">
                           {med.dosageFrequency && (
-                            <span className="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
+                            <span className="font-bold text-navy-800 bg-navy-50 px-2 py-0.5 rounded border border-navy-100">
                               {med.dosageFrequency}
                             </span>
                           )}
@@ -249,7 +249,7 @@ export function PrescriptionPrintView({ prescription, onClose }: PrescriptionPri
               )}
 
               {followUpDate && (
-                <p className="text-xs font-bold text-emerald-800">
+                <p className="text-xs font-bold text-navy-800">
                   📅 পরবর্তী সাক্ষাত (Next Visit): {followUpDate}
                 </p>
               )}

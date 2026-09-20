@@ -107,7 +107,7 @@ export function AdminView() {
               }}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap ${
                 activeTab === 'builder'
-                  ? 'bg-emerald-800 text-white shadow-sm'
+                  ? 'bg-navy-800 text-white shadow-sm'
                   : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -119,7 +119,7 @@ export function AdminView() {
               onClick={() => setActiveTab('history')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap relative ${
                 activeTab === 'history'
-                  ? 'bg-emerald-800 text-white shadow-sm'
+                  ? 'bg-navy-800 text-white shadow-sm'
                   : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -127,7 +127,7 @@ export function AdminView() {
               <span>প্রেসক্রিপশন হিস্ট্রি (History)</span>
               {prescriptions.length > 0 && (
                 <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-black ${
-                  activeTab === 'history' ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'
+                  activeTab === 'history' ? 'bg-navy-600 text-white' : 'bg-slate-200 text-slate-700'
                 }`}>
                   {prescriptions.length}
                 </span>
@@ -138,7 +138,7 @@ export function AdminView() {
               onClick={() => setActiveTab('profile')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap ${
                 activeTab === 'profile'
-                  ? 'bg-emerald-800 text-white shadow-sm'
+                  ? 'bg-navy-800 text-white shadow-sm'
                   : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -150,7 +150,7 @@ export function AdminView() {
               onClick={() => setActiveTab('stats')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap ${
                 activeTab === 'stats'
-                  ? 'bg-emerald-800 text-white shadow-sm'
+                  ? 'bg-navy-800 text-white shadow-sm'
                   : 'text-slate-600 hover:bg-slate-100'
               }`}
             >
@@ -192,15 +192,15 @@ export function AdminView() {
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
-                <Database className="w-5 h-5 text-emerald-600" />
+                <Database className="w-5 h-5 text-navy-700" />
                 <span>সেন্ট্রাল মেডিসিন ডাটাবেজ স্ট্যাটাস (Database Overview)</span>
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                <div className="bg-emerald-50 border border-emerald-200 p-5 rounded-xl text-center">
-                  <span className="text-3xl font-black text-emerald-900 block">২১,৯০৫+</span>
-                  <span className="text-xs font-bold text-emerald-800 uppercase mt-1 block">নিবন্ধিত ওষুধ (Medicines)</span>
-                  <p className="text-[11px] text-emerald-700 mt-1">সব থেরাপিউটিক ক্লাসের ট্যাবলেট, সিরাপ, ইনজেকশন</p>
+                <div className="bg-navy-50 border border-navy-200 p-5 rounded-xl text-center">
+                  <span className="text-3xl font-black text-navy-900 block">২১,৯০৫+</span>
+                  <span className="text-xs font-bold text-navy-800 uppercase mt-1 block">নিবন্ধিত ওষুধ (Medicines)</span>
+                  <p className="text-[11px] text-navy-700 mt-1">সব থেরাপিউটিক ক্লাসের ট্যাবলেট, সিরাপ, ইনজেকশন</p>
                 </div>
 
                 <div className="bg-blue-50 border border-blue-200 p-5 rounded-xl text-center">

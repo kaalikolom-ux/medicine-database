@@ -19,7 +19,7 @@ export function SavedMedicinesView({
   if (savedMedicines.length === 0) {
     return (
       <div className="max-w-md mx-auto px-4 py-16 text-center space-y-4">
-        <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
+        <div className="w-16 h-16 bg-navy-50 text-navy-800 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
           <Bookmark className="w-8 h-8" />
         </div>
         <h3 className="text-lg font-bold text-slate-800">No Saved Medicines Yet</h3>
@@ -28,7 +28,7 @@ export function SavedMedicinesView({
         </p>
         <button
           onClick={onExplore}
-          className="mt-2 px-5 py-2.5 bg-emerald-700 text-white rounded-xl text-xs font-semibold hover:bg-emerald-800 shadow-sm transition"
+          className="mt-2 px-5 py-2.5 bg-navy-800 text-white rounded-xl text-xs font-semibold hover:bg-navy-900 shadow-sm transition"
         >
           Explore Medicines
         </button>
@@ -41,7 +41,7 @@ export function SavedMedicinesView({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            <Bookmark className="w-6 h-6 text-emerald-600 fill-emerald-600" />
+            <Bookmark className="w-6 h-6 text-navy-700 fill-navy-700" />
             <span>Saved Medicines</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
@@ -66,19 +66,19 @@ export function SavedMedicinesView({
             <div
               key={med.medicine_id}
               className={`p-4 bg-white border rounded-2xl transition flex flex-col justify-between shadow-sm hover:shadow-md ${
-                isBd ? 'border-emerald-200' : 'border-slate-200'
+                isBd ? 'border-navy-200' : 'border-slate-200'
               }`}
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div onClick={() => onSelectMedicine(med)} className="cursor-pointer">
-                    <h3 className="text-base font-bold text-slate-900 hover:text-emerald-700 transition">
+                    <h3 className="text-base font-bold text-slate-900 hover:text-navy-700 transition">
                       {med.brand_name}
                       <span className="text-xs font-normal text-slate-500 ml-1.5">
                         {med.strength}
                       </span>
                     </h3>
-                    <p className="text-xs text-emerald-700 font-medium flex items-center gap-1 mt-0.5">
+                    <p className="text-xs text-navy-700 font-medium flex items-center gap-1 mt-0.5">
                       <Pill className="w-3 h-3" />
                       {med.generic_name}
                     </p>
@@ -108,7 +108,7 @@ export function SavedMedicinesView({
 
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
                 {isBd ? (
-                  <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold text-navy-800 bg-navy-100 px-2 py-0.5 rounded-full">
                     🇧🇩 Bangladesh
                   </span>
                 ) : (
@@ -120,7 +120,7 @@ export function SavedMedicinesView({
 
                 <button
                   onClick={() => onSelectMedicine(med)}
-                  className="flex items-center gap-1 text-xs font-semibold text-emerald-700 hover:text-emerald-800"
+                  className="flex items-center gap-1 text-xs font-semibold text-navy-700 hover:text-navy-800"
                 >
                   <span>Details</span>
                   <ChevronRight className="w-3.5 h-3.5" />

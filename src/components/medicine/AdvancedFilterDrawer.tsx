@@ -62,12 +62,12 @@ export function AdvancedFilterDrawer({
     <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-sm space-y-4">
       <div className="flex items-center justify-between pb-3 border-b border-slate-100">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700">
+          <div className="p-1.5 rounded-lg bg-navy-50 text-navy-800">
             <Stethoscope className="w-4 h-4" />
           </div>
           <h3 className="text-sm font-bold text-slate-800">Advanced Medicine Filters</h3>
           {activeFilterCount > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-navy-100 text-navy-800">
               {activeFilterCount} active
             </span>
           )}
@@ -101,7 +101,7 @@ export function AdvancedFilterDrawer({
                 onClick={() => onSelectDosageForm(form === 'All Forms' ? '' : form)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
                   isSelected
-                    ? 'bg-emerald-700 text-white shadow-sm ring-2 ring-emerald-600/30'
+                    ? 'bg-navy-800 text-white shadow-sm ring-2 ring-navy-700/30'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
@@ -124,7 +124,7 @@ export function AdvancedFilterDrawer({
               value={selectedTherapeuticClass}
               onChange={(e) => onSelectTherapeuticClass(e.target.value)}
               aria-label="Filter by Therapeutic Class"
-              className="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none appearance-none"
+              className="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-navy-500 focus:outline-none appearance-none"
             >
               {THERAPEUTIC_CLASSES.map((cls) => (
                 <option key={cls} value={cls === 'All Classes' ? '' : cls}>
@@ -148,7 +148,7 @@ export function AdvancedFilterDrawer({
               value={selectedCountry}
               onChange={(e) => onSelectCountry(e.target.value)}
               aria-label="Filter by Country Priority"
-              className="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:outline-none appearance-none"
+              className="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-medium text-slate-800 focus:ring-2 focus:ring-navy-500 focus:outline-none appearance-none"
             >
               {COUNTRIES.map((country) => (
                 <option key={country} value={country === 'All Countries' ? '' : country}>
@@ -168,7 +168,7 @@ export function AdvancedFilterDrawer({
         <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-100">
           <span className="text-[11px] font-medium text-slate-400 mr-1">Active:</span>
           {selectedDosageForm && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-navy-50 text-navy-800 border border-navy-200">
               Form: {selectedDosageForm}
               <button onClick={() => onSelectDosageForm('')} aria-label="Remove dosage form filter">
                 <X className="w-3 h-3 hover:text-rose-600" />
@@ -176,7 +176,7 @@ export function AdvancedFilterDrawer({
             </span>
           )}
           {selectedTherapeuticClass && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-teal-50 text-teal-800 border border-teal-200">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
               Class: {selectedTherapeuticClass}
               <button onClick={() => onSelectTherapeuticClass('')} aria-label="Remove therapeutic class filter">
                 <X className="w-3 h-3 hover:text-rose-600" />

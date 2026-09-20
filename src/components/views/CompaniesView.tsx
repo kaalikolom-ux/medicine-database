@@ -51,7 +51,7 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-          <Building2 className="w-6 h-6 text-emerald-600" />
+          <Building2 className="w-6 h-6 text-navy-700" />
           <span>Pharmaceutical Companies</span>
         </h2>
         <p className="text-xs text-slate-500 mt-1">
@@ -67,7 +67,7 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
           placeholder="Search company (e.g. Square, Beximco, Pfizer)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
         />
       </div>
 
@@ -82,7 +82,7 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
             key={item.name}
             className={`p-4 bg-white border rounded-2xl transition flex flex-col justify-between shadow-sm hover:shadow-md ${
               item.isBd
-                ? 'border-emerald-200 ring-1 ring-emerald-50'
+                ? 'border-navy-200 ring-1 ring-navy-50'
                 : 'border-slate-200'
             }`}
           >
@@ -92,7 +92,7 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
                   {item.name}
                 </h3>
                 {item.isBd ? (
-                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-300 shrink-0">
+                  <span className="text-[10px] font-bold bg-navy-100 text-navy-800 px-2 py-0.5 rounded-full border border-navy-300 shrink-0">
                     🇧🇩 BD Priority
                   </span>
                 ) : (
@@ -111,7 +111,7 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
             <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
               <button
                 onClick={() => onSelectCompany(item.name)}
-                className="flex items-center gap-1 font-semibold text-emerald-700 hover:text-emerald-800"
+                className="flex items-center gap-1 font-semibold text-navy-700 hover:text-navy-800"
               >
                 <span>View {item.count} medicines</span>
                 <ChevronRight className="w-3.5 h-3.5" />

@@ -42,7 +42,7 @@ export function GenericsView({ medicines, onSelectGeneric }: GenericsViewProps) 
     <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-          <Pill className="w-6 h-6 text-emerald-600" />
+          <Pill className="w-6 h-6 text-navy-700" />
           <span>Generics & Formulations</span>
         </h2>
         <p className="text-xs text-slate-500 mt-1">Browse active pharmaceutical ingredients and therapeutic classes</p>
@@ -56,7 +56,7 @@ export function GenericsView({ medicines, onSelectGeneric }: GenericsViewProps) 
           placeholder="Search generic (e.g. Paracetamol, Omeprazole)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
         />
       </div>
 
@@ -70,25 +70,25 @@ export function GenericsView({ medicines, onSelectGeneric }: GenericsViewProps) 
           <button
             key={item.name}
             onClick={() => onSelectGeneric(item.name)}
-            className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl text-left hover:border-emerald-400 hover:shadow-md transition group"
+            className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl text-left hover:border-navy-400 hover:shadow-md transition group"
           >
             <div className="pr-3">
-              <h3 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition">
+              <h3 className="text-sm font-bold text-slate-900 group-hover:text-navy-700 transition">
                 {item.name}
               </h3>
               {item.therapeuticClass && (
                 <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                  <Activity className="w-3 h-3 text-emerald-600 shrink-0" />
+                  <Activity className="w-3 h-3 text-navy-700 shrink-0" />
                   <span className="truncate max-w-[200px]">{item.therapeuticClass}</span>
                 </p>
               )}
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <span className="px-2 py-0.5 bg-slate-100 group-hover:bg-emerald-100 text-slate-600 group-hover:text-emerald-800 text-xs font-semibold rounded-full transition">
+              <span className="px-2 py-0.5 bg-slate-100 group-hover:bg-navy-100 text-slate-600 group-hover:text-navy-800 text-xs font-semibold rounded-full transition">
                 {item.count} {item.count === 1 ? 'brand' : 'brands'}
               </span>
-              <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-600 transition" />
+              <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-navy-700 transition" />
             </div>
           </button>
         ))}

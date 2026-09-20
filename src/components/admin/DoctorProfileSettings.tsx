@@ -23,7 +23,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
       <div className="border-b border-slate-100 pb-4">
         <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <User className="w-5 h-5 text-emerald-600" />
+          <User className="w-5 h-5 text-navy-700" />
           <span>ডাক্তার ও চেম্বার প্রোফাইল (Doctor & Chamber Letterhead)</span>
         </h2>
         <p className="text-xs text-slate-500 mt-1">
@@ -47,7 +47,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. Dr. Mohammad Abdullah"
             />
           </div>
@@ -61,7 +61,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               required
               value={formData.degrees}
               onChange={(e) => setFormData({ ...formData, degrees: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. MBBS (DMC), FCPS (Medicine)"
             />
           </div>
@@ -74,7 +74,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.specialization}
               onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. Medicine & Cardiovascular Specialist"
             />
           </div>
@@ -88,7 +88,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               required
               value={formData.bmdcRegNo}
               onChange={(e) => setFormData({ ...formData, bmdcRegNo: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. A-54321"
             />
           </div>
@@ -101,7 +101,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.designation}
               onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. Associate Professor"
             />
           </div>
@@ -114,7 +114,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.workplace}
               onChange={(e) => setFormData({ ...formData, workplace: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. Dhaka Medical College & Hospital"
             />
           </div>
@@ -124,7 +124,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
       {/* Chamber Info */}
       <div className="space-y-4 pt-4 border-t border-slate-100">
         <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <Building className="w-4 h-4 text-emerald-600" />
+          <Building className="w-4 h-4 text-navy-700" />
           <span>২. চেম্বার ও সিরিয়ালের তথ্য</span>
         </h3>
 
@@ -137,7 +137,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.chamberName}
               onChange={(e) => setFormData({ ...formData, chamberName: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. Popular Diagnostic Centre"
             />
           </div>
@@ -150,7 +150,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.chamberPhone}
               onChange={(e) => setFormData({ ...formData, chamberPhone: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. +880 1711-000000"
             />
           </div>
@@ -163,7 +163,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.chamberAddress}
               onChange={(e) => setFormData({ ...formData, chamberAddress: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. House #16, Road #2, Dhanmondi, Dhaka"
             />
           </div>
@@ -176,7 +176,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
               type="text"
               value={formData.visitingHours}
               onChange={(e) => setFormData({ ...formData, visitingHours: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
               placeholder="e.g. প্রতিদিন বিকাল ৫টা - রাত ৯টা (শুক্রবার বন্ধ)"
             />
           </div>
@@ -194,7 +194,7 @@ export function DoctorProfileSettings({ profile, onSave }: DoctorProfileSettings
 
         <button
           type="submit"
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow-md transition"
+          className="flex items-center gap-2 bg-navy-800 hover:bg-navy-900 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow-md transition cursor-pointer"
         >
           <Save className="w-4 h-4" />
           <span>সেভ করুন (Save Changes)</span>

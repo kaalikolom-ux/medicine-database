@@ -36,7 +36,7 @@ export function PrescriptionHistoryView({
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-emerald-600" />
+            <FileText className="w-5 h-5 text-navy-700" />
             <span>সংরক্ষিত প্রেসক্রিপশন হিস্ট্রি ({prescriptions.length})</span>
           </h2>
           <p className="text-xs text-slate-500">
@@ -52,7 +52,7 @@ export function PrescriptionHistoryView({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="রোগীর নাম বা মোবাইল দিয়ে খুঁজুন..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-navy-500 focus:outline-none"
           />
         </div>
       </div>
@@ -75,7 +75,7 @@ export function PrescriptionHistoryView({
                 {/* Header Strip */}
                 <div className="flex items-start justify-between gap-2 border-b border-slate-100 pb-2.5">
                   <div>
-                    <span className="text-[10px] font-mono text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 block mb-1">
+                    <span className="text-[10px] font-mono text-navy-800 font-bold bg-navy-50 px-2 py-0.5 rounded border border-navy-100 block mb-1">
                       #{rx.id}
                     </span>
                     <h3 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
@@ -100,7 +100,7 @@ export function PrescriptionHistoryView({
 
                 {/* Diagnosis / Complaints */}
                 {rx.clinicalDiagnosis && (
-                  <p className="text-xs text-emerald-900 font-semibold bg-emerald-50/50 p-2 rounded-lg mt-2">
+                  <p className="text-xs text-navy-900 font-semibold bg-navy-50/50 p-2 rounded-lg mt-2">
                     <strong>Dx:</strong> {rx.clinicalDiagnosis}
                   </p>
                 )}
@@ -136,7 +136,7 @@ export function PrescriptionHistoryView({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => onEditPrescription(rx)}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition"
+                    className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition cursor-pointer"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                     <span>এডিট (Edit)</span>
@@ -144,7 +144,7 @@ export function PrescriptionHistoryView({
 
                   <button
                     onClick={() => onSelectPrint(rx)}
-                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-navy-800 hover:bg-navy-900 text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer"
                   >
                     <Printer className="w-3.5 h-3.5" />
                     <span>প্রিন্ট (Print)</span>

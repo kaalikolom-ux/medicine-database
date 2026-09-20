@@ -31,21 +31,21 @@ export function BottomNav({ currentTab, onSelectTab, savedCount }: BottomNavProp
               onClick={() => onSelectTab(tab.id)}
               className={`relative flex flex-col items-center justify-center py-2 px-3 rounded-2xl transition-all select-none ${
                 isActive
-                  ? 'text-emerald-700 font-bold scale-105'
+                  ? 'text-navy-900 font-bold scale-105'
                   : 'text-slate-400 hover:text-slate-600 font-medium'
               }`}
             >
               <div className="relative">
                 <Icon className={`w-5 h-5 transition-transform ${isActive ? 'stroke-[2.4px]' : 'stroke-[1.8px]'}`} />
                 {tab.badge !== undefined && tab.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2 px-1.5 py-0.2 bg-emerald-600 text-white text-[10px] font-black rounded-full ring-2 ring-white">
+                  <span className="absolute -top-1.5 -right-2 px-1.5 py-0.2 bg-navy-800 text-white text-[10px] font-black rounded-full ring-2 ring-white">
                     {tab.badge}
                   </span>
                 )}
               </div>
               <span className="text-[11px] mt-1 tracking-tight">{tab.label}</span>
               {isActive && (
-                <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full mt-0.5 animate-in fade-in" />
+                <span className="w-1.5 h-1.5 bg-navy-800 rounded-full mt-0.5 animate-in fade-in" />
               )}
             </button>
           );
