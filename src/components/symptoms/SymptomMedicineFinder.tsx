@@ -2,7 +2,8 @@ import { useState, useMemo } from 'react';
 import { 
   Stethoscope, Sparkles, AlertTriangle, 
   Pill, ShieldCheck, HeartPulse, CheckCircle2, 
-  HelpCircle, RotateCcw, ChevronRight, Bookmark
+  HelpCircle, RotateCcw, ChevronRight, Bookmark,
+  FlaskConical, Microscope, Plus, Check, FileText
 } from 'lucide-react';
 import { analyzeSymptoms, type SymptomAnalysisResult } from '../../services/symptomAnalyzer';
 import type { MedicineDirectoryItem } from '../../types/database.types';
@@ -12,19 +13,23 @@ interface SymptomMedicineFinderProps {
   onOpenRxPad?: () => void;
   savedIds?: Set<string>;
   onToggleSave?: (medicine: MedicineDirectoryItem, e: React.MouseEvent) => void;
+  onAddTestToRx?: (testName: string) => void;
+  onAddBatchTestsToRx?: (testNames: string[]) => void;
 }
 
 const SAMPLE_SYMPTOMS = [
   { label: 'জ্বর ও শরীর ব্যথা', text: 'আমার গা গরম, হালকা জ্বর এবং তীব্র মাথা ও শরীর ব্যথা' },
   { label: 'গ্যাস্ট্রিক ও বুকজ্বালা', text: 'পেটে গ্যাস, পেট ফাঁপা এবং খাওয়ার পর বুক জ্বালাপোড়া করে' },
+  { label: 'বুকে তীব্র চাপ ও ব্যথা', text: 'বুকের মাঝখানে ভারী পাথর চেপে বসার মত ব্যথা ও বাম হাতে টান' },
   { label: 'সর্দি ও হাঁচি', text: 'নাক দিয়ে পানি পড়ে, ঘন ঘন হাঁচি ও মাথা ভার হয়ে আছে' },
   { label: 'বুকে কফ ও কাশি', text: 'শুকনো কাশি ও বুকে কফ জমে আছে, রাতে কাশি বাড়ে' },
   { label: 'পাতলা পায়খানা / ডায়রিয়া', text: 'পেট খারাপ, বারবার পাতলা পায়খানা হচ্ছে এবং বমি বমি ভাব' },
+  { label: 'প্রস্রাবে তীব্র জ্বালাপোড়া', text: 'প্রস্রাবের সময় প্রচণ্ড জ্বালাপোড়া করে এবং তলপেটে ব্যথা' },
+  { label: 'জন্ডিস ও চোখ হলুদ', text: 'চোখ ও প্রস্রাব হলুদ হয়ে গেছে এবং খাবারে তীব্র অরুচি' },
   { label: 'অ্যালার্জি ও গা চুলকানি', text: 'ত্বকে লাল চাকা উঠেছে এবং তীব্র চুলকানি হচ্ছে' },
   { label: 'কোমর ও পেশী ব্যথা', text: 'কোমরে তীব্র ব্যথা এবং মাংশপেশিতে টান লেগেছে' },
   { label: 'শ্বাসকষ্ট ও হাঁপানি', text: 'বুকে সাঁই সাঁই শব্দ এবং নিঃশ্বাস নিতে বেশ কষ্ট হচ্ছে' },
-  { label: 'দাউদ ও চুলকানি', text: 'চামড়ায় গোল গোল চাকা ও দাউদের মত ফাঙ্গাল চুলকানি' },
-  { label: 'দুর্বলতা ও ক্লান্তি', text: 'শরীর দুর্বল লাগে, খাবারে অরুচি ও মাথা ঝিমঝিম করে' }
+  { label: 'দুর্বলতা ও রক্তস্বল্পতা', text: 'শরীর দুর্বল লাগে, অল্পতেই হাঁপিয়ে যাই ও মাথা ঝিমঝিম করে' }
 ];
 
 export function SymptomMedicineFinder({
@@ -32,9 +37,53 @@ export function SymptomMedicineFinder({
   onOpenRxPad,
   savedIds = new Set(),
   onToggleSave,
+  onAddTestToRx,
+  onAddBatchTestsToRx,
 }: SymptomMedicineFinderProps) {
   const [inputText, setInputText] = useState('');
   const [activeAnalysisQuery, setActiveAnalysisQuery] = useState('');
+
+  // Persistent pending tests for Prescription Pad
+  const [rxTests, setRxTests] = useState<Set<string>>(() => {
+    try {
+      const stored = localStorage.getItem('pending_rx_investigations');
+      return stored ? new Set(JSON.parse(stored)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
+
+  const handleToggleRxTest = (testName: string) => {
+    setRxTests((prev) => {
+      const next = new Set(prev);
+      if (next.has(testName)) {
+        next.delete(testName);
+      } else {
+        next.add(testName);
+      }
+      try {
+        localStorage.setItem('pending_rx_investigations', JSON.stringify(Array.from(next)));
+      } catch (err) {
+        console.error(err);
+      }
+      return next;
+    });
+    onAddTestToRx?.(testName);
+  };
+
+  const handleAddBatchTests = (testNames: string[]) => {
+    setRxTests((prev) => {
+      const next = new Set(prev);
+      testNames.forEach((t) => next.add(t));
+      try {
+        localStorage.setItem('pending_rx_investigations', JSON.stringify(Array.from(next)));
+      } catch (err) {
+        console.error(err);
+      }
+      return next;
+    });
+    onAddBatchTestsToRx?.(testNames);
+  };
 
   // Perform analysis whenever user submits or clicks a preset
   const analysisResult: SymptomAnalysisResult | null = useMemo(() => {
@@ -65,13 +114,13 @@ export function SymptomMedicineFinder({
       <div className="space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#ede3d3] text-[#0f4c42] border border-[#dfd0b8]">
           <HeartPulse className="w-4 h-4 text-[#0f4c42]" />
-          <span>দ্বিভাষিক লক্ষণ ও অসুখ অ্যানালাইজার (Symptom to Medicine)</span>
+          <span>দ্বিভাষিক ক্লিনিক্যাল লক্ষণ ও ডায়াগনস্টিক সহকারী (Clinical Decision Support)</span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1c1710] tracking-tight">
-          অসুখের বিবরণ দিয়ে ওষুধ খুঁজুন
+          অসুখের বিবরণ দিয়ে ওষুধ ও প্যাথলজিক্যাল টেস্ট জানুন
         </h2>
         <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-          আপনার যেকোনো শারীরিক উপসর্গ বা অসুখের কথা <strong>বাংলা বা ইংরেজিতে</strong> লিখুন। আমাদের স্মার্ট ইঞ্জিন লক্ষণ বিশ্লেষণ করে সম্ভাব্য রোগ, চিকিৎসার জেনেরিক ও ২১,৬০০+ ডাটাবেজ থেকে শীর্ষ বাংলাদেশি ওষুধ প্রদর্শন করবে।
+          আপনার যেকোনো শারীরিক উপসর্গ বা অসুখের কথা <strong>বাংলা বা ইংরেজিতে</strong> লিখুন। আমাদের ক্লিনিক্যাল ইঞ্জিন সম্ভাব্য রোগ, প্রয়োজনীয় <strong>প্যাথলজিক্যাল/ল্যাব টেস্টের কারণ ও ভুল ডায়াগনোসিস রোধের নির্দেশিকা</strong> এবং ২১,৬০০+ ডাটাবেজ থেকে শীর্ষ বাংলাদেশি ওষুধ প্রদর্শন করবে।
         </p>
       </div>
 
@@ -88,14 +137,14 @@ export function SymptomMedicineFinder({
               rows={3}
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder="উদাহরণ: ৩ দিন ধরে তীব্র জ্বর ও শরীর ব্যথা... অথবা: I have severe acidity and burning sensation after eating..."
+              placeholder="উদাহরণ: ৩ দিন ধরে তীব্র জ্বর ও শরীর ব্যথা... অথবা: I have severe chest pain and left arm ache..."
               className="w-full p-3.5 bg-[#fdfbf7] border border-[#dfd0b8] rounded-xl text-xs sm:text-sm text-[#1c1710] placeholder-stone-400 focus:ring-2 focus:ring-[#0f4c42] focus:outline-none transition leading-relaxed resize-none shadow-inner"
             />
             {inputText && (
               <button
                 type="button"
                 onClick={() => setInputText('')}
-                className="absolute right-3 top-3 text-stone-400 hover:text-stone-700 text-xs px-2 py-0.5 rounded-md hover:bg-stone-100 transition"
+                className="absolute right-3 top-3 text-stone-400 hover:text-stone-700 text-xs px-2 py-0.5 rounded-md hover:bg-stone-100 transition cursor-pointer"
               >
                 মুছুন
               </button>
@@ -110,7 +159,7 @@ export function SymptomMedicineFinder({
                 className="px-5 py-2.5 bg-[#0f4c42] hover:bg-[#0c3c34] disabled:opacity-50 text-white rounded-xl text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-emerald-200" />
-                <span>লক্ষণ বিশ্লেষণ করুন (Analyze Symptoms)</span>
+                <span>লক্ষণ ও টেস্ট বিশ্লেষণ করুন (Analyze)</span>
               </button>
 
               {activeAnalysisQuery && (
@@ -129,9 +178,9 @@ export function SymptomMedicineFinder({
               <button
                 type="button"
                 onClick={onOpenRxPad}
-                className="text-xs font-bold text-[#0f4c42] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#0f4c42] hover:underline flex items-center gap-1 cursor-pointer"
               >
-                <span>প্রেসক্রিপশন প্যাড খুলুন &rarr;</span>
+                <span>প্রেসক্রিপশন প্যাড খুলুন ({rxTests.size}টি টেস্ট যুক্ত) &rarr;</span>
               </button>
             )}
           </div>
@@ -156,6 +205,27 @@ export function SymptomMedicineFinder({
           </div>
         </div>
       </div>
+
+      {/* Selected Rx Tests Notice Bar */}
+      {rxTests.size > 0 && (
+        <div className="p-3 bg-[#ede3d3] border border-[#dfd0b8] rounded-2xl flex items-center justify-between text-xs text-[#1c1710] shadow-2xs">
+          <div className="flex items-center gap-2">
+            <FileText className="w-4 h-4 text-[#0f4c42]" />
+            <span>
+              প্রেসক্রিপশনের জন্য <strong className="text-[#0f4c42]">{rxTests.size}টি প্যাথলজিক্যাল টেস্ট</strong> নির্বাচিত রয়েছে।
+            </span>
+          </div>
+          {onOpenRxPad && (
+            <button
+              type="button"
+              onClick={onOpenRxPad}
+              className="px-3 py-1 bg-[#0f4c42] hover:bg-[#0c3c34] text-white rounded-lg font-bold transition flex items-center gap-1 cursor-pointer"
+            >
+              <span>প্রেসক্রিপশন প্যাডে যান &rarr;</span>
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Analysis Results Display */}
       {analysisResult && (
@@ -184,7 +254,7 @@ export function SymptomMedicineFinder({
             </span>
           </div>
 
-          {/* If No Direct Conditions matched, show fallback indication results */}
+          {/* Fallback Indication Results if no direct condition matched */}
           {analysisResult.matchedConditions.length === 0 && (
             <div className="bg-white border border-[#dfd0b8] p-6 rounded-2xl text-center space-y-3">
               <HelpCircle className="w-10 h-10 text-stone-400 mx-auto" />
@@ -252,7 +322,7 @@ export function SymptomMedicineFinder({
           {analysisResult.matchedConditions.map(({ condition, matchedKeywords, genericsWithMedicines }) => (
             <div
               key={condition.id}
-              className="bg-white border border-[#dfd0b8] rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 hover:border-[#0f4c42]/50 transition-all"
+              className="bg-white border border-[#dfd0b8] rounded-2xl p-5 sm:p-6 shadow-sm space-y-5 hover:border-[#0f4c42]/50 transition-all"
             >
               {/* Condition Title & Urgency Badge */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#ede3d3]">
@@ -304,23 +374,142 @@ export function SymptomMedicineFinder({
                 {condition.summaryBn}
               </p>
 
-              {/* Recommended Generics & Matching 21k Database Medicines */}
+              {/* 1. PATHOLOGICAL & DIAGNOSTIC TESTS SUGGESTIONS (DOCTOR DECISION SUPPORT) */}
+              {condition.recommendedTests && condition.recommendedTests.length > 0 && (
+                <div className="bg-[#fcfaf6] border border-[#dfd0b8] rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-2xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#ede3d3] pb-3">
+                    <div className="flex items-start gap-2.5">
+                      <div className="p-2 rounded-xl bg-[#0f4c42]/10 text-[#0f4c42] shrink-0 mt-0.5">
+                        <FlaskConical className="w-5 h-5 text-[#0f4c42]" />
+                      </div>
+                      <div>
+                        <h4 className="text-xs sm:text-sm font-extrabold text-[#1c1710] flex items-center gap-1.5">
+                          <span>প্রয়োজনীয় প্যাথলজিক্যাল টেস্ট ও পরীক্ষা (Diagnostic Investigations):</span>
+                        </h4>
+                        <p className="text-[11px] text-stone-600 mt-0.5">
+                          ডাক্তারের মানসিক চাপ কমাতে ও ভুল ডায়াগনোসিস রোধে রোগ নিশ্চিতকরণ পরীক্ষাসমূহ
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleAddBatchTests(condition.recommendedTests.map((t) => t.testName))}
+                      className="px-3 py-1.5 bg-[#ede3d3] hover:bg-[#0f4c42] text-[#0f4c42] hover:text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 self-start sm:self-auto cursor-pointer border border-[#dfd0b8] shadow-2xs"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>সব টেস্ট প্রেসক্রিপশনে নিন</span>
+                    </button>
+                  </div>
+
+                  {/* Grid of Recommended Tests */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                    {condition.recommendedTests.map((test) => {
+                      const isAdded = rxTests.has(test.testName);
+
+                      return (
+                        <div
+                          key={test.testName}
+                          className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between ${
+                            isAdded
+                              ? 'bg-emerald-50/70 border-emerald-300 shadow-2xs'
+                              : 'bg-white border-[#dfd0b8] hover:border-[#0f4c42]/60 shadow-2xs'
+                          }`}
+                        >
+                          <div className="space-y-2">
+                            {/* Test Header */}
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="space-y-0.5">
+                                <span className="font-extrabold text-xs sm:text-sm text-[#1c1710] flex items-center gap-1.5">
+                                  <Microscope className="w-3.5 h-3.5 text-[#0f4c42] shrink-0" />
+                                  <span>{test.testName}</span>
+                                </span>
+                                <span className="inline-block text-[10px] font-semibold text-stone-600 bg-[#f5efe4] px-1.5 py-0.5 rounded border border-[#dfd0b8]">
+                                  {test.categoryLabelBn}
+                                </span>
+                              </div>
+
+                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${
+                                test.urgency === 'immediate'
+                                  ? 'bg-rose-100 text-rose-800 border-rose-300'
+                                  : test.urgency === 'if_persists'
+                                    ? 'bg-amber-100 text-amber-800 border-amber-300'
+                                    : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                              }`}>
+                                {test.urgency === 'immediate' && '🚨 '}
+                                {test.urgency === 'if_persists' && '⏳ '}
+                                {test.urgency === 'routine' && '📋 '}
+                                {test.urgencyLabelBn}
+                              </span>
+                            </div>
+
+                            {/* Medical Reason */}
+                            <p className="text-xs text-stone-700 leading-relaxed bg-[#fbf9f4] p-2 rounded-lg border border-[#ede3d3]">
+                              <strong className="text-stone-900 font-semibold">ক্লিনিক্যাল উদ্দেশ্য:</strong> {test.reasonBn}
+                            </p>
+
+                            {/* Error Prevention Alert Box */}
+                            <div className="text-[11px] text-amber-950 bg-amber-50/90 border border-amber-200 p-2 rounded-lg leading-relaxed flex items-start gap-1.5">
+                              <ShieldCheck className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
+                              <div>
+                                <span className="font-bold text-amber-900">ভুল ডায়াগনোসিস রোধ: </span>
+                                <span>{test.preventsErrorBn}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Action Button: Add to Rx Pad */}
+                          <div className="pt-2.5 mt-2.5 border-t border-[#ede3d3] flex items-center justify-between">
+                            <span className="text-[10px] text-stone-500 italic">
+                              {isAdded ? 'প্রেসক্রিপশনভুক্ত হয়েছে' : 'প্রেসক্রিপশনে যোগ করতে পারেন'}
+                            </span>
+
+                            <button
+                              type="button"
+                              onClick={() => handleToggleRxTest(test.testName)}
+                              className={`px-3 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ${
+                                isAdded
+                                  ? 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                                  : 'bg-[#0f4c42] hover:bg-[#0c3c34] text-white shadow-2xs'
+                              }`}
+                            >
+                              {isAdded ? (
+                                <>
+                                  <Check className="w-3 h-3" />
+                                  <span>যুক্ত রয়েছে</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Plus className="w-3 h-3" />
+                                  <span>+ প্রেসক্রিপশনে নিন</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* 2. RECOMMENDED GENERICS & MATCHING 21K DATABASE MEDICINES */}
               <div className="space-y-4 pt-1">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-stone-600 flex items-center gap-1.5">
                   <Pill className="w-4 h-4 text-[#0f4c42]" />
-                  <span>চিকিৎসায় ব্যবহৃত প্রধান জেনেরিক ও বাংলাদেশি ওষুধ (Medicines):</span>
+                  <span>চিকিৎসায় ব্যবহৃত প্রধান জেনেরিক ও শীর্ষ বাংলাদেশি ওষুধ (Medicines):</span>
                 </h4>
 
                 <div className="space-y-4">
                   {genericsWithMedicines.map(({ generic, medicines }) => (
                     <div
                       key={generic.genericName}
-                      className="bg-[#fdfbf7] border border-[#dfd0b8] p-4 rounded-xl space-y-3"
+                      className="bg-[#fdfbf7] border border-[#dfd0b8] p-4 rounded-xl space-y-3 shadow-2xs"
                     >
                       {/* Generic Info */}
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-[#ede3d3] pb-2">
                         <div>
-                          <span className="text-xs font-extrabold text-[#0f4c42] text-sm">
+                          <span className="font-extrabold text-[#0f4c42] text-sm">
                             {generic.genericName}
                           </span>
                           <span className="text-xs text-stone-600 block sm:inline sm:ml-2">
@@ -407,7 +596,7 @@ export function SymptomMedicineFinder({
                 </div>
               </div>
 
-              {/* Lifestyle & Dietary Advice */}
+              {/* 3. LIFESTYLE & DIETARY ADVICE */}
               {condition.lifestyleAdviceBn.length > 0 && (
                 <div className="bg-[#f5efe4] p-3.5 rounded-xl border border-[#dfd0b8] space-y-1.5 text-xs text-stone-700">
                   <h5 className="font-bold text-[#1c1710] flex items-center gap-1.5">
@@ -422,7 +611,7 @@ export function SymptomMedicineFinder({
                 </div>
               )}
 
-              {/* Important Medical Warnings */}
+              {/* 4. IMPORTANT MEDICAL WARNINGS */}
               {condition.warningsBn.length > 0 && (
                 <div className="bg-amber-50 p-3.5 rounded-xl border border-amber-300 space-y-1 text-xs text-amber-950">
                   <h5 className="font-bold text-amber-900 flex items-center gap-1.5">

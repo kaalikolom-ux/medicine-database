@@ -6,6 +6,20 @@ export interface RecommendedGeneric {
   timingBn?: string;
 }
 
+export type TestCategory = 'blood' | 'urine_stool' | 'radiology' | 'cardiac' | 'specialized';
+export type TestUrgency = 'routine' | 'if_persists' | 'immediate';
+
+export interface RecommendedPathologyTest {
+  testName: string;
+  testCategory: TestCategory;
+  categoryLabelBn: string;
+  reasonBn: string;
+  reasonEn: string;
+  urgency: TestUrgency;
+  urgencyLabelBn: string;
+  preventsErrorBn: string;
+}
+
 export interface SymptomCondition {
   id: string;
   nameBn: string;
@@ -17,6 +31,7 @@ export interface SymptomCondition {
   banglaKeywords: string[];
   englishKeywords: string[];
   recommendedGenerics: RecommendedGeneric[];
+  recommendedTests: RecommendedPathologyTest[];
   lifestyleAdviceBn: string[];
   lifestyleAdviceEn: string[];
   warningsBn: string[];
@@ -31,8 +46,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Fever, Headache & Body Ache',
     category: 'Analgesics & Antipyretics',
     severity: 'mild',
-    summaryBn: 'ভাইরাল ইনফেকশন, ঠাণ্ডা লাগা বা ক্লান্তির কারণে জ্বর ও মাথা/শরীর ব্যথা হতে পারে।',
-    summaryEn: 'Common fever, headache, and generalized body ache usually associated with viral infections or physical exhaustion.',
+    summaryBn: 'ভাইরাল ইনফেকশন, ঠাণ্ডা লাগা বা ব্যাকটেরিয়াল সংক্রমণের কারণে জ্বর ও গা ব্যথা হতে পারে।',
+    summaryEn: 'Common fever, headache, and generalized body ache associated with viral infections or bacterial illness.',
     banglaKeywords: [
       'জ্বর', 'গা গরম', 'গায়ে জ্বর', 'জ্বর ভাব', 'মাথাব্যথা', 'মাথা ব্যথা', 'মাথা ধরেছে', 
       'শরীর ব্যথা', 'গা হাত পা ব্যথা', 'গা ব্যথা', 'কম্পন', 'হালকা জ্বর', 'তীব্র জ্বর', 
@@ -49,6 +64,48 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         roleEn: 'First-line medication for fever reduction and mild-to-moderate pain',
         typicalDosageBn: 'প্রাপ্তবয়স্ক: ৫০০ মি.গ্রা. থেকে ১০০০ মি.গ্রা. দিনে ৩-৪ বার (প্রয়োজনে)',
         timingBn: 'খাওয়ার পর (ভরা পেটে সেব্য)'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'CBC with ESR',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্ত পরীক্ষা',
+        reasonBn: 'শ্বেতকণিকা (WBC), নিউট্রোফিল ও প্লেটলেট কাউন্ট দেখে ভাইরাল নাকি ব্যাকটেরিয়াল সংক্রমণ তা নির্ণয়ে।',
+        reasonEn: 'Assesses total leukocyte count, platelet count, and markers of active inflammation.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'জ্বর ৩+ দিন স্থায়ী হলে',
+        preventsErrorBn: 'প্লেটলেট কাউন্ট পর্যবেক্ষণ করে ডেঙ্গু শক সিন্ড্রোম ও মারাত্মক সেপসিস মিস হওয়া রোধ করে।'
+      },
+      {
+        testName: 'Dengue NS1 Antigen & Dengue IgM/IgG',
+        testCategory: 'blood',
+        categoryLabelBn: 'ডেঙ্গু স্ক্রিনিং',
+        reasonBn: 'জ্বরের প্রথম ১ থেকে ৪ দিনের মধ্যে ডেঙ্গু ভাইরাস সংক্রমণ নিশ্চিতকরণের গোল্ড স্ট্যান্ডার্ড টেস্ট।',
+        reasonEn: 'Early qualitative detection of Dengue viral antigen and antibodies.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তীব্র জ্বর বা ডেঙ্গু মৌসুমে জরুরি',
+        preventsErrorBn: 'সাধারণ ফ্লু মনে করে ভুলবশত ব্যথানাশক (NSAIDs) প্রয়োগ বন্ধ করে প্রাণঘাতী অভ্যন্তরীণ রক্তপাত প্রতিরোধ করে।'
+      },
+      {
+        testName: 'Widal Test / Blood Culture & Sensitivity (C/S)',
+        testCategory: 'blood',
+        categoryLabelBn: 'টাইফয়েড ও কালচার',
+        reasonBn: 'জ্বর ৫-৭ দিনের বেশি স্থায়ী হলে এন্টেরিক ফিভার (টাইফয়েড) নিশ্চিতকরণ ও সঠিক অ্যান্টিবায়োটিক নির্বাচনে।',
+        reasonEn: 'Diagnostic evaluation for Salmonella typhi and precise antimicrobial sensitivity.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'টানা ৫-৭ দিন জ্বর থাকলে',
+        preventsErrorBn: 'অনুমাননির্ভর ভুল অ্যান্টিবায়োটিক ব্যবহার ও অ্যান্টিবায়োটিক রেজিস্ট্যান্সের ঝুঁকি কমায়।'
+      },
+      {
+        testName: 'Urine R/M/E',
+        testCategory: 'urine_stool',
+        categoryLabelBn: 'প্রস্রাব পরীক্ষা',
+        reasonBn: 'উপসর্গহীন মূত্রনালীর সংক্রমণ (UTI) জ্বরের সুপ্ত কারণ কিনা তা নিশ্চিত হতে।',
+        reasonEn: 'Screens for occult urinary tract infection as the source of pyrexia.',
+        urgency: 'routine',
+        urgencyLabelBn: 'প্রাথমিক স্ক্রিনিং',
+        preventsErrorBn: 'কিডনি বা মূত্রথলির ইনফেকশন ডায়াগনোসিস না করে ভুল চিকিৎসার সম্ভাবনা দূর করে।'
       }
     ],
     lifestyleAdviceBn: [
@@ -75,7 +132,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Gastric, Acidity, Heartburn & GERD',
     category: 'Proton Pump Inhibitor (PPI) & Antacid',
     severity: 'mild',
-    summaryBn: 'পাকস্থলীতে অতিরিক্ত এসিড উৎপাদন, অনিয়মিত খাওয়া-দাওয়া বা অতিরিক্ত তেল-মশলাযুক্ত খাবারের কারণে বুকজ্বালা ও পেট ফাঁপা হতে পারে।',
+    summaryBn: 'পাকস্থলীতে অতিরিক্ত এসিড উৎপাদন বা তেল-মশলাযুক্ত খাবারের কারণে বুকজ্বালা ও পেট ফাঁপা হতে পারে।',
     summaryEn: 'Excess stomach acid production leading to heartburn, acid reflux, epigastric burning, or bloating.',
     banglaKeywords: [
       'গ্যাস্ট্রিক', 'এসিডিটি', 'বুক জ্বালা', 'বুকজ্বালা', 'বুক জ্বলে', 'বুক জ্বালাপোড়া', 
@@ -109,6 +166,48 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'সকালে খালি পেটে'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'ECG (12 Lead)',
+        testCategory: 'cardiac',
+        categoryLabelBn: 'ইসিজি ও কার্ডিয়াক',
+        reasonBn: 'বুকের মাঝখানে বা পেটের উপরিভাগে জ্বালাপোড়া বা অস্বস্তি হার্ট অ্যাটাকের লক্ষণ কিনা তা শতভাগ নিশ্চিত হতে।',
+        reasonEn: 'Rules out inferior wall myocardial infarction presenting atypically as epigastric discomfort.',
+        urgency: 'immediate',
+        urgencyLabelBn: '৪০+ বয়স্ক বা বুকে চাপ থাকলে জরুরি',
+        preventsErrorBn: 'চিকিৎসা বিজ্ঞানের সবচেয়ে মারাত্মক ভুল: হার্ট অ্যাটাককে সাধারণ গ্যাস্ট্রিক মনে করে চিকিৎসা করা প্রতিরোধ করে।'
+      },
+      {
+        testName: 'USG of Whole Abdomen',
+        testCategory: 'radiology',
+        categoryLabelBn: 'আল্ট্রাসনোগ্রাম',
+        reasonBn: 'পিত্তথলিতে পাথর (Gallstones), ফ্যাটি লিভার বা অগ্ন্যাশয়ের প্রদাহ শনাক্তে।',
+        reasonEn: 'Screens for cholelithiasis, biliary colic, hepatic steatosis, and abdominal pathologies.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'ওষুধ সেবনেও পেটব্যথা না কমলে',
+        preventsErrorBn: 'পিত্তথলির পাথরজনিত তীব্র কলিক ব্যথায় অযথা মাসের পর মাস গ্যাস্ট্রিকের ওষুধ চালিয়ে যাওয়ার অপচিকিৎসা রোধ করে।'
+      },
+      {
+        testName: 'Upper GI Endoscopy',
+        testCategory: 'specialized',
+        categoryLabelBn: 'এন্ডোস্কোপি',
+        reasonBn: 'পাকস্থলী ও খাদ্যনালীর অভ্যন্তরীণ দেয়ালের আলসার, ক্ষত বা রিফ্লাক্সের সঠিক গভীরতা দেখতে।',
+        reasonEn: 'Direct visual inspection of mucosal erosion, peptic ulceration, and esophageal lesions.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'দীর্ঘস্থায়ী গ্যাস্ট্রিক বা ওজন কমলে',
+        preventsErrorBn: 'পাকস্থলীর মারাত্মক ক্ষত বা ম্যালিগন্যান্সি প্রারম্ভিক পর্যায়েই ধরা নিশ্চিত করে।'
+      },
+      {
+        testName: 'Serum Lipase & Amylase',
+        testCategory: 'blood',
+        categoryLabelBn: 'প্যানক্রিয়াস পরীক্ষা',
+        reasonBn: 'তীব্র পেটে ব্যথা বা পিঠে ছড়িয়ে যাওয়া ব্যথায় অ্যাকিউট প্যানক্রিয়াটাইটিস বাদ দিতে।',
+        reasonEn: 'Diagnostic enzymatic markers to exclude acute pancreatitis.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তীব্র পেটের ব্যথায় জরুরি',
+        preventsErrorBn: 'অগ্ন্যাশয়ের প্রাণঘাতী প্রদাহকে সাধারণ এসিডিটি ভাবার বিভ্রান্তি রোধ করে।'
+      }
+    ],
     lifestyleAdviceBn: [
       'একসাথে বেশি না খেয়ে অল্প অল্প করে নির্দিষ্ট সময়ে খাবার গ্রহণ করুন।',
       'তৈলাক্ত, ভাজাপোড়া, অতিরিক্ত ঝাল ও কোমল পানীয় বর্জন করুন।',
@@ -132,8 +231,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Nausea & Vomiting',
     category: 'Antiemetic & Gastroprokinetic',
     severity: 'moderate',
-    summaryBn: 'খাবারের বিষক্রিয়া, গ্যাস্ট্রিক, গাড়িতে ওঠার অস্বস্তি বা ইনফেকশনজনিত কারণে বমি বমি ভাব বা বমি হতে পারে।',
-    summaryEn: 'Symptom caused by food poisoning, gastrointestinal distress, motion sickness, or infections.',
+    summaryBn: 'খাবারের বিষক্রিয়া, গ্যাস্ট্রিক বা ইনফেকশনজনিত কারণে বমি বমি ভাব বা বমি হতে পারে।',
+    summaryEn: 'Symptom caused by food poisoning, gastrointestinal distress, or infections.',
     banglaKeywords: [
       'বমি', 'বমি বমি ভাব', 'বমি ভাব', 'বমি হওয়া', 'বমি হচ্ছে', 'পেট গুলানো', 
       'খাবার খেতে পারি না', 'পেট মোচড়ানো'
@@ -158,6 +257,38 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'খাওয়ার পূর্বে বা পরে'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Serum Electrolytes (Na+, K+, Cl-, HCO3-)',
+        testCategory: 'blood',
+        categoryLabelBn: 'ইলেকট্রোলাইট পরীক্ষা',
+        reasonBn: 'ঘন ঘন বমির কারণে সোডিয়াম ও পটাশিয়ামের বিপজ্জনক হ্রাস (Hypokalemia) নির্ণয়ে।',
+        reasonEn: 'Monitors electrolyte loss and prevents fatal hypokalemia or cardiac dysrhythmias.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'ঘন ঘন বমি হলে জরুরি',
+        preventsErrorBn: 'ইলেকট্রোলাইট ঘাটতি ও মেটাবলিক অ্যালকালসিস মিস হয়ে হৃদযন্ত্রের জটিলতা তৈরি হওয়া প্রতিরোধ করে।'
+      },
+      {
+        testName: 'Serum Creatinine',
+        testCategory: 'blood',
+        categoryLabelBn: 'কিডনি ফাংশন',
+        reasonBn: 'পানিশূন্যতার কারণে কিডনির কার্যকারিতায় টান (Acute Kidney Injury) পড়েছে কিনা যাচাইয়ে।',
+        reasonEn: 'Assesses renal perfusion and prevents prerenal acute kidney injury.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'পানিশূন্যতার লক্ষণ থাকলে',
+        preventsErrorBn: 'কিডনির আকস্মিক বৈকল্য আগে থেকেই ধরে সময়মত আইভি ফ্লুইড থেরাপির মাত্রা নির্ধারণ নিশ্চিত করে।'
+      },
+      {
+        testName: 'USG of Whole Abdomen',
+        testCategory: 'radiology',
+        categoryLabelBn: 'আল্ট্রাসনোগ্রাম',
+        reasonBn: 'তীব্র বমির সাথে পেটব্যথায় অ্যাপেন্ডিসাইটিস, গলব্লাডারের পাথর বা অন্ত্রের ব্লকেজ শনাক্তে।',
+        reasonEn: 'Identifies acute appendicitis, bowel obstruction, or biliary etiology.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'পেটব্যথা থাকলে জরুরি',
+        preventsErrorBn: 'জরুরি সার্জিক্যাল রোগকে কেবল সাধারণ গ্যাস্ট্রোএন্টারাইটিস ভাবার মারাত্মক ভুল ঠেকায়।'
+      }
+    ],
     lifestyleAdviceBn: [
       'বমি হলে সাথে সাথে ভারী খাবার খাবেন না, অল্প অল্প করে খাবার স্যালাইন বা ডাবের পানি পান করুন।',
       'তৈলাক্ত ও তীব্র গন্ধযুক্ত খাবার থেকে দূরে থাকুন।'
@@ -179,7 +310,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     category: 'Antihistamines',
     severity: 'mild',
     summaryBn: 'মৌসুমি ঠাণ্ডা, ধুলোবালি বা অ্যালার্জির কারণে সর্দি, হাঁচি ও নাক বন্ধ হতে পারে।',
-    summaryEn: 'Upper respiratory allergy or viral cold causing rhinorrhea, nasal blockage, sneezing, and ocular itchiness.',
+    summaryEn: 'Upper respiratory allergy or viral cold causing rhinorrhea, nasal blockage, and sneezing.',
     banglaKeywords: [
       'সর্দি', 'ঠাণ্ডা', 'ঠান্ডা', 'নাক দিয়ে পানি পড়ে', 'নাক বন্ধ', 'হাঁচি', 'নাক চুলকায়', 
       'মাথা ভারী', 'সর্দিকাশি', 'নাক দিয়ে পানি ঝরে'
@@ -211,6 +342,28 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'প্রতিদিন নির্দিষ্ট সময়ে'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'CBC with AEC (Absolute Eosinophil Count)',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্ত পরীক্ষা',
+        reasonBn: 'রক্তে ইওসিনোফিল কাউন্ট পর্যবেক্ষণ করে অ্যালার্জির মাত্রা ও অন্তর্নিহিত কারণ নির্ণয়ে।',
+        reasonEn: 'Evaluates allergic predisposition and screens for bacterial superinfection.',
+        urgency: 'routine',
+        urgencyLabelBn: 'প্রাথমিক স্ক্রিনিং',
+        preventsErrorBn: 'সাধারণ সর্দি ও দীর্ঘমেয়াদী অ্যালার্জিক রাইনাইটিসের সঠিক চিকিৎসা নির্ধারণ করে।'
+      },
+      {
+        testName: "X-Ray PNS (Water's View)",
+        testCategory: 'radiology',
+        categoryLabelBn: 'সাইনোসাইটিস এক্স-রে',
+        reasonBn: 'মাথা ভার বা কপালে ব্যথায় সাইনাসে ফ্লুইড বা পুঁজ জমে সাইনোসাইটিস হয়েছে কিনা তা দেখতে।',
+        reasonEn: 'Evaluates maxillary and frontal sinuses for fluid levels and mucosal thickening.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'মাথা ভার বা কপাল ব্যথায়',
+        preventsErrorBn: 'ক্রনিক সাইনোসাইটিস মিস হয়ে দীর্ঘস্থায়ী মাথা ব্যথায় ভুল ব্যথানাশক সেবন বন্ধ করে।'
+      }
+    ],
     lifestyleAdviceBn: [
       'গরম পানির ভাপ (স্টিম ইনহেলেশন) নিন, এটি নাক পরিষ্কার করতে সাহায্য করে।',
       'কুসুম গরম পানি ও আদা-লেবু চা পান করুন।',
@@ -233,8 +386,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Dry Cough & Chest Congestion',
     category: 'Cough Suppressants & Expectorants',
     severity: 'mild',
-    summaryBn: 'শ্বাসতন্ত্রের সংক্রমণ, দূষণ বা অ্যালার্জির কারণে শুকনো অথবা বুকে কফ জমা কাশি হতে পারে।',
-    summaryEn: 'Respiratory tract irritation or infection causing dry tickly cough or mucus-producing productive cough.',
+    summaryBn: 'শ্বাসতন্ত্রের সংক্রমণ, দূষণ বা ব্যাকটেরিয়াল আক্রমণে শুকনো অথবা বুকে কফ জমা কাশি হতে পারে।',
+    summaryEn: 'Respiratory tract irritation or infection causing dry cough or mucus-producing productive cough.',
     banglaKeywords: [
       'কাশি', 'শুকনো কাশি', 'খুকখুকে কাশি', 'গলা খুসখুস', 'কফ', 'বুকে কফ', 'কফযুক্ত কাশি', 
       'শ্লেষ্মা', 'কাশি হয়', 'রাতে কাশি বাড়ে'
@@ -266,6 +419,38 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'খাওয়ার পর'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Chest X-Ray P/A View',
+        testCategory: 'radiology',
+        categoryLabelBn: 'বুকের এক্স-রে',
+        reasonBn: 'ফুসফুসে কনসলিডেশন (নিউমোনিয়া), ব্রঙ্কাইটিস বা প্লুরাল ইফিউশন আছে কিনা দেখতে।',
+        reasonEn: 'Detects pneumonia, pulmonary infiltration, pleural effusion, or lung lesions.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'কাশি ৭ দিনের বেশি হলে',
+        preventsErrorBn: 'নিউমোনিয়া বা লাং ইনফেকশন মিস হয়ে রোগীর ফুসফুস মারাত্মক ক্ষতিগ্রস্ত হওয়া প্রতিরোধ করে।'
+      },
+      {
+        testName: 'CBC with ESR',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্ত পরীক্ষা',
+        reasonBn: 'লিউকোসাইটোসিস ও উচ্চ ইএসআর পর্যবেক্ষণ করে ব্যাকটেরিয়াল নিউমোনিয়া স্ক্রিনিং।',
+        reasonEn: 'Screens for leukocytosis, neutrophil shift, and systemic bacterial burden.',
+        urgency: 'routine',
+        urgencyLabelBn: 'ইনফেকশন স্ক্রিনিং',
+        preventsErrorBn: 'ভাইরাল কাশি ও ব্যাকটেরিয়াল সেকেন্ডারি সংক্রমণের মধ্যে পরিষ্কার বিভাজন করে।'
+      },
+      {
+        testName: 'Sputum for GeneXpert / AFB (Tuberculosis)',
+        testCategory: 'specialized',
+        categoryLabelBn: 'কফ ও যক্ষ্মা পরীক্ষা',
+        reasonBn: 'কাশি ২-৩ সপ্তাহের অধিক স্থায়ী হলে পালমোনারি টিউবারকিউলোসিস (যক্ষ্মা) পরীক্ষা।',
+        reasonEn: 'Definitive molecular and smear diagnostic test for Mycobacterium tuberculosis.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'টানা ৩ সপ্তাহের কাশিতে বাধ্যতামূলক',
+        preventsErrorBn: 'যক্ষ্মা প্রারম্ভিক পর্যায়ে মিস হওয়া শতভাগ রোধ করে পরিবারের অন্য সদস্যদের সংক্রমণ থেকে বাঁচায়।'
+      }
+    ],
     lifestyleAdviceBn: [
       'কুসুম গরম পানিতে মধু ও লেবুর রস মিশিয়ে পান করুন।',
       'ধূমপান ও পরোক্ষ ধূমপান থেকে সম্পূর্ণ দূরে থাকুন।'
@@ -287,7 +472,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Sore Throat & Tonsillitis',
     category: 'Mouthwash & Throat Antiseptic',
     severity: 'mild',
-    summaryBn: 'ফ্যারিঞ্জাইটিস, টনসিলে প্রদাহ বা ভাইরাসের আক্রমণে গলায় তীব্র ব্যথা ও খাবার গিলতে কষ্ট হতে পারে।',
+    summaryBn: 'ফ্যারিঞ্জাইটিস, টনসিলে প্রদাহ বা ব্যাকটেরিয়ার আক্রমণে গলায় তীব্র ব্যথা ও খাবার গিলতে কষ্ট হতে পারে।',
     summaryEn: 'Throat inflammation, tonsillitis, or pharyngitis causing irritation, pain, and difficulty swallowing.',
     banglaKeywords: [
       'গলা ব্যথা', 'গলাব্যাথা', 'টনসিল', 'ঢোক গিলতে কষ্ট', 'গলা জ্বালা', 'গলা ফোলা', 
@@ -313,6 +498,28 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'খাওয়ার পর'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Throat Swab for Gram Stain & C/S',
+        testCategory: 'specialized',
+        categoryLabelBn: 'গলার কালচার পরীক্ষা',
+        reasonBn: 'গ্রুপ-এ বিটা-হিমোলাইটিক স্ট্রেপ্টোকক্কাস ব্যাকটেরিয়া শনাক্তকরণ ও সঠিক অ্যান্টিবায়োটিক নির্বাচন।',
+        reasonEn: 'Identifies Group A beta-hemolytic Streptococcus and antibiotic sensitivities.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'জ্বর ও পুঁজযুক্ত টনসিলে',
+        preventsErrorBn: 'অপ্রয়োজনীয় ব্রড-স্পেকট্রাম অ্যান্টিবায়োটিক ব্যবহার ও অ্যান্টিবায়োটিক রেজিস্ট্যান্স রোধ করে।'
+      },
+      {
+        testName: 'CBC with ESR',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্ত পরীক্ষা',
+        reasonBn: 'ইনফেকশনের তীব্রতা ও নিউট্রোফিলিক লিউকোসাইটোসিস পর্যবেক্ষণ।',
+        reasonEn: 'Monitors acute inflammatory markers and bacterial response.',
+        urgency: 'routine',
+        urgencyLabelBn: 'রুটিন ইনফেকশন টেস্ট',
+        preventsErrorBn: 'ভাইরাল ফ্যারিঞ্জাইটিস ও ব্যাকটেরিয়াল টনসিলাইটিস পৃথকীকরণে সহায়ক।'
+      }
+    ],
     lifestyleAdviceBn: [
       'কুসুম গরম পানিতে সামান্য লবণ দিয়ে দিনে অন্তত ৩ বার গার্গল (কুলকুচি) করুন।',
       'অতিরিক্ত ঠাণ্ডা পানি বা আইসক্রিম পরিহার করুন।'
@@ -333,8 +540,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Diarrhea, Loose Stool & Dehydration',
     category: 'Electrolytes & Rehydration',
     severity: 'moderate',
-    summaryBn: 'দূষিত পানি বা বাসি খাবার গ্রহণের ফলে পেটে ব্যাকটেরিয়া বা ভাইরাসের আক্রমণে ঘন ঘন পাতলা পায়খানা হতে পারে।',
-    summaryEn: 'Frequent watery bowel movements caused by viral gastroenteritis, contaminated food or water, leading to dehydration.',
+    summaryBn: 'দূষিত খাবার বা পানিতে ব্যাকটেরিয়া বা ভাইরাসের আক্রমণে ঘন ঘন পাতলা পায়খানা হতে পারে।',
+    summaryEn: 'Frequent watery bowel movements caused by viral or bacterial gastroenteritis.',
     banglaKeywords: [
       'ডায়রিয়া', 'ডায়েরিয়া', 'পাতলা পায়খানা', 'পেট খারাপ', 'ঘন ঘন পায়খানা', 'পাতলা মল', 
       'পেট কামড়ে পায়খানা', 'কলেরা'
@@ -353,14 +560,46 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
       },
       {
         genericName: 'Zinc Sulfate',
-        roleBn: 'অন্ত্রের আস্তরণ দ্রুত নিরাময় করে এবং ডায়রিয়ার সময়কাল কমায় (বিশেষ করে শিশুদের জন্য)',
+        roleBn: 'অন্ত্রের আস্তরণ দ্রুত নিরাময় করে এবং ডায়রিয়ার সময়কাল কমায়',
         roleEn: 'Restores intestinal mucosal integrity and shortens diarrhea duration',
         typicalDosageBn: '১০-২০ মি.গ্রা. দিনে একবার (টানা ১০-১৪ দিন)',
         timingBn: 'খাওয়ার পর'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Stool R/M/E (Routine & Microscopic)',
+        testCategory: 'urine_stool',
+        categoryLabelBn: 'মল পরীক্ষা',
+        reasonBn: 'মলে পুঁজ (Pus cells), রক্তকণিকা (RBC), অ্যামিবা বা সিস্টের উপস্থিতি শনাক্তে।',
+        reasonEn: 'Identifies leukocytes, erythrocytes, amoebic trophozoites, and cysts.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তীব্র ডায়রিয়া বা আমাশয়ে জরুরি',
+        preventsErrorBn: 'অ্যামিবিক ও ব্যাকটেরিয়াল ডায়রিয়ার মধ্যে পার্থক্য নিশ্চিত করে ভুল ওষুধের অপপ্রয়োগ ঠেকায়।'
+      },
+      {
+        testName: 'Serum Electrolytes (Na+, K+, Cl-)',
+        testCategory: 'blood',
+        categoryLabelBn: 'ইলেকট্রোলাইট পরীক্ষা',
+        reasonBn: 'মারাত্মক পটাশিয়াম হ্রাস (Hypokalemia) ও অ্যাসিডোসিস জটিলতা নিরূপণে।',
+        reasonEn: 'Monitors potentially lethal hypokalemia and metabolic acidosis due to intestinal losses.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তীব্র পানিশূন্যতায় জরুরি',
+        preventsErrorBn: 'কার্ডিয়াক অ্যারেস্ট বা প্যারালাইটিক ইলিউস হওয়া রোধ করে ফ্লুইডের নির্ভুল ডোজ ঠিক করে।'
+      },
+      {
+        testName: 'Serum Creatinine',
+        testCategory: 'blood',
+        categoryLabelBn: 'কিডনি ফাংশন',
+        reasonBn: 'ডিহাইড্রেশনজনিত রেনাল রক্তপ্রবাহের টান (Prerenal Acute Kidney Injury) মনিটরিং।',
+        reasonEn: 'Assesses renal function to rule out prerenal azotemia secondary to hypovolemia.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'প্রস্রাবের পরিমাণ কমে এলে',
+        preventsErrorBn: 'অ্যাকিউট কিডনি ফেইলিউর (AKI) মিস হওয়ার ঝুঁকি শূন্যে নামায়।'
+      }
+    ],
     lifestyleAdviceBn: [
-      'এক প্যাকেট ওরস্যালাইন সম্পূর্ণ আধা লিটার (৫০০ মিলি) বিশুদ্ধ পানিতে গুলিয়ে প্রস্তুত করুন। কম বা বেশি পানিতে গুলানো যাবে না।',
+      'এক প্যাকেট ওরস্যালাইন সম্পূর্ণ আধা লিটার (৫০০ মিলি) বিশুদ্ধ পানিতে গুলিয়ে প্রস্তুত করুন।',
       'স্যালাইনের পাশাপাশি ডাবের পানি, ভাতের মাড়, কাঁচাকলার ঝোল ইত্যাদি তরল খাবার দিন।',
       'খাবারের পূর্বে সাবান দিয়ে হাত ধোয়ার অভ্যাস বজায় রাখুন।'
     ],
@@ -383,8 +622,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Skin Allergy, Itching & Urticaria',
     category: 'Antihistamines',
     severity: 'mild',
-    summaryBn: 'কোনো নির্দিষ্ট খাবার, ওষুধ, পোকামাকড়ের কামড় বা আবহাওয়ার পরিবর্তনের কারণে ত্বকে লালচে চাকা ও চুলকানি হতে পারে।',
-    summaryEn: 'Cutaneous allergic response causing itchy wheals, hives, redness, and swelling on the skin.',
+    summaryBn: 'কোনো খাবার, ওষুধ বা আবহাওয়ার পরিবর্তনের কারণে ত্বকে লালচে চাকা ও চুলকানি হতে পারে।',
+    summaryEn: 'Cutaneous allergic response causing itchy wheals, hives, redness, and swelling.',
     banglaKeywords: [
       'এলার্জি', 'অ্যালার্জি', 'চুলকানি', 'গা চুলকায়', 'চুলকায়', 'আমবাত', 'লাল চাকা', 
       'ফুসকুড়ি', 'র‍্যাশ', 'চামড়া চুলকায়', 'চুলকিয়ে ঘা'
@@ -416,6 +655,28 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'রাত্রে ঘুমানোর পূর্বে'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Complete Blood Count (CBC with AEC)',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্ত পরীক্ষা',
+        reasonBn: 'রক্তে ইওসিনোফিল কাউন্ট বৃদ্ধির মাত্রা পরিমাপ করে সিস্টেমিক অ্যালার্জি বা প্যারাসাইটিক ইনফেকশন মূল্যায়ন।',
+        reasonEn: 'Assesses blood eosinophilia associated with hypersensitivity or helminthic infection.',
+        urgency: 'routine',
+        urgencyLabelBn: 'প্রাথমিক স্ক্রিনিং',
+        preventsErrorBn: 'চুলকানির নেপথ্যে কৃমি বা ইন্টারনাল প্যারাসাইট জনিত কারণ আলাদা করতে সহায়তা করে।'
+      },
+      {
+        testName: 'Total Serum IgE',
+        testCategory: 'blood',
+        categoryLabelBn: 'আইজিই পরীক্ষা',
+        reasonBn: 'এটোপিক ডার্মাটাইটিস ও দীর্ঘস্থায়ী ক্রনিক আর্টিকারিয়া নিশ্চিতকরণ।',
+        reasonEn: 'Confirms atopic diathesis and guides long-term anti-allergy treatment.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'বারবার অ্যালার্জি দেখা দিলে',
+        preventsErrorBn: 'ক্রনিক স্কিন কন্ডিশনে কার্যকর অ্যান্টি-অ্যালার্জি প্রটোকল প্ল্যান তৈরিতে সাহায্য করে।'
+      }
+    ],
     lifestyleAdviceBn: [
       'চুলকানির স্থানে নখ দিয়ে অতিরিক্ত ঘষাঘষি করবেন না, এতে ইনফেকশন হতে পারে।',
       'চিংড়ি, বোয়াল মাছ, গরুর মাংস, বেগুন, পুঁইশাক সাময়িকভাবে পরিহার করুন।',
@@ -439,8 +700,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Back Pain, Joint Pain, Muscle Sprain & Toothache',
     category: 'NSAIDs & Muscle Relaxants',
     severity: 'moderate',
-    summaryBn: 'ভারী জিনিস তোলা, ভুল ভঙ্গিমায় বসা বা পেশীর টানের কারণে কোমর, ঘাড় বা মাংসপেশীতে তীব্র ব্যথা হতে পারে।',
-    summaryEn: 'Musculoskeletal discomfort, lumbago, joint inflammation, or dental pain requiring analgesic support.',
+    summaryBn: 'ভারী জিনিস তোলা বা পেশীর টানের কারণে কোমর, ঘাড় বা মাংসপেশীতে তীব্র ব্যথা হতে পারে।',
+    summaryEn: 'Musculoskeletal discomfort, lumbago, joint inflammation, or dental pain.',
     banglaKeywords: [
       'কোমর ব্যথা', 'কোমড় ব্যথা', 'পিঠ ব্যথা', 'দাঁত ব্যথা', 'দাঁতে ব্যথা', 'দাঁতে যন্ত্রণা', 
       'হাড়ের ব্যথা', 'বাতের ব্যথা', 'পেশী ব্যথা', 'মাংসপেশিতে টান', 'ঘাড়ে ব্যথা', 'হাঁটু ব্যথা'
@@ -472,6 +733,38 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'ভরা পেটে'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Serum Uric Acid',
+        testCategory: 'blood',
+        categoryLabelBn: 'ইউরিক এসিড',
+        reasonBn: 'পায়ের বৃদ্ধাঙ্গুল বা যেকোনো জয়েন্টে তীব্র ব্যথায় গেঁটেবাত (Gout) নিশ্চিতকরণ।',
+        reasonEn: 'Diagnostic evaluation for hyperuricemia and gouty arthritis.',
+        urgency: 'routine',
+        urgencyLabelBn: 'অস্থিসন্ধি ব্যথায়',
+        preventsErrorBn: 'গাউটের প্রদাহকে ভুলবশত সাধারণ মচকে যাওয়া ভেবে ভুল চিকিৎসা রোধ করে।'
+      },
+      {
+        testName: 'X-Ray Lumbo-Sacral (L/S) Spine (B/V)',
+        testCategory: 'radiology',
+        categoryLabelBn: 'মেরুদণ্ডের এক্স-রে',
+        reasonBn: 'মেরুদণ্ডের হাড়ের ক্ষয় (Spondylosis), স্পেস রিডাকশন বা ডিস্ক স্থানচ্যুতি দেখতে।',
+        reasonEn: 'Visualizes degenerative spinal changes, disc space narrowing, and alignment.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'ব্যথা পায়ে নামলে বা দীর্ঘস্থায়ী হলে',
+        preventsErrorBn: 'পিএলআইডি (PLID) বা নার্ভ কম্প্রেশন মিস করে কেবল ব্যথানাশক দিয়ে কিডনি নষ্ট হওয়া ঠেকায়।'
+      },
+      {
+        testName: 'Serum Calcium & Vitamin D3',
+        testCategory: 'blood',
+        categoryLabelBn: 'ক্যালসিয়াম ও ভিটামিন ডি',
+        reasonBn: 'অস্টিওপেনিয়া, হাড়ের ঘনত্ব হ্রাস বা হাড়ের ব্যথা নিরূপণে।',
+        reasonEn: 'Screens for hypocalcemia, osteomalacia, and bone demineralization.',
+        urgency: 'routine',
+        urgencyLabelBn: 'বয়স্ক রোগীদের জন্য',
+        preventsErrorBn: 'হাড়ের ভঙ্গুরতা আগেভাগে ধরা পড়ায় ফ্র্যাকচার প্রতিরোধ সম্ভব হয়।'
+      }
+    ],
     lifestyleAdviceBn: [
       'ব্যথার জায়গায় গরম সেঁক বা বরফ সেঁক দিতে পারেন।',
       'ভারী জিনিস তোলা থেকে বিরত থাকুন এবং বসার সময় মেরুদণ্ড সোজা রাখুন।',
@@ -496,7 +789,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     category: 'Bronchodilators & Antiasthmatics',
     severity: 'consult_doctor',
     summaryBn: 'শ্বাসনালীর প্রদাহ ও সংকুচিত হওয়ার কারণে শ্বাসকষ্ট, বুকে চাপ লাগা বা কাশি হতে পারে।',
-    summaryEn: 'Chronic inflammation of the airways causing reversible bronchospasm, shortness of breath, and wheezing.',
+    summaryEn: 'Chronic inflammation of the airways causing reversible bronchospasm, dyspnea, and wheezing.',
     banglaKeywords: [
       'শ্বাসকষ্ট', 'শ্বাস কষ্ট', 'হাঁপানি', 'অ্যাজমা', 'দম বন্ধ লাগে', 'শ্বাস নিতে কষ্ট', 
       'বুকে সাঁই সাঁই শব্দ', 'দম খাটো'
@@ -519,6 +812,28 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         roleEn: 'Leukotriene receptor antagonist preventing asthma attacks and nighttime symptoms',
         typicalDosageBn: '১০ মি.গ্রা. দিনে একবার (রাত্রে)',
         timingBn: 'রাত্রে নির্দিষ্ট সময়ে'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'Spirometry with Reversibility Test / PFT',
+        testCategory: 'specialized',
+        categoryLabelBn: 'ফুসফুসের স্পাইরোমেট্রি',
+        reasonBn: 'শ্বাসনালীর সংকোচন ও ব্রঙ্কোডাইলেটরে রিভার্সিবিলিটি মেপে অ্যাজমা বা সিওপিডি নিশ্চিতকরণ।',
+        reasonEn: 'Gold-standard spirometric measurement of FEV1/FVC and airway obstruction reversibility.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'ডায়াগনোসিস নিশ্চিত করতে আবশ্যক',
+        preventsErrorBn: 'সিওপিডি ও ব্রঙ্কিয়াল অ্যাজমার ভুল চিকিৎসা দূর করে সঠিক ইনহেলার স্টেরয়েড নির্ধারণ করে।'
+      },
+      {
+        testName: 'Chest X-Ray P/A View',
+        testCategory: 'radiology',
+        categoryLabelBn: 'বুকের এক্স-রে',
+        reasonBn: 'শ্বাসকষ্টের নেপথ্যে নিউমোথোরাক্স বা হার্ট ফেইলিউর (কার্ডিয়াক অ্যাজমা) বাদ দিতে।',
+        reasonEn: 'Rules out pneumothorax, pulmonary edema, and pleural pathologies.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তীব্র শ্বাসকষ্টে জরুরি',
+        preventsErrorBn: 'কার্ডিয়াক অ্যাজমা (হার্ট ফেইলিউর) ও রেসপিরেটরি অ্যাজমার মধ্যকার ভুল পার্থক্য রোধ করে।'
       }
     ],
     lifestyleAdviceBn: [
@@ -545,7 +860,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     category: 'Antihypertensive',
     severity: 'consult_doctor',
     summaryBn: 'রক্তনালীর ভেতর রক্তের অতিরিক্ত চাপের ফলে মাথা ঘোরা, ঘাড় ব্যথা বা বুক ধড়ফড় হতে পারে।',
-    summaryEn: 'Persistent elevation of arterial blood pressure requiring lifelong cardiovascular monitoring.',
+    summaryEn: 'Persistent elevation of arterial blood pressure requiring cardiovascular monitoring.',
     banglaKeywords: [
       'উচ্চ রক্তচাপ', 'হাই প্রেশার', 'ব্লাড প্রেশার', 'প্রেশার বেশি', 'বুক ধড়ফড়', 'মাথা ঘোরা', 
       'ঘাড় ব্যথা', 'প্রেশার ওঠানামা'
@@ -568,6 +883,38 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         roleEn: 'Angiotensin II receptor antagonist controlling blood pressure safely',
         typicalDosageBn: '২৫ মি.গ্রা. বা ৫০ মি.গ্রা. দিনে একবার',
         timingBn: 'প্রতিদিন নির্দিষ্ট সময়ে'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'ECG (12 Lead)',
+        testCategory: 'cardiac',
+        categoryLabelBn: 'ইসিজি',
+        reasonBn: 'হার্টের মাংসপেশি মোটা হওয়া (Left Ventricular Hypertrophy - LVH), এরিদমিয়া ও ইস্কেমিয়া দেখতে।',
+        reasonEn: 'Screens for left ventricular hypertrophy, conduction abnormalities, and silent ischemia.',
+        urgency: 'routine',
+        urgencyLabelBn: 'প্রাথমিক কার্ডিয়াক স্ক্রিনিং',
+        preventsErrorBn: 'লুকায়িত সাইলেন্ট ইস্কেমিয়া ও হার্ট ফেইলিউরের ঝুঁকি আগে থেকেই শনাক্ত করে।'
+      },
+      {
+        testName: 'Serum Creatinine & Electrolytes',
+        testCategory: 'blood',
+        categoryLabelBn: 'রেনাল প্রোফাইল',
+        reasonBn: 'উচ্চ রক্তচাপের কিডনি প্রভাব ও রেনাল কারণ স্ক্রিনিং এবং নিরাপদ অ্যান্টিহাইপারটেনসিভ নির্বাচন।',
+        reasonEn: 'Monitors baseline renal function and potassium before starting ACEi/ARB therapy.',
+        urgency: 'routine',
+        urgencyLabelBn: 'ঔষধ নির্বাচনের পূর্বে আবশ্যক',
+        preventsErrorBn: 'কিডনি ফাংশন না জেনে ভুল ওষুধ ব্যবহারে হাইপারক্যালেমিয়া ও রেনাল ফেইলিউর রোধ করে।'
+      },
+      {
+        testName: 'Lipid Profile',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্তের চর্বি',
+        reasonBn: 'কোলেস্টেরলের মাত্রা ও রক্তনালী ব্লক হওয়ার ঝুঁকি মূল্যায়ন।',
+        reasonEn: 'Evaluates atherogenic dyslipidemia and 10-year cardiovascular risk.',
+        urgency: 'routine',
+        urgencyLabelBn: 'রুটিন কার্ডিয়াক স্ক্রিনিং',
+        preventsErrorBn: 'অ্যাথেরোস্ক্লেরোসিস ও স্ট্রোক প্রতিরোধে যথাসময়ে স্ট্যাটিন শুরু করতে নিশ্চিত করে।'
       }
     ],
     lifestyleAdviceBn: [
@@ -594,7 +941,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     category: 'Antidiabetic (Biguanide & DPP-4)',
     severity: 'consult_doctor',
     summaryBn: 'ইনসুলিনের স্বল্পতা বা অকার্যকারিতার কারণে রক্তে গ্লুকোজের মাত্রা স্বাভাবিকের চেয়ে বেড়ে যাওয়া।',
-    summaryEn: 'Metabolic disorder characterized by elevated levels of blood glucose due to insulin resistance or deficiency.',
+    summaryEn: 'Metabolic disorder characterized by elevated levels of blood glucose.',
     banglaKeywords: [
       'ডায়াবেটিস', 'ডায়াবেটিস', 'সুগার বেশি', 'রক্তে সুগার', 'ঘন ঘন প্রস্রাব', 'অতিরিক্ত তৃষ্ণা', 
       'চোখে ঝাপসা দেখা', 'হাত পা জ্বালা'
@@ -619,6 +966,38 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'প্রতিদিন নির্দিষ্ট সময়ে খাবারের সাথে বা ছাড়া'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'HbA1c (Glycated Hemoglobin)',
+        testCategory: 'blood',
+        categoryLabelBn: 'এইচবিএ১সি পরীক্ষা',
+        reasonBn: 'বিগত ৩ মাসের গড় রক্তে গ্লুকোজ নিয়ন্ত্রণ ও ডায়াবেটিসের নিশ্চিত ডায়াগনোসিস।',
+        reasonEn: 'Gold standard index of 3-month glycemic control and diagnostic confirmation.',
+        urgency: 'routine',
+        urgencyLabelBn: 'ডায়াগনোসিস ও মনিটরিংয়ে গোল্ড স্ট্যান্ডার্ড',
+        preventsErrorBn: 'সাময়িক খাদ্যাভ্যাসের পরিবর্তনে রক্ত সুগারের বিভ্রান্তিকর রিডিংয়ের ভুল ডায়াগনোসিস রোধ করে।'
+      },
+      {
+        testName: 'FBS & 2HABF (Fasting & 2h After Breakfast)',
+        testCategory: 'blood',
+        categoryLabelBn: 'ফাস্টিং ও পোস্ট-মিল সুগার',
+        reasonBn: 'খালি পেটে ও খাবারের ২ ঘণ্টা পর গ্লুকোজের তাৎক্ষণিক মাত্রা নিরূপণ ও ওষুধের মাত্রা সমন্বয়ে।',
+        reasonEn: 'Monitors acute fasting and post-prandial glycemic excursions.',
+        urgency: 'routine',
+        urgencyLabelBn: 'প্রাথমিক স্ক্রিনিং',
+        preventsErrorBn: 'হাইপোগ্লাইসেমিয়া বা মারাত্মক হাইপারগ্লাইসেমিয়া থেকে রোগীকে নিরাপদে রাখে।'
+      },
+      {
+        testName: 'Serum Creatinine & Urine for Microalbumin (ACR)',
+        testCategory: 'blood',
+        categoryLabelBn: 'ডায়াবেটিক কিডনি পরীক্ষা',
+        reasonBn: 'ডায়াবেটিক নেফ্রোপ্যাথির প্রথম ধাপেই প্রোটিন লিকেজ ধরা ও কিডনি সুরক্ষা নিশ্চিত করা।',
+        reasonEn: 'Early detection of diabetic nephropathy via microalbuminuria assessment.',
+        urgency: 'routine',
+        urgencyLabelBn: 'বাৎসরিক স্ক্রিনিং',
+        preventsErrorBn: 'কিডনি বিকল হওয়ার পূর্বে ডায়াবেটিসের ওষুধ (যেমন মেটফরমিন) নিরাপদে টাইট্রেট করতে সহায়তা করে।'
+      }
+    ],
     lifestyleAdviceBn: [
       'চিনি, মিষ্টি, সফট ড্রিংকস ও অতিরিক্ত শর্করাযুক্ত খাবার এড়িয়ে চলুন।',
       'নিয়মিত খালি পেটে (FBS) এবং খাওয়ার ২ ঘণ্টা পরে রক্তের গ্লুকোজ মাপুন।'
@@ -639,8 +1018,8 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Eye Irritation, Red Eyes & Conjunctivitis',
     category: 'Ophthalmic Lubricants & Antiseptics',
     severity: 'mild',
-    summaryBn: 'ধুলোবালি, অ্যালার্জি, দীর্ঘক্ষণ স্ক্রিন দেখা বা জীবাণু সংক্রমণের কারণে চোখ লাল ও খচখচ করতে পারে।',
-    summaryEn: 'Conjunctival irritation, dry eyes, allergic reaction, or viral conjunctivitis causing redness and discharge.',
+    summaryBn: 'ধুলোবালি, অ্যালার্জি বা জীবাণু সংক্রমণের কারণে চোখ লাল ও খচখচ করতে পারে।',
+    summaryEn: 'Conjunctival irritation, dry eyes, allergic reaction, or viral conjunctivitis.',
     banglaKeywords: [
       'চোখ লাল', 'চোখ ওঠা', 'চোখ চুলকায়', 'চোখ দিয়ে পানি পড়ে', 'চোখ জ্বালাপোড়া', 
       'চোখ খচখচ করে', 'শুষ্ক চোখ', 'চোখে আলো সহ্য হয় না'
@@ -665,6 +1044,18 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'চোখে ড্রপ দেওয়ার পর কিছুক্ষণ চোখ বন্ধ রাখুন'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Slit Lamp Biomicroscopy & Fluorescein Staining',
+        testCategory: 'specialized',
+        categoryLabelBn: 'স্লিট ল্যাম্প ও কর্নিয়া টেস্ট',
+        reasonBn: 'চোখের কর্নিয়াতে ক্ষত (Corneal Ulcer) বা বাহ্যিক কণা (Foreign Body) আছে কিনা নিশ্চিত করতে।',
+        reasonEn: 'Detects corneal epithelial defects, ulceration, or foreign bodies under cobalt blue light.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তীব্র আলো সহ্য না হলে জরুরি',
+        preventsErrorBn: 'ভুলবশত কর্নিয়াল আলসারে স্টেরয়েড আই ড্রপ প্রয়োগ করে রোগীর স্থায়ী অন্ধত্ব ডেকে আনা রোধ করে।'
+      }
+    ],
     lifestyleAdviceBn: [
       'হাত দিয়ে চোখ চুলকাবেন না বা ঘষবেন না।',
       'মোবাইল বা কম্পিউটারের দিকে একটানা তাকিয়ে না থেকে ২০ মিনিট পর পর দূরে তাকান।',
@@ -687,7 +1078,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     nameEn: 'Fungal Skin Infection & Ringworm (Tinea)',
     category: 'Antifungal',
     severity: 'mild',
-    summaryBn: 'আর্দ্রতা, ঘাম বা ভেজা কাপড়ের কারণে ত্বকে গোল গোল চাকা (দাউদ), চুলকানি বা ফাঙ্গাল ইনফেকশন হয়।',
+    summaryBn: 'আর্দ্রতা, ঘাম বা ভেজা কাপড়ের কারণে ত্বকে গোল গোল চাকা (দাউদ) বা ফাঙ্গাল ইনফেকশন হয়।',
     summaryEn: 'Superficial dermatophyte fungal infection like tinea corporis, ringworm, or candidiasis.',
     banglaKeywords: [
       'দাউদ', 'দাদ', 'ছত্রাক', 'খোসপাঁচড়া', 'আঙ্গুলের ফাঁকে ঘা', 'ফাঙ্গাল ইনফেকশন', 
@@ -713,6 +1104,18 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'লক্ষণ ভালো হওয়ার পরও ১ সপ্তাহ ব্যবহার করুন'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Skin Scraping for KOH Mount & Microscopy',
+        testCategory: 'specialized',
+        categoryLabelBn: 'কে-ও-এইচ মাউন্ট টেস্ট',
+        reasonBn: 'মাইক্রোস্কোপের নিচে ফাঙ্গাল হাইফি সরাসরি শনাক্ত করে দাউদ বা টিনিয়া নিশ্চিতকরণ।',
+        reasonEn: 'Microscopic identification of fungal hyphae and spores in keratinized tissue.',
+        urgency: 'routine',
+        urgencyLabelBn: 'স্কিন ডায়াগনোসিস',
+        preventsErrorBn: 'একজিমা ও ফাঙ্গাল ইনফেকশনের বিভ্রান্তিকর লক্ষণ আলাদা করে ভুল স্টেরয়েড প্রয়োগ ঠেকায়।'
+      }
+    ],
     lifestyleAdviceBn: [
       'আক্রান্ত স্থান সবসময় শুষ্ক ও পরিষ্কার রাখুন। গোসলের পর ভালো করে মুছে নিন।',
       'অন্যের ব্যবহৃত তোয়ালে, গামছা বা কাপড় শেয়ার করবেন না।',
@@ -736,7 +1139,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     category: 'Laxatives & Stool Softeners',
     severity: 'mild',
     summaryBn: 'কম পানি পান, আঁশহীন খাবার বা কায়িক পরিশ্রমের অভাবে মল শক্ত হয়ে কোষ্ঠকাঠিন্য দেখা দেয়।',
-    summaryEn: 'Infrequent or difficult evacuation of the bowels due to lack of dietary fiber, inadequate fluids, or sluggish gut motility.',
+    summaryEn: 'Infrequent or difficult evacuation of the bowels due to lack of dietary fiber.',
     banglaKeywords: [
       'কোষ্ঠকাঠিন্য', 'মল শক্ত', 'পায়খানা পরিষ্কার হয় না', 'পায়খানায় কষ্ট', 'পায়খানা কষা', 
       'মলত্যাগে ব্যথা', 'কষা পায়খানা'
@@ -759,6 +1162,28 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         roleEn: 'Natural bulk-forming dietary fiber for regular bowel movements',
         typicalDosageBn: '১-২ চামচ এক গ্লাস পানিতে গুলিয়ে অবিলম্বে সেব্য',
         timingBn: 'রাত্রে ঘুমানোর পূর্বে'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'Stool for Occult Blood Test (FOBT)',
+        testCategory: 'urine_stool',
+        categoryLabelBn: 'লুকায়িত রক্ত পরীক্ষা',
+        reasonBn: 'মলে খালি চোখে অদৃশ্য রক্তপাত শনাক্ত করে কোলোরেক্টাল পলিপ বা আলসার নির্ণয়ে।',
+        reasonEn: 'Screens for microscopic gastrointestinal bleeding and colorectal neoplasia.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'বয়স্ক রোগীদের ক্ষেত্রে বা ওজন কমলে',
+        preventsErrorBn: 'কোলন ক্যান্সার বা কোলাইটিসকে কেবল সাধারণ কোষ্ঠকাঠিন্য ভেবে অবহেলা করা রোধ করে।'
+      },
+      {
+        testName: 'Serum TSH (Thyroid Stimulating Hormone)',
+        testCategory: 'blood',
+        categoryLabelBn: 'থাইরয়েড হরমোন',
+        reasonBn: 'হাইপোথাইরয়েডিজম অন্ত্রের গতি ধীর করে কোষ্ঠকাঠিন্যের কারণ তৈরি করেছে কিনা যাচাইয়ে।',
+        reasonEn: 'Identifies systemic hypothyroidism causing reduced colonic transit time.',
+        urgency: 'routine',
+        urgencyLabelBn: 'মেটাবলিক কারণ নির্ণয়',
+        preventsErrorBn: 'থাইরয়েড হরমোনের ঘাটতি মিস হওয়া ঠেকিয়ে রোগের মূল শিকড়ের সমাধান দেয়।'
       }
     ],
     lifestyleAdviceBn: [
@@ -784,7 +1209,7 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     category: 'Vitamins & Minerals',
     severity: 'mild',
     summaryBn: 'অপুষ্টি, দীর্ঘ অসুস্থতা বা ভিটামিনের অভাবে অবসাদ ও দুর্বলতা অনুভূত হতে পারে।',
-    summaryEn: 'Persistent low energy, malaise, or post-illness fatigue related to inadequate nutritional intake or micronutrient deficiency.',
+    summaryEn: 'Persistent low energy, malaise, or post-illness fatigue.',
     banglaKeywords: [
       'দুর্বলতা', 'ক্লান্তি', 'গায়ে শক্তি পাই না', 'দুর্বল লাগে', 'ভিটামিনের অভাব', 
       'মাথা ঝিমঝিম', 'অল্পতে হাঁপিয়ে যাই', 'হাত পা কাঁপে'
@@ -809,6 +1234,38 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
         timingBn: 'দুপুরে বা রাতে খাওয়ার পর'
       }
     ],
+    recommendedTests: [
+      {
+        testName: 'Complete Blood Count (CBC with PBF)',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্তস্বল্পতা পরীক্ষা',
+        reasonBn: 'হিমোগ্লোবিনের মাত্রা ও লোহিত রক্তকণিকার আকার দেখে অ্যানিমিয়া বা রক্তস্বল্পতা শনাক্তকরণ।',
+        reasonEn: 'Screens for microcytic, normocytic, or macrocytic anemia and hemoglobin level.',
+        urgency: 'routine',
+        urgencyLabelBn: 'প্রাথমিক টেস্ট',
+        preventsErrorBn: 'রক্তস্বল্পতা মিস করে অপ্রয়োজনীয় সাধারণ টনিক দিয়ে সময় নষ্ট করা প্রতিরোধ করে।'
+      },
+      {
+        testName: 'Serum Ferritin & Iron Profile',
+        testCategory: 'blood',
+        categoryLabelBn: 'আয়রন রিজার্ভ পরীক্ষা',
+        reasonBn: 'শরীরের আয়রন সঞ্চয় মাপা ও আয়রন ডেফিসিয়েন্সি অ্যানিমিয়া নিশ্চিতকরণ।',
+        reasonEn: 'Evaluates total body iron stores and distinguishes from thalassemia trait.',
+        urgency: 'routine',
+        urgencyLabelBn: 'নিশ্চিতকরণ পরীক্ষা',
+        preventsErrorBn: 'থ্যালাসেমিয়া ট্রেইট ও আয়রন ঘাটতির মারাত্মক ভুল চিকিৎসায় আয়রন ওভারলোড হওয়া থেকে বাঁচায়।'
+      },
+      {
+        testName: 'Serum TSH & RBS',
+        testCategory: 'blood',
+        categoryLabelBn: 'হরমোন ও সুগার',
+        reasonBn: 'ক্লান্তির অন্তর্নিহিত কারণ হিসেবে হাইপোথাইরয়েডিজম বা অনির্ণীত ডায়াবেটিস বাদ দিতে।',
+        reasonEn: 'Excludes endocrine etiologies like hypothyroidism or diabetes mellitus.',
+        urgency: 'routine',
+        urgencyLabelBn: 'মেটাবলিক স্ক্রিনিং',
+        preventsErrorBn: 'সাইলেন্ট ডায়াবেটিস বা মেটাবলিক স্লথনেস দ্রুত শনাক্ত করে।'
+      }
+    ],
     lifestyleAdviceBn: [
       'পুষ্টিকর খাবার, ডিম, দুধ, ফলমূল ও পর্যাপ্ত প্রোটিন গ্রহণ করুন।',
       'দিনে অন্তত ৭-৮ ঘণ্টা নিয়মিত ঘুমান।'
@@ -820,5 +1277,290 @@ export const SYMPTOM_CONDITIONS: SymptomCondition[] = [
     warningsBn: [
       'দীর্ঘমেয়াদী ক্লান্তির পেছনে রক্তস্বল্পতা (Anemia) বা থাইরয়েডের সমস্যা থাকতে পারে; ডাক্তারের কাছে রক্ত পরীক্ষা করিয়ে নেওয়া ভালো।'
     ]
+  },
+
+  // 17. Chest Pain, Pressure & Acute Coronary Syndrome
+  {
+    id: 'chest_pain_cardiac',
+    nameBn: 'বুকে তীব্র চাপ, বুকব্যথা ও হৃদরোগের ঝুঁকি',
+    nameEn: 'Chest Pain, Angina & Acute Coronary Syndrome',
+    category: 'Cardiovascular & Emergency',
+    severity: 'emergency',
+    summaryBn: 'বুকের মাঝখানে ভারী পাথর চেপে বসার মত ব্যথা, বাম হাতে বা চোয়ালে ছড়িয়ে যাওয়া এবং ঘাম হওয়া হার্ট অ্যাটাকের লক্ষণ হতে পারে।',
+    summaryEn: 'Central crushing chest pain, radiating to left arm or jaw with diaphoresis, indicating possible myocardial ischemia or infarction.',
+    banglaKeywords: [
+      'বুকে ব্যথা', 'বুক ব্যথা', 'বুকের চাপ', 'বুক চেপে ধরে', 'হার্ট অ্যাটাক', 'হার্টের সমস্যা', 
+      'বুকে পাথর', 'বাম হাত ব্যথা', 'বুকে তীব্র যন্ত্রণা', 'শ্বাস নিতে বুক ব্যথা'
+    ],
+    englishKeywords: [
+      'chest pain', 'angina', 'heart attack', 'cardiac pain', 'chest pressure', 
+      'myocardial infarction', 'radiating pain', 'crushing chest pain'
+    ],
+    recommendedGenerics: [
+      {
+        genericName: 'Glyceryl Trinitrate',
+        roleBn: 'হৃদপিন্ডের ধমনী দ্রুত প্রসারিত করে বুকে ব্যথার তীব্রতা কমায় (জরুরি নাইট্রোগ্লিসারিন স্প্রে/ট্যাবলেট)',
+        roleEn: 'Sublingual vasodilator relieving acute anginal ischemic pain',
+        typicalDosageBn: '১-২ পাফ জিহ্বার নিচে স্প্রে অথবা ১টি ট্যাবলেট জিহ্বার নিচে',
+        timingBn: 'বুকে ব্যথার সময় অবিলম্বে (বসা অবস্থায়)'
+      },
+      {
+        genericName: 'Aspirin',
+        roleBn: 'রক্তনালীতে রক্ত জমাট বাঁধা ঠেকিয়ে হার্ট অ্যাটাকের ক্ষতি সীমিত রাখে',
+        roleEn: 'Antiplatelet agent preventing propagation of intracoronary thrombus',
+        typicalDosageBn: '৩০০ মি.গ্রা. জরুরি অবস্থায় চিবিয়ে সেব্য',
+        timingBn: 'তাৎক্ষণিক চিবিয়ে সেব্য'
+      },
+      {
+        genericName: 'Clopidogrel',
+        roleBn: 'দ্বিতীয় অ্যান্টিপ্লাটিলেট — রক্তনালী খোলা রাখতে ডুয়াল অ্যান্টিপ্লাটিলেট থেরাপির অংশ',
+        roleEn: 'P2Y12 inhibitor complementing aspirin in acute coronary syndrome',
+        typicalDosageBn: '৩০০ মি.গ্রা. লোডিং ডোজ',
+        timingBn: 'জরুরি নির্দেশনায়'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'ECG (12 Lead)',
+        testCategory: 'cardiac',
+        categoryLabelBn: 'জরুরি ইসিজি',
+        reasonBn: 'এসটি এলিভেশন (STEMI) বা তীব্র ইস্কেমিক পরিবর্তন তাৎক্ষণিক নির্ণয়ে প্রথম ও প্রধান টেস্ট।',
+        reasonEn: 'Immediate diagnostic test to detect ST-elevation myocardial infarction and arrhythmias.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তাৎক্ষণিক আবশ্যক (Immediate)',
+        preventsErrorBn: 'হার্ট অ্যাটাককে সাধারণ গ্যাস্ট্রিক মনে করার মারাত্মক ভুল ঠেকিয়ে জীবন রক্ষা করে।'
+      },
+      {
+        testName: 'Serum Troponin-I (High Sensitivity)',
+        testCategory: 'blood',
+        categoryLabelBn: 'কার্ডিয়াক এনজাইম',
+        reasonBn: 'হার্টের মাংসপেশির ক্ষতি নিশ্চিতকরণের গোল্ড স্ট্যান্ডার্ড বায়োমার্কার।',
+        reasonEn: 'Definitive gold-standard biomarker of myocardial necrosis and injury.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তৎক্ষণাৎ আবশ্যক',
+        preventsErrorBn: 'নন-এসটিএমআই (NSTEMI) হার্ট অ্যাটাক মিস হওয়া সম্পূর্ণ রোধ করে।'
+      },
+      {
+        testName: 'Echocardiography (2D / Color Doppler)',
+        testCategory: 'cardiac',
+        categoryLabelBn: 'ইকোকার্ডিওগ্রাফি',
+        reasonBn: 'হার্টের পাম্পিং ক্ষমতা (Ejection Fraction) ও প্রাচীরের গতিবিধি (RWMA) মূল্যায়নে।',
+        reasonEn: 'Assesses regional wall motion abnormality and left ventricular ejection fraction.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'জরুরি কার্ডিয়াক অ্যাসেসমেন্ট',
+        preventsErrorBn: 'হার্ট ফেইলিউর বা ভালভের গুরুতর ত্রুটি আগে থেকেই শনাক্ত করে সঠিক চিকিৎসা দেয়।'
+      },
+      {
+        testName: 'Lipid Profile',
+        testCategory: 'blood',
+        categoryLabelBn: 'রক্তের চর্বি',
+        reasonBn: 'রক্তনালীতে কোলেস্টেরল ব্লকেজ ও ভবিষ্যৎ স্ট্রোক/হার্ট অ্যাটাক ঝুঁকি নিরূপণে।',
+        reasonEn: 'Evaluates atherogenic dyslipidemia for long-term secondary prevention.',
+        urgency: 'routine',
+        urgencyLabelBn: 'রুটিন পরীক্ষা',
+        preventsErrorBn: 'হাই-ইনটেনসিটি স্ট্যাটিন থেরাপির সঠিক মাত্রা নির্ধারণে সহায়তা করে।'
+      }
+    ],
+    lifestyleAdviceBn: [
+      'বুকে তীব্র চাপ হলে কোনো কায়িক পরিশ্রম না করে শান্ত হয়ে বসে থাকুন।',
+      'বিলম্ব না করে নিকটস্থ হাসপাতালে যান; নিজে গাড়ি চালাবেন না।'
+    ],
+    lifestyleAdviceEn: [
+      'Sit down and rest immediately; avoid any physical exertion.',
+      'Call emergency services or reach a cardiac hospital immediately.'
+    ],
+    warningsBn: [
+      'বুকে ব্যথা যদি চোয়ালে, ঘাড়ে বা পিঠে ছড়িয়ে যায় এবং ঠান্ডা ঘাম দেয় তবে এটি নিশ্চিত কার্ডিয়াক রেড ফ্ল্যাগ।'
+    ],
+    emergencyWarningBn: 'বুকে তীব্র পাথর চেপে বসার মত ব্যথা, ঘাম ও শ্বাসকষ্ট — জরুরি কার্ডিয়াক ইমার্জেন্সি! অবিলম্বে কার্ডিয়াক বা জরুরি হাসপাতালে স্থানান্তর করুন।'
+  },
+
+  // 18. Urinary Tract Infection (UTI) & Burning Micturition
+  {
+    id: 'uti_urinary',
+    nameBn: 'প্রস্রাবে জ্বালাপোড়া ও ঘন ঘন প্রস্রাবের বেগ (UTI)',
+    nameEn: 'Urinary Tract Infection (UTI) & Burning Micturition',
+    category: 'Urological & Antibacterial',
+    severity: 'moderate',
+    summaryBn: 'মূত্রনালী বা ব্লাডারে ব্যাকটেরিয়া সংক্রমণের কারণে প্রস্রাবের সময় তীব্র জ্বালাপোড়া, তলপেটে ব্যথা বা ঘন ঘন বেগ হতে পারে।',
+    summaryEn: 'Bacterial infection of the bladder or urethra causing dysuria, frequency, and suprapubic discomfort.',
+    banglaKeywords: [
+      'প্রস্রাবে জ্বালা', 'প্রস্রাবে জ্বালাপোড়া', 'ইউটিআই', 'ঘন ঘন প্রস্রাব', 'তলপেটে ব্যথা', 
+      'প্রস্রাব আটকে থাকে', 'প্রস্রাবে দুর্গন্ধ', 'প্রস্রাবে রক্ত', 'পেসাবে জ্বালা'
+    ],
+    englishKeywords: [
+      'uti', 'urinary tract infection', 'burning urine', 'dysuria', 'frequent urination', 
+      'urine burning', 'cloudy urine', 'bladder infection'
+    ],
+    recommendedGenerics: [
+      {
+        genericName: 'Cefixime',
+        roleBn: 'মূত্রতন্ত্রের ব্যাকটেরিয়াল ইনফেকশনের চিকিৎসায় বহুল কার্যকর সেফালোস্পোরিন অ্যান্টিবায়োটিক',
+        roleEn: 'Third-generation cephalosporin for uncomplicated urinary tract infection',
+        typicalDosageBn: '২০০ মি.গ্রা. বা ৪০০ মি.গ্রা. দিনে ১-২ বার (টানা ৭-১৪ দিন)',
+        timingBn: 'খাওয়ার পর'
+      },
+      {
+        genericName: 'Nitrofurantoin',
+        roleBn: 'মূত্রথলিতে উচ্চ ঘনমাত্রায় কাজ করে ইউটিআই নিরাময়কারী ফার্স্ট-লাইন ওষুধ',
+        roleEn: 'First-line antimicrobial concentrating specifically in the urinary tract',
+        typicalDosageBn: '১০০ মি.গ্রা. দিনে ২ বার (খাবারের সাথে)',
+        timingBn: 'ভরা পেটে সেব্য'
+      },
+      {
+        genericName: 'Sodium Citrate',
+        roleBn: 'ইউরিন অ্যালকালাইজার — প্রস্রাবের এসিডিটি কমিয়ে তাৎক্ষণিক জ্বালাপোড়া প্রশমিত করে',
+        roleEn: 'Urinary alkalinizer relieving dysuria and reducing urinary acidity',
+        typicalDosageBn: 'সিরাপ ২-৩ চামচ আধা গ্লাস পানিতে মিশিয়ে দিনে ৩ বার',
+        timingBn: 'খাওয়ার পর'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'Urine R/M/E (Routine & Microscopic Examination)',
+        testCategory: 'urine_stool',
+        categoryLabelBn: 'প্রস্রাবের রুটিন টেস্ট',
+        reasonBn: 'প্রস্রাবে পুঁজকণিকা (Pus Cells), লোহিতকণিকা (RBC) ও ব্যাকটেরিয়ার উপস্থিতি তাৎক্ষণিক নিশ্চিতকরণে।',
+        reasonEn: 'Detects pyuria, hematuria, bacteriuria, and casts confirming active urinary infection.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তাৎক্ষণিক আবশ্যক',
+        preventsErrorBn: 'ইউরিনারি ইনফেকশন নিশ্চিত না হয়েই অপ্রয়োজনীয় অ্যান্টিবায়োটিক প্রয়োগের বিভ্রান্তি দূর করে।'
+      },
+      {
+        testName: 'Urine Culture & Sensitivity (C/S)',
+        testCategory: 'urine_stool',
+        categoryLabelBn: 'ইউরিন কালচার ও সেনসিটিভিটি',
+        reasonBn: 'সুনির্দিষ্ট ব্যাকটেরিয়া (যেমন E. coli) শনাক্তকরণ এবং ঠিক কোন অ্যান্টিবায়োটিক কাজ করবে তা নিশ্চিত করতে।',
+        reasonEn: 'Isolates causative organism and determines precise antimicrobial susceptibility.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'অ্যান্টিবায়োটিক শুরুর পূর্বে বা বারবার হলে',
+        preventsErrorBn: 'অ্যান্টিবায়োটিক রেজিস্ট্যান্স রোধ করে এবং ভুল অ্যান্টিবায়োটিকের কারণে ইনফেকশন কিডনিতে (Pyelonephritis) ছড়ানো ঠেকায়।'
+      },
+      {
+        testName: 'USG of KUB & Prostate',
+        testCategory: 'radiology',
+        categoryLabelBn: 'আল্ট্রাসনোগ্রাম (কে-ইউ-বি)',
+        reasonBn: 'কিডনিতে পাথর, মূত্রনালীর ব্লকেজ বা পুরুষদের ক্ষেত্রে প্রোস্টেট গ্রন্থির বৃদ্ধি শনাক্ত করতে।',
+        reasonEn: 'Screens for renal calculi, hydronephrosis, urinary retention, and benign prostatic hyperplasia.',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'বারবার প্রস্রাবে ইনফেকশন হলে',
+        preventsErrorBn: 'পাথর বা প্রোস্টেটের প্রতিবন্ধকতা মিস করে কেবল ওষুধ দিয়ে চিকিৎসা চালানোর পুনরাবৃত্তি বন্ধ করে।'
+      },
+      {
+        testName: 'Serum Creatinine',
+        testCategory: 'blood',
+        categoryLabelBn: 'কিডনি ফাংশন',
+        reasonBn: 'ইনফেকশন কিডনিতে ছড়িয়ে পাইলোনেফ্রাইটিস বা কিডনির কার্যক্ষমতার ক্ষতি করেছে কিনা তা যাচাইয়ে।',
+        reasonEn: 'Excludes ascending upper urinary tract infection and renal impairment.',
+        urgency: 'routine',
+        urgencyLabelBn: 'জ্বর বা কোমর ব্যথায় জরুরি',
+        preventsErrorBn: 'কিডনির অবনতি প্রাথমিক অবস্থাতেই শনাক্ত করে রোগীকে সুরক্ষিত রাখে।'
+      }
+    ],
+    lifestyleAdviceBn: [
+      'প্রতিদিন অন্তত ৩ থেকে ৪ লিটার বিশুদ্ধ পানি পান করুন যাতে ব্যাকটেরিয়া ধুয়ে বের হয়ে যায়।',
+      'প্রস্রাবের বেগ আটকে রাখবেন না; বেগ এলেই অবিলম্বে প্রস্রাব করুন।',
+      'প্রস্রাব করার পর পরিষ্কার পানি দিয়ে পরিষ্কার-পরিচ্ছন্নতা বজায় রাখুন।'
+    ],
+    lifestyleAdviceEn: [
+      'Drink 3-4 liters of water daily to flush bacteria from the urinary system.',
+      'Do not delay or hold urine when the urge arises.',
+      'Maintain proper hygiene.'
+    ],
+    warningsBn: [
+      'প্রস্রাবে জ্বালাপোড়ার সাথে যদি কাঁপুনি দিয়ে তীব্র জ্বর বা কোমরের পেছনে ব্যথা থাকে তবে ইনফেকশন কিডনিতে পৌঁছানোর ঝুঁকি রয়েছে — দ্রুত চিকিৎসকের কাছে যান।'
+    ],
+    emergencyWarningBn: 'প্রস্রাবের সাথে লাল রক্ত যাওয়া বা প্রস্রাব সম্পূর্ণ বন্ধ হয়ে গেলে অবিলম্বে জরুরি বিভাগে যোগাযোগ করুন।'
+  },
+
+  // 19. Jaundice, Yellow Eyes & Hepatic Distress
+  {
+    id: 'jaundice_liver',
+    nameBn: 'জন্ডিস, চোখ ও প্রস্রাব হলুদ হওয়া ও লিভারের সমস্যা',
+    nameEn: 'Jaundice, Yellow Sclera & Hepatic Inflammation',
+    category: 'Hepatoprotective & Gastrointestinal',
+    severity: 'consult_doctor',
+    summaryBn: 'রক্তে বিলিরুবিনের মাত্রা বৃদ্ধি, হেপাটাইটিস ভাইরাসের আক্রমণ বা পিত্তনালীর বাধার কারণে চোখ ও প্রস্রাব হলুদ হতে পারে।',
+    summaryEn: 'Hyperbilirubinemia leading to yellowing of sclera and skin caused by acute hepatitis, hemolysis, or biliary obstruction.',
+    banglaKeywords: [
+      'জন্ডিস', 'চোখ হলুদ', 'প্রস্রাব হলুদ', 'গা হলুদ', 'লিভারের সমস্যা', 'লিভার ফোলা', 
+      'খাবারে অরুচি জন্ডিস', 'পেটে পানি', 'বিলিরুবিন বেশি'
+    ],
+    englishKeywords: [
+      'jaundice', 'yellow eyes', 'yellow urine', 'hepatitis', 'bilirubin', 
+      'liver disease', 'liver inflammation', 'icterus'
+    ],
+    recommendedGenerics: [
+      {
+        genericName: 'Ursodeoxycholic Acid',
+        roleBn: 'পিত্ত প্রবাহ সচল করে এবং লিভারের কোষগুলোকে বিষাক্ত পিত্ত এসিডের ক্ষতি থেকে রক্ষা করে',
+        roleEn: 'Hepatoprotective agent promoting biliary flow and cellular protection',
+        typicalDosageBn: '২৫০ মি.গ্রা. বা ৩০০ মি.গ্রা. দিনে ২-৩ বার',
+        timingBn: 'খাবারের সাথে বা খাওয়ার পর'
+      },
+      {
+        genericName: 'Silymarin',
+        roleBn: 'প্রাকৃতিক মিল্ক থিসল উপাদান — লিভার কোষের পুনরুজ্জীবনে সহায়ক সাপ্লিমেন্ট',
+        roleEn: 'Antioxidant flavonoid protecting hepatocytes from membrane peroxidation',
+        typicalDosageBn: '১৪০ মি.গ্রা. দিনে ২-৩ বার',
+        timingBn: 'খাওয়ার পর'
+      }
+    ],
+    recommendedTests: [
+      {
+        testName: 'Serum Bilirubin (Total, Direct & Indirect)',
+        testCategory: 'blood',
+        categoryLabelBn: 'বিলিরুবিন পরীক্ষা',
+        reasonBn: 'রক্তে জন্ডিসের সঠিক মাত্রা এবং এটি হেপাটিক নাকি অবস্ট্রাক্টিভ (পিত্তনালীর ব্লকেজ) তা নির্ণয়ে।',
+        reasonEn: 'Measures total, conjugated, and unconjugated bilirubin to identify etiology of jaundice.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'তাৎক্ষণিক আবশ্যক',
+        preventsErrorBn: 'হিমোলাইটিক ও অবস্ট্রাক্টিভ জন্ডিসের মধ্যকার মারাত্মক ভুল পার্থক্য নির্মূল করে।'
+      },
+      {
+        testName: 'SGPT / ALT & SGOT / AST',
+        testCategory: 'blood',
+        categoryLabelBn: 'লিভার এনজাইম',
+        reasonBn: 'লিভার কোষে তীব্র প্রদাহ (Acute Hepatitis) বা ক্ষতির মাত্রা সরাসরি নিরূপণে।',
+        reasonEn: 'Key transaminases indicating acute hepatocyte injury and necrosis.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'প্রাথমিক লিভার পরীক্ষা',
+        preventsErrorBn: 'লিভারের ক্ষতের তীব্রতা না বুঝে প্যারাসিটামল বা লিভার-টক্সিক ওষুধ সেবনের ঝুঁকি প্রতিরোধ করে।'
+      },
+      {
+        testName: 'USG of Hepatobiliary System (HBS)',
+        testCategory: 'radiology',
+        categoryLabelBn: 'হেপাটোবিলিয়ারি আল্ট্রাসনোগ্রাম',
+        reasonBn: 'পিত্তথলি বা পিত্তনালীতে পাথর আটকে অবস্ট্রাক্টিভ জন্ডিস হয়েছে কিনা তা দেখতে।',
+        reasonEn: 'Visualizes biliary tree dilatation, choledocholithiasis, and hepatic parenchyma.',
+        urgency: 'immediate',
+        urgencyLabelBn: 'জরুরি ইমেজিং',
+        preventsErrorBn: 'সার্জিক্যাল অবস্ট্রাকশন মিস করে রোগীকে সেপসিসে চলে যাওয়া থেকে বাঁচায়।'
+      },
+      {
+        testName: 'Viral Hepatitis Panel (HBsAg, Anti-HCV, IgM Anti-HAV, IgM Anti-HEV)',
+        testCategory: 'blood',
+        categoryLabelBn: 'হেপাটাইটিস ভাইরাস স্ক্রিনিং',
+        reasonBn: 'জন্ডিসের পেছনে হেপাটাইটিস এ, ই, বি বা সি ভাইরাসের আক্রমণ রয়েছে কিনা তা নিশ্চিত হতে।',
+        reasonEn: 'Differentiates feco-oral hepatitis (A, E) from blood-borne chronic hepatitis (B, C).',
+        urgency: 'if_persists',
+        urgencyLabelBn: 'কারণ নিশ্চিতকরণে আবশ্যক',
+        preventsErrorBn: 'ক্রনিক হেপাটাইটিস বি/সি মিস হয়ে ভবিষ্যতে লিভার সিরোসিস হওয়া প্রতিরোধ করে।'
+      }
+    ],
+    lifestyleAdviceBn: [
+      'সম্পূর্ণ বিশ্রাম নিন; জন্ডিস চলাকালীন ভারী কায়িক পরিশ্রম ও দৌড়াদৌড়ি কঠোরভাবে নিষিদ্ধ।',
+      'বাইরের খোলা খাবার, তেল-মশলা ও কোমল পানীয় সম্পূর্ণ বর্জন করুন।',
+      'পর্যাপ্ত বিশুদ্ধ পানি ও শর্করাযুক্ত সহজপাচ্য খাবার গ্রহণ করুন।'
+    ],
+    lifestyleAdviceEn: [
+      'Maintain strict bed rest during acute jaundice.',
+      'Avoid oily, greasy foods, fast food, and alcohol completely.',
+      'Drink boiled pure water and eat light, easily digestible carbohydrates.'
+    ],
+    warningsBn: [
+      'কবিরাজি বা ঝাড়ফুঁকের ওষুধ খাবেন না; এতে লিভার ফেইলিউর হয়ে মৃত্যুর ঝুঁকি থাকে।'
+    ],
+    emergencyWarningBn: 'রোগী যদি প্রলাপ বকে, ঘুম ঘুম ভাব বা অস্বাভাবিক আচরণ করে তবে তা একিউট লিভার ফেইলিউরের লক্ষণ — অবিলম্বে আইসিইউ সুবিধাযুক্ত হাসপাতালে নিন।'
   }
 ];

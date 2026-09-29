@@ -1,6 +1,13 @@
-import { SYMPTOM_CONDITIONS, type SymptomCondition, type RecommendedGeneric } from '../data/symptomKnowledgeBase';
+import { 
+  SYMPTOM_CONDITIONS, 
+  type SymptomCondition, 
+  type RecommendedGeneric,
+  type RecommendedPathologyTest 
+} from '../data/symptomKnowledgeBase';
 import { getLocalMedicines } from './medicineService';
 import type { MedicineDirectoryItem } from '../types/database.types';
+
+export { type RecommendedPathologyTest };
 
 export interface GenericRecommendation {
   generic: RecommendedGeneric;
@@ -17,6 +24,7 @@ export interface MatchedConditionResult {
 export interface SymptomAnalysisResult {
   query: string;
   matchedConditions: MatchedConditionResult[];
+  allRecommendedTests: RecommendedPathologyTest[];
   fallbackMedicines: MedicineDirectoryItem[];
   urgencyLevel: 'mild' | 'moderate' | 'consult_doctor' | 'emergency';
   hasEmergencyWarning: boolean;
@@ -81,6 +89,7 @@ export function analyzeSymptoms(query: string): SymptomAnalysisResult {
     return {
       query: '',
       matchedConditions: [],
+      allRecommendedTests: [],
       fallbackMedicines: [],
       urgencyLevel: 'mild',
       hasEmergencyWarning: false,
@@ -176,6 +185,20 @@ export function analyzeSymptoms(query: string): SymptomAnalysisResult {
       .slice(0, 12);
   }
 
+  // Deduplicate all recommended tests across all matched top conditions
+  const testMap = new Map<string, RecommendedPathologyTest>();
+  const topConditions = matchedConditions.slice(0, 3);
+  for (const mc of topConditions) {
+    if (mc.condition.recommendedTests) {
+      for (const t of mc.condition.recommendedTests) {
+        if (!testMap.has(t.testName)) {
+          testMap.set(t.testName, t);
+        }
+      }
+    }
+  }
+  const allRecommendedTests = Array.from(testMap.values());
+
   // Determine overall urgency
   let highestUrgency: 'mild' | 'moderate' | 'consult_doctor' | 'emergency' = 'mild';
   let hasEmergencyWarning = false;
@@ -197,7 +220,8 @@ export function analyzeSymptoms(query: string): SymptomAnalysisResult {
 
   return {
     query: trimmed,
-    matchedConditions: matchedConditions.slice(0, 3), // Return top 3 matched categories
+    matchedConditions: topConditions,
+    allRecommendedTests,
     fallbackMedicines,
     urgencyLevel: highestUrgency,
     hasEmergencyWarning,

@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { 
   Plus, Trash2, Printer, Save, Search, Pill, Sparkles, 
-  RotateCcw, User, HeartPulse, FileText, CheckCircle2
+  RotateCcw, User, HeartPulse, FileText, CheckCircle2,
+  FlaskConical, Microscope
 } from 'lucide-react';
 import { searchMedicines } from '../../services/medicineService';
 import type { MedicineDirectoryItem } from '../../types/database.types';
@@ -18,6 +19,49 @@ interface PrescriptionBuilderProps {
   onSavePrescription: (data: PrescriptionData) => void;
   initialData?: PrescriptionData | null;
 }
+
+export const CLINICAL_TEST_PRESETS = [
+  {
+    category: 'জ্বর / ডেঙ্গু / টাইফয়েড',
+    description: 'সংক্রমণের উৎস ও প্লেটলেট নিরূপণে',
+    tests: ['CBC with ESR', 'Dengue NS1 Antigen & Dengue IgM/IgG', 'Widal Test / Blood C/S', 'Urine R/M/E']
+  },
+  {
+    category: 'বুকব্যথা / কার্ডিয়াক (Heart)',
+    description: 'হার্ট অ্যাটাক ও ইস্কেমিক ঝুঁকি বাদ দিতে',
+    tests: ['ECG (12 Lead)', 'Serum Troponin-I', 'Lipid Profile', 'Echocardiography']
+  },
+  {
+    category: 'গ্যাস্ট্রিক / পেটব্যথা / প্যানক্রিয়াস',
+    description: 'আলসার, পাথর ও প্যানক্রিয়াটাইটিস নির্ণয়ে',
+    tests: ['ECG (12 Lead)', 'USG of Whole Abdomen', 'Serum Lipase & Amylase', 'Upper GI Endoscopy']
+  },
+  {
+    category: 'কাশি / ফুসফুস / টিবি (Chest)',
+    description: 'নিউমোনিয়া ও যক্ষ্মা স্ক্রিনিংয়ে',
+    tests: ['Chest X-Ray P/A View', 'CBC with ESR', 'Sputum for GeneXpert / AFB']
+  },
+  {
+    category: 'প্রস্রাবে জ্বালা (UTI) / কিডনি',
+    description: 'ব্যাকটেরিয়াল ইউটিআই ও কিডনি সুরক্ষা',
+    tests: ['Urine R/M/E', 'Urine Culture & Sensitivity (C/S)', 'USG of KUB & Prostate', 'Serum Creatinine']
+  },
+  {
+    category: 'ডায়াবেটিস ও রক্তের সুগার',
+    description: '৩ মাসের গড় সুগার ও কিডনি মার্কার',
+    tests: ['HbA1c', 'FBS & 2HABF', 'Serum Creatinine', 'Lipid Profile', 'Urine for Microalbumin']
+  },
+  {
+    category: 'জন্ডিস / লিভার ফাংশন',
+    description: 'হেপাটাইটিস ও পিত্তনালী অবস্ট্রাকশন',
+    tests: ['Serum Bilirubin (Total & Direct)', 'SGPT / ALT', 'USG of Hepatobiliary System', 'HBsAg & Anti-HCV']
+  },
+  {
+    category: 'দুর্বলতা / রক্তস্বল্পতা (Anemia)',
+    description: 'হিমোগ্লোবিন, আয়রন ও থাইরয়েড ঘাটতি',
+    tests: ['Complete Blood Count (CBC with PBF)', 'Serum Ferritin', 'Serum TSH', 'RBS']
+  }
+];
 
 const COMMON_INVESTIGATIONS = [
   'CBC with ESR',
@@ -111,8 +155,19 @@ export function PrescriptionBuilder({
   const [currentInstructions, setCurrentInstructions] = useState('');
 
   // Investigations & Advice
-  const [selectedInvestigations, setSelectedInvestigations] = useState<string[]>([]);
+  const [selectedInvestigations, setSelectedInvestigations] = useState<string[]>(() => {
+    if (initialData?.investigations && initialData.investigations.length > 0) {
+      return initialData.investigations;
+    }
+    try {
+      const pending = localStorage.getItem('pending_rx_investigations');
+      return pending ? JSON.parse(pending) : [];
+    } catch {
+      return [];
+    }
+  });
   const [customInvestigation, setCustomInvestigation] = useState('');
+  const [selectedTestPreset, setSelectedTestPreset] = useState<number | null>(0);
   const [selectedAdvices, setSelectedAdvices] = useState<string[]>([]);
   const [customAdvice, setCustomAdvice] = useState('');
   const [followUpDate, setFollowUpDate] = useState('');
@@ -211,14 +266,41 @@ export function PrescriptionBuilder({
   };
 
   const toggleInvestigation = (test: string) => {
-    setSelectedInvestigations((prev) =>
-      prev.includes(test) ? prev.filter((t) => t !== test) : [...prev, test]
-    );
+    setSelectedInvestigations((prev) => {
+      const updated = prev.includes(test) ? prev.filter((t) => t !== test) : [...prev, test];
+      try {
+        localStorage.setItem('pending_rx_investigations', JSON.stringify(updated));
+      } catch (err) {
+        console.error(err);
+      }
+      return updated;
+    });
+  };
+
+  const handleAddBatchPresetTests = (tests: string[]) => {
+    setSelectedInvestigations((prev) => {
+      const next = Array.from(new Set([...prev, ...tests]));
+      try {
+        localStorage.setItem('pending_rx_investigations', JSON.stringify(next));
+      } catch (err) {
+        console.error(err);
+      }
+      return next;
+    });
   };
 
   const handleAddCustomInvestigation = () => {
     if (customInvestigation.trim()) {
-      setSelectedInvestigations((prev) => [...prev, customInvestigation.trim()]);
+      const trimmed = customInvestigation.trim();
+      setSelectedInvestigations((prev) => {
+        const updated = [...prev, trimmed];
+        try {
+          localStorage.setItem('pending_rx_investigations', JSON.stringify(updated));
+        } catch (err) {
+          console.error(err);
+        }
+        return updated;
+      });
       setCustomInvestigation('');
     }
   };
@@ -730,30 +812,166 @@ export function PrescriptionBuilder({
       </section>
 
       {/* 3. Investigations (পরীক্ষাসমূহ) */}
-      <section className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 border-b border-slate-100 pb-2">
-          <HeartPulse className="w-4 h-4 text-navy-700" />
-          <span>৩. ল্যাব টেস্ট ও পরীক্ষা (Investigations Advised)</span>
-        </h3>
+      <section className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+            <HeartPulse className="w-4 h-4 text-navy-700" />
+            <span>৩. ল্যাব টেস্ট ও পরীক্ষা (Investigations Advised)</span>
+          </h3>
 
-        <div className="flex flex-wrap gap-1.5">
-          {COMMON_INVESTIGATIONS.map((test) => {
-            const isSelected = selectedInvestigations.includes(test);
-            return (
+          <span className="text-xs font-semibold text-navy-800 bg-navy-50 px-2.5 py-0.5 rounded-full border border-navy-200 self-start sm:self-auto">
+            {selectedInvestigations.length}টি পরীক্ষা সংযুক্ত
+          </span>
+        </div>
+
+        {/* CLINICAL DECISION SUPPORT: SMART TEST ASSISTANT FOR DOCTORS */}
+        <div className="bg-[#fcfaf6] border border-[#dfd0b8] rounded-xl p-3.5 sm:p-4 space-y-3 shadow-2xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <FlaskConical className="w-4 h-4 text-[#0f4c42]" />
+              <div>
+                <span className="text-xs font-extrabold text-[#1c1710] block sm:inline">
+                  ক্লিনিক্যাল টেস্ট অ্যাসিস্ট্যান্ট (Smart Suggestions):
+                </span>
+                <span className="text-[11px] text-stone-500 sm:ml-2">
+                  ভুল ডায়াগনোসিস রোধে রোগের ক্যাটাগরি অনুযায়ী স্ট্যান্ডার্ড টেস্ট
+                </span>
+              </div>
+            </div>
+
+            {selectedTestPreset !== null && (
               <button
-                key={test}
                 type="button"
-                onClick={() => toggleInvestigation(test)}
-                className={`px-3 py-1 rounded-xl text-xs font-medium transition border ${
-                  isSelected
-                    ? 'bg-navy-800 text-white border-navy-900 shadow-sm font-bold'
-                    : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-                }`}
+                onClick={() => handleAddBatchPresetTests(CLINICAL_TEST_PRESETS[selectedTestPreset].tests)}
+                className="px-2.5 py-1 bg-[#0f4c42] hover:bg-[#0c3c34] text-white rounded-lg text-[11px] font-bold transition flex items-center gap-1 shrink-0 cursor-pointer shadow-2xs self-start sm:self-auto"
               >
-                {isSelected ? `✓ ${test}` : `+ ${test}`}
+                <Plus className="w-3 h-3" />
+                <span>এই গ্রুপের সব টেস্ট নিন</span>
               </button>
-            );
-          })}
+            )}
+          </div>
+
+          {/* Preset Category Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+            {CLINICAL_TEST_PRESETS.map((preset, idx) => {
+              const isActive = selectedTestPreset === idx;
+              return (
+                <button
+                  key={preset.category}
+                  type="button"
+                  onClick={() => setSelectedTestPreset(isActive ? null : idx)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition shrink-0 border cursor-pointer ${
+                    isActive
+                      ? 'bg-[#0f4c42] text-white border-[#0f4c42] shadow-xs'
+                      : 'bg-white hover:bg-[#ede3d3] text-stone-700 border-[#dfd0b8]'
+                  }`}
+                >
+                  {preset.category}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Preset's Tests Display */}
+          {selectedTestPreset !== null && (
+            <div className="pt-2 border-t border-[#ede3d3] space-y-2">
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="text-stone-600 font-semibold">
+                  উদ্দেশ্য: {CLINICAL_TEST_PRESETS[selectedTestPreset].description}
+                </span>
+                <span className="text-stone-500">ক্লিক করে যুক্ত বা বাদ দিন</span>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {CLINICAL_TEST_PRESETS[selectedTestPreset].tests.map((t) => {
+                  const isChecked = selectedInvestigations.includes(t);
+                  return (
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => toggleInvestigation(t)}
+                      className={`px-3 py-1 rounded-xl text-xs font-medium transition border flex items-center gap-1 cursor-pointer ${
+                        isChecked
+                          ? 'bg-emerald-700 text-white border-emerald-800 shadow-xs font-bold'
+                          : 'bg-white hover:bg-[#f5efe4] text-stone-800 border-[#dfd0b8]'
+                      }`}
+                    >
+                      {isChecked ? <CheckCircle2 className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+                      <span>{t}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Selected Tests Pills (Already added to prescription) */}
+        {selectedInvestigations.length > 0 && (
+          <div className="space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <div className="flex items-center justify-between text-[11px] text-slate-500 font-bold uppercase tracking-wider">
+              <span>প্রেসক্রিপশনে সংযুক্ত টেস্টসমূহ ({selectedInvestigations.length}টি):</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedInvestigations([]);
+                  try {
+                    localStorage.removeItem('pending_rx_investigations');
+                  } catch (e) {
+                    console.error(e);
+                  }
+                }}
+                className="text-red-600 hover:underline cursor-pointer"
+              >
+                সব মুছুন
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {selectedInvestigations.map((t) => (
+                <span
+                  key={t}
+                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-navy-800 text-white rounded-lg text-xs font-semibold shadow-2xs"
+                >
+                  <Microscope className="w-3 h-3 text-cyan-300" />
+                  <span>{t}</span>
+                  <button
+                    type="button"
+                    onClick={() => toggleInvestigation(t)}
+                    className="ml-1 hover:text-red-300 cursor-pointer"
+                    title="Remove"
+                  >
+                    &times;
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* General Common Investigations Chips */}
+        <div>
+          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">
+            অন্যান্য সাধারণ টেস্ট (Common Quick Selector):
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {COMMON_INVESTIGATIONS.map((test) => {
+              const isSelected = selectedInvestigations.includes(test);
+              return (
+                <button
+                  key={test}
+                  type="button"
+                  onClick={() => toggleInvestigation(test)}
+                  className={`px-3 py-1 rounded-xl text-xs font-medium transition border cursor-pointer ${
+                    isSelected
+                      ? 'bg-navy-800 text-white border-navy-900 shadow-sm font-bold'
+                      : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+                  }`}
+                >
+                  {isSelected ? `✓ ${test}` : `+ ${test}`}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Custom Test Adder */}
@@ -768,13 +986,13 @@ export function PrescriptionBuilder({
                 handleAddCustomInvestigation();
               }
             }}
-            placeholder="অন্য কোনো পরীক্ষা যুক্ত করুন (Type other test)..."
-            className="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-navy-500 focus:outline-none"
+            placeholder="অন্য কোনো পরীক্ষা লিখুন (Type custom lab test)..."
+            className="flex-1 px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs focus:ring-2 focus:ring-navy-500 focus:outline-none"
           />
           <button
             type="button"
             onClick={handleAddCustomInvestigation}
-            className="px-4 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-semibold"
+            className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-semibold cursor-pointer"
           >
             যোগ করুন
           </button>
