@@ -3,7 +3,7 @@ import {
   Search, Pill, Building2, Globe2, ArrowUpDown, 
   Sparkles, SlidersHorizontal, ChevronRight, X, Bookmark, FileText
 } from 'lucide-react';
-import { searchMedicines } from './services/medicineService';
+import { searchMedicines, preloadFullLocalDataset, subscribeDatabaseStatus } from './services/medicineService';
 import { isSupabaseConfigured } from './lib/supabase';
 import { MedicineDetailsModal } from './components/medicine/MedicineDetailsModal';
 import { AdvancedFilterDrawer } from './components/medicine/AdvancedFilterDrawer';
@@ -28,6 +28,16 @@ export function App() {
   const [selectedTherapeuticClass, setSelectedTherapeuticClass] = useState<string>('');
   const [showAdvancedFilters, setShowAdvancedFilters] = useState<boolean>(false);
   const [selectedMedicine, setSelectedMedicine] = useState<MedicineDirectoryItem | null>(null);
+
+  // Database connectivity & remote offline fallback state
+  const [isDbOffline, setIsDbOffline] = useState<boolean>(false);
+  const [dismissBanner, setDismissBanner] = useState<boolean>(false);
+
+  useEffect(() => {
+    return subscribeDatabaseStatus((offline) => {
+      setIsDbOffline(offline);
+    });
+  }, []);
 
   // Saved / Bookmarked medicines (persisted to localStorage)
   const [savedMedicines, setSavedMedicines] = useState<MedicineDirectoryItem[]>(() => {
@@ -86,11 +96,17 @@ export function App() {
   // Fetch all medicines on initial mount to populate Generics and Companies views
   useEffect(() => {
     let isMounted = true;
-    searchMedicines({ pageSize: 150 })
+    preloadFullLocalDataset()
       .then((data) => {
-        if (isMounted) setAllMedicines(data);
+        if (isMounted && data.length > 0) setAllMedicines(data);
       })
-      .catch((err) => console.error('Failed to preload medicines:', err));
+      .catch(() => {
+        searchMedicines({ pageSize: 250 })
+          .then((data) => {
+            if (isMounted) setAllMedicines(data);
+          })
+          .catch((err) => console.error('Failed to preload medicines:', err));
+      });
     return () => { isMounted = false; };
   }, []);
 
@@ -214,16 +230,47 @@ export function App() {
             </button>
 
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${
-              isSupabaseConfigured 
-                ? 'bg-navy-950/80 text-navy-200 border border-navy-400/30' 
-                : 'bg-amber-900/80 text-amber-200 border border-amber-400/30'
+              isDbOffline
+                ? 'bg-amber-500/20 text-amber-200 border border-amber-400/40'
+                : isSupabaseConfigured 
+                  ? 'bg-navy-950/80 text-navy-200 border border-navy-400/30' 
+                  : 'bg-amber-900/80 text-amber-200 border border-amber-400/30'
             }`}>
-              <span className={`w-2 h-2 rounded-full ${isSupabaseConfigured ? 'bg-navy-400 animate-pulse' : 'bg-amber-400'}`}></span>
-              <span className="hidden sm:inline">{isSupabaseConfigured ? 'Connected' : 'Demo'}</span>
+              <span className={`w-2 h-2 rounded-full ${isDbOffline ? 'bg-amber-400 animate-pulse' : isSupabaseConfigured ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+              <span className="hidden sm:inline">{isDbOffline ? 'Offline (21k Local DB)' : isSupabaseConfigured ? 'Connected' : 'Demo'}</span>
             </span>
           </div>
         </div>
       </header>
+
+      {/* Remote Database Status / Unpause Notification Banner */}
+      {isDbOffline && !dismissBanner && (
+        <aside aria-label="Database Status Alert" className="bg-amber-50 border-b border-amber-200 px-4 py-2.5 text-xs text-amber-900 flex items-center justify-between gap-3 shadow-inner">
+          <div className="flex items-center gap-2 max-w-5xl">
+            <span className="text-base flex-shrink-0">⚠️</span>
+            <div className="leading-relaxed">
+              <span className="font-bold text-amber-950">Supabase ক্লাউড ডাটাবেজ সাময়িকভাবে পজ (Paused) রয়েছে:</span>{' '}
+              <span>সার্চে কোনো সমস্যা নেই — অফলাইন ব্যাকআপ ইঞ্জিন থেকে <strong>২১,৬০০+ ওষুধের সম্পূর্ণ ডাটাবেজ</strong> লোড হচ্ছে। ক্লাউড ডাটাবেজ সচল করতে{' '}
+                <a
+                  href="https://supabase.com/dashboard/project/nxwjkawsnjrebxzdkedl"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-bold underline text-amber-950 hover:text-navy-900 decoration-amber-600 inline-flex items-center gap-1"
+                >
+                  Supabase ড্যাশবোর্ডে গিয়ে Restore করুন &nearr;
+                </a>
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={() => setDismissBanner(true)}
+            className="p-1 rounded-md text-amber-700 hover:text-amber-950 hover:bg-amber-200/50 transition flex-shrink-0"
+            title="Dismiss notice"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </aside>
+      )}
 
 
       {/* VIEW: EXPLORE (Main Priority Medicine Search) */}
