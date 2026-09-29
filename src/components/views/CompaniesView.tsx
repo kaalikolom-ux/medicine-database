@@ -48,30 +48,30 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
   }, [companiesList, search]);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
+    <div className="max-w-4xl mx-auto px-4 py-6 space-y-4 text-slate-100">
       <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
-          <Building2 className="w-6 h-6 text-navy-700" />
+        <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+          <Building2 className="w-6 h-6 text-teal-300" />
           <span>Pharmaceutical Companies</span>
         </h2>
-        <p className="text-xs text-slate-500 mt-1">
+        <p className="text-xs text-teal-200/70 mt-1">
           Priority Listing: <strong>Bangladesh Manufacturers</strong> first, followed by Global Producers (A-Z)
         </p>
       </div>
 
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-teal-400/70" />
         <input
           type="text"
           placeholder="Search company (e.g. Square, Beximco, Pfizer)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm focus:ring-2 focus:ring-navy-500 focus:outline-none"
+          className="w-full pl-10 pr-4 py-2.5 bg-[#05171b] border border-[#134952] rounded-xl text-xs sm:text-sm text-white placeholder-teal-100/40 focus:ring-2 focus:ring-teal-400 focus:outline-none"
         />
       </div>
 
-      <div className="text-xs text-slate-500 font-medium">
+      <div className="text-xs text-teal-200/70 font-medium">
         Showing {filteredCompanies.length} companies
       </div>
 
@@ -80,38 +80,38 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
         {filteredCompanies.map((item) => (
           <div
             key={item.name}
-            className={`p-4 bg-white border rounded-2xl transition flex flex-col justify-between shadow-sm hover:shadow-md ${
+            className={`p-4 bg-[#082228]/85 hover:bg-[#0b2d35] border rounded-2xl transition flex flex-col justify-between shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] ${
               item.isBd
-                ? 'border-navy-200 ring-1 ring-navy-50'
-                : 'border-slate-200'
+                ? 'border-[#145663] ring-1 ring-teal-500/30'
+                : 'border-[#103a42]'
             }`}
           >
             <div>
               <div className="flex items-start justify-between gap-2 mb-2">
-                <h3 className="text-sm font-bold text-slate-900">
+                <h3 className="text-sm font-bold text-white">
                   {item.name}
                 </h3>
                 {item.isBd ? (
-                  <span className="text-[10px] font-bold bg-navy-100 text-navy-800 px-2 py-0.5 rounded-full border border-navy-300 shrink-0">
+                  <span className="text-[10px] font-bold bg-emerald-950/80 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-500/40 shrink-0">
                     🇧🇩 BD Priority
                   </span>
                 ) : (
-                  <span className="text-[10px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full border border-slate-200 shrink-0 flex items-center gap-1">
-                    <Globe2 className="w-3 h-3" />
+                  <span className="text-[10px] font-medium bg-[#05171b] text-teal-200/80 px-2.5 py-0.5 rounded-full border border-[#10434c] shrink-0 flex items-center gap-1">
+                    <Globe2 className="w-3 h-3 text-teal-400" />
                     {item.country}
                   </span>
                 )}
               </div>
 
-              <p className="text-xs text-slate-500 mb-3">
-                Origin: <strong>{item.country}</strong>
+              <p className="text-xs text-slate-300 mb-3">
+                Origin: <strong className="text-teal-200">{item.country}</strong>
               </p>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <div className="pt-3 border-t border-[#0e373e] flex items-center justify-between text-xs">
               <button
                 onClick={() => onSelectCompany(item.name)}
-                className="flex items-center gap-1 font-semibold text-navy-700 hover:text-navy-800"
+                className="flex items-center gap-1 font-semibold text-teal-300 hover:text-white transition cursor-pointer"
               >
                 <span>View {item.count} medicines</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -122,7 +122,8 @@ export function CompaniesView({ medicines, onSelectCompany }: CompaniesViewProps
                   href={item.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-slate-700 p-1"
+                  className="text-teal-400/60 hover:text-teal-300 p-1 transition"
+                  title="Visit website"
                   aria-label="Visit website"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
