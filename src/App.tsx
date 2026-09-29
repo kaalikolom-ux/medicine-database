@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { 
   Search, Pill, Building2, Globe2, ArrowUpDown, 
-  Sparkles, SlidersHorizontal, ChevronRight, X, Bookmark, FileText
+  Sparkles, SlidersHorizontal, ChevronRight, X, Bookmark, FileText, HeartPulse
 } from 'lucide-react';
 import { searchMedicines, preloadFullLocalDataset, subscribeDatabaseStatus } from './services/medicineService';
 import { isSupabaseConfigured } from './lib/supabase';
@@ -13,6 +13,7 @@ import { CompaniesView } from './components/views/CompaniesView';
 import { SavedMedicinesView } from './components/views/SavedMedicinesView';
 import { AboutView } from './components/views/AboutView';
 import { AdminView } from './components/admin/AdminView';
+import { SymptomMedicineFinder } from './components/symptoms/SymptomMedicineFinder';
 import type { MedicineDirectoryItem } from './types/database.types';
 
 export function App() {
@@ -221,6 +222,19 @@ export function App() {
 
           <div className="flex items-center space-x-2">
             <button
+              onClick={() => setCurrentTab('symptoms')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer ${
+                currentTab === 'symptoms'
+                  ? 'bg-[#0f4c42] text-white ring-2 ring-[#0f4c42]/30'
+                  : 'bg-[#ede3d3] hover:bg-[#dfd0b8] text-[#0f4c42] border border-[#dfd0b8]'
+              }`}
+            >
+              <HeartPulse className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">লক্ষণ অনুযায়ী ওষুধ (Symptom Rx)</span>
+              <span className="sm:hidden">লক্ষণ</span>
+            </button>
+
+            <button
               onClick={() => setCurrentTab('admin')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer ${
                 currentTab === 'admin'
@@ -317,6 +331,14 @@ export function App() {
               {/* Navigation Pill Chips */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 <button
+                  onClick={() => setCurrentTab('symptoms')}
+                  className="px-4 py-2 rounded-xl bg-[#ede3d3] hover:bg-[#dfd0b8] border border-[#dfd0b8] hover:border-[#0f4c42] text-[#0f4c42] text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer"
+                >
+                  <HeartPulse className="w-3.5 h-3.5 text-[#0f4c42]" />
+                  <span>অসুখ অনুযায়ী ওষুধ</span>
+                </button>
+
+                <button
                   onClick={() => {
                     const searchEl = document.getElementById('main-search-input');
                     searchEl?.focus();
@@ -352,15 +374,24 @@ export function App() {
                 </button>
               </div>
 
-              {/* Full Width CTA Button */}
-              <button
-                onClick={() => setCurrentTab('admin')}
-                className="w-full py-2.5 sm:py-3 px-4 rounded-2xl bg-gradient-to-r from-[#0f4c42] via-[#145d52] to-[#0f4c42] hover:from-[#0c3c34] hover:to-[#0c3c34] border border-[#0f4c42] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer group"
-              >
-                <Sparkles className="w-4 h-4 text-amber-200 group-hover:rotate-12 transition-transform" />
-                <span>প্রেসক্রিপশন তৈরি ও প্রিন্ট করুন — প্রেসক্রিপশন প্যাড (Rx Pad)</span>
-                <Sparkles className="w-4 h-4 text-amber-200 group-hover:-rotate-12 transition-transform" />
-              </button>
+              {/* Action Buttons: Symptom Checker & Rx Pad */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                <button
+                  onClick={() => setCurrentTab('symptoms')}
+                  className="py-2.5 sm:py-3 px-4 rounded-2xl bg-[#0f4c42] hover:bg-[#0c3c34] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer group"
+                >
+                  <HeartPulse className="w-4 h-4 text-emerald-200 group-hover:scale-110 transition-transform" />
+                  <span>অসুখের বিবরণ দিয়ে ওষুধ পরামর্শ নিন &rarr;</span>
+                </button>
+
+                <button
+                  onClick={() => setCurrentTab('admin')}
+                  className="py-2.5 sm:py-3 px-4 rounded-2xl bg-[#f5efe4] hover:bg-[#ede3d3] border border-[#dfd0b8] text-[#0f4c42] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer group"
+                >
+                  <FileText className="w-4 h-4 text-[#0f4c42]" />
+                  <span>প্রেসক্রিপশন তৈরি ও প্রিন্ট করুন (Rx Pad)</span>
+                </button>
+              </div>
             </div>
           </section>
 
@@ -461,6 +492,18 @@ export function App() {
                     {item.label}
                   </button>
                 ))}
+              </div>
+
+              {/* Symptom Checker Quick Access Prompt */}
+              <div className="flex items-center justify-between text-xs pt-1 border-t border-[#ede3d3]/80">
+                <button
+                  type="button"
+                  onClick={() => setCurrentTab('symptoms')}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0f4c42] hover:text-[#0c3c34] hover:underline cursor-pointer group"
+                >
+                  <HeartPulse className="w-3.5 h-3.5 text-[#0f4c42] group-hover:scale-110 transition-transform" />
+                  <span>ওষুধের নাম জানা নেই? বাংলা বা ইংরেজিতে অসুখের লক্ষণ লিখে ওষুধ খুঁজুন &rarr;</span>
+                </button>
               </div>
 
               {/* Collapsible Advanced Filters Drawer */}
@@ -629,6 +672,16 @@ export function App() {
             )}
           </main>
         </>
+      )}
+
+      {/* VIEW: SYMPTOM MEDICINE FINDER */}
+      {currentTab === 'symptoms' && (
+        <SymptomMedicineFinder
+          onSelectMedicine={(med) => setSelectedMedicine(med)}
+          onOpenRxPad={() => setCurrentTab('admin')}
+          savedIds={savedIds}
+          onToggleSave={toggleSave}
+        />
       )}
 
       {/* VIEW: GENERICS */}
